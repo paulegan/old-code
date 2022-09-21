@@ -1,0 +1,4 @@
+#!/bin/sh
+#LD_LIBRARY_PATH=/home/paul/download/firefox/firefox
+WEBAPP=~/.webapps/yahoo@webrunner.app
+exec $WEBAPP/stub/webrunner -webapp $WEBAPP

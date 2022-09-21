@@ -1,0 +1,2 @@
+#!/bin/sh
+iptables -I RH-Firewall-1-INPUT 1 -p tcp -s $1 -j DROP

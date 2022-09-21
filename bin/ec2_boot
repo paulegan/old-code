@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# boot a new instance of the specified group
+[[ "$MYDECO_DOMAIN" = *dev* ]] && environment=development || environment=production
+os=centos
+runcmd=RunInstances
+descmd=DescribeInstances
+ami_type=large	# forcing large/x86_64
+args=( -g default )
+tags=( --tag Env=$environment )
+groups=()
+
+while [ "$1" ]; do
+	case "$1" in
+		-T) tags+=( --tag Name=$2 ) && shift 2 && continue;;
+		-g) groups+=( $2 );;
+		-k) keypair=$2;;
+		-p) runcmd=RequestSpotInstances && descmd=DescribeSpotInstanceRequests;;
+		-t) [[ "$2" = *small* ]] && ami_type=small;;
+		# use last naked arg as group name
+		[a-z]*) [ ${groups:-$#} = 1 ] && args+=( -g ) && groups+=( $1 );;
+	esac
+	args+=( "$1" )
+	shift
+done
+
+[ "$keypair" = "windows" ] && os=win2003
+ami=`ec2-cmd DescribeImages | awk "/$os-$ami_type/"'{print $2}' | head -1`
+id=`ec2-cmd $runcmd "${args[@]}" $ami | awk '/INSTANCE/{print $2; exit}'`
+ec2-cmd CreateTags $id "${tags[@]}" --tag Groups="${groups[*]}" >/dev/null
+ec2-cmd $descmd $id

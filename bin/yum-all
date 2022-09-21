@@ -1,0 +1,1 @@
+yum --enablerepo freshrpms --enablerepo atrpms --enablerepo livna --enablerepo dries --enablerepo macromedia "$@"

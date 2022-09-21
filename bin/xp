@@ -1,0 +1,4 @@
+#!/bin/sh
+#export VMWARE_USE_SHIPPED_GTK=force
+cd /home/vmware/machines/winXP
+exec vmware -x -q config.vmx &

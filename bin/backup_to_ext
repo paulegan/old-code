@@ -1,0 +1,20 @@
+#!/bin/sh
+
+BACKUP_ROOT="/media/ext/backup"
+TARGETS="/etc /home /usr/share/music"
+MAIL_TO="root"
+LOG="/tmp/backup.$$"
+
+[ -d "$BACKUP_ROOT" ] || exit
+
+cp /dev/null "$LOG"
+
+for target in $TARGETS; do
+	if [ -e "$BACKUP_ROOT/$target" ]; then
+		echo -e "\n###########\n$target\n" >>$LOG
+		rsync -av --delete "$target/" "$BACKUP_ROOT/$target/" >>"$LOG" 2>&1
+	fi
+done
+
+mail -s "$HOSTNAME backup" "$MAIL_TO" <"$LOG"
+rm -f "$LOG"

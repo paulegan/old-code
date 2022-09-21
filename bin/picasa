@@ -1,0 +1,4 @@
+#!/bin/sh
+export WINEARCH=win32
+cd $HOME'/.wine/drive_c/Program Files/Google/Picasa3'
+exec wine ./Picasa3.exe

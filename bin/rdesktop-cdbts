@@ -1,0 +1,4 @@
+#!/bin/tcsh
+source ~/.ec2/eu.mydeco.com
+set HOST=`ls_ec2 -g cdbts -p --dns-domain | tail -1 | awk '/running/{print $8}'`
+rdesktop -0 -u Administrator -p '"B3773r" passwds By Design for mydeco.com!' -g 1680x1050 $HOST &

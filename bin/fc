@@ -1,0 +1,134 @@
+#!/usr/bin/python
+
+import sys, re
+from os import path
+from twisted.internet import protocol, reactor
+from twisted.protocols.basic import LineReceiver
+
+COMMAND = path.expanduser('~/bin/fcsh')
+ADDRESS = '/tmp/.fcsh'
+PROMPT = '(fcsh) '
+TARGET_EXPR = re.compile("fcsh: Assigned (?P<id>\d+) as the compile target id")
+COMPILE_TARGET = "compile %s"
+DEFAULT_CMD = 'mxmlc'
+
+
+class ProcessProtocol(protocol.ProcessProtocol):
+    """Wrap a fcsh process with a simple protocol that forwards responses 
+    to a client.
+    """
+
+    def __init__(self):
+        self.response = ""
+        self.client = None
+
+    def forwardResponse(self):
+        if self.client:
+            self.client.transport.write(self.response)
+            self.response = ""
+
+    def outReceived(self, data):
+        """Send received data to the client.  When the fcsh prompt is read the
+        client connection is dropped.  Any response that matches the target
+        assignment expression causes the client command map to the updated.
+        """
+        self.response += data
+
+        match = TARGET_EXPR.search(self.response)
+        if match and self.client:
+            self.client.factory.cmd_map[self.client.cmd] = \
+                            COMPILE_TARGET % match.group('id')
+
+        if self.response.endswith(PROMPT):
+            self.response = self.response[:-len(PROMPT)]
+            self.forwardResponse()
+            if self.client:
+                self.client.transport.loseConnection()
+
+        self.forwardResponse()
+
+    def errReceived(self, data):
+        # treat stderr the same as stdout
+        self.outReceived(data)
+
+    def processEnded(self, status_object):
+        reactor.stop()
+
+
+class ServerProtocol(LineReceiver):
+    """Reads commands line by line and passes them through to the wrapped process."""
+
+    def lineReceived(self, cmd):
+        self.cmd = self.factory.cmd_map.get(cmd, cmd)
+        self.factory.process.client = self
+        self.factory.process.transport.write(self.cmd + "\n")
+
+    def connectionLost(self, reason):
+        self.factory.process.client = None
+
+
+class ServerFactory(protocol.Factory):
+
+    protocol = ServerProtocol
+    cmd_map = {}
+
+    def __init__(self, process):
+        self.process = process
+
+
+class ClientProtocol(LineReceiver):
+    """Send the given command as soon as the connection is made.  Print any data
+    reveived.
+    """
+
+    def __init__(self, cmd=None):
+        self.cmd = cmd
+
+    def connectionMade(self):
+        self.sendLine(self.cmd)
+
+    def dataReceived(self, data):
+        print data
+
+    def connectionLost(self, reason):
+        reactor.stop()
+
+
+class ClientFactory(protocol.ClientFactory):
+    protocol = ClientProtocol
+
+    def __init__(self, cmd):
+        self.cmd = cmd
+
+    def buildProtocol(self, addr):
+        return self.protocol(self.cmd)
+
+
+def start_server(args):
+    process = ProcessProtocol()
+    reactor.callWhenRunning(reactor.spawnProcess, process, args[0], args)
+    reactor.listenUNIX(ADDRESS, ServerFactory(process))
+    reactor.run()
+
+def start_client(args):
+    if not args:
+        cmd = "help"
+    elif args[0].startswith('--'):
+        cmd = " ".join(args)[2:]
+    else:
+        args = map(lambda a: path.exists(a) and path.abspath(a) or a, args)
+        cmd = " ".join([DEFAULT_CMD] + args)
+    if path.exists(ADDRESS):
+        reactor.connectUNIX(ADDRESS, ClientFactory(cmd), timeout=1)
+        reactor.run()
+    else:
+        sys.stderr.write("No server running\n")
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        start_client([])
+    elif sys.argv[1] == '--server':
+        args = len(sys.argv) > 2 and sys.argv[2:] or [COMMAND]
+        start_server(args)
+    else:
+        start_client(sys.argv[1:])

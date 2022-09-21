@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# iptables
+for host in hathor.paulegan.org; do
+	ssh $host knock
+done
+
+# httpd
+for host in site.dev.mydeco.com demo.dev.mydeco.com; do
+	ssh $host /etc/httpd/conf.d/add_me_to_allowed_hosts
+done

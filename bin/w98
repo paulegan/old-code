@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /home/vmware/machines/win98
+exec vmware -x -q config.vmx &

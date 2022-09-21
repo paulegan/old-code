@@ -1,0 +1,3 @@
+#!/bin/sh
+WEBAPP=~/.webapps/gmail@webrunner.app
+exec $WEBAPP/stub/webrunner -webapp $WEBAPP

@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+import sys, simplejson
+
+def get_path_obj(obj, path):
+    def get_field(obj, field):
+        return obj[field.isdigit() and int(field) or field]
+    if not path:
+        return obj
+    elif path[0] == '*' and len(path) > 1:   # all children
+        list = obj.values() if hasattr(obj, 'values') else obj
+        return get_path_obj(map(lambda item: get_field(item, path[1]), list), path[2:])
+    else:
+        return get_path_obj(get_field(obj, path[0]), path[1:])
+
+try:
+    input = sys.stdin.read()
+    obj = simplejson.loads(input)
+except ValueError:
+    sys.stdout.write(input)
+    sys.exit(1)
+
+if len(sys.argv) > 1:
+    try:
+        obj = get_path_obj(obj, sys.argv[1].split('/'))
+    except KeyError, error:
+        sys.stderr.write("%s not found\n" % error)
+        sys.exit(1)
+
+print simplejson.dumps(obj, indent=True)

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+localname=~/ss.jpg
+dstpath=dev.mydeco.com:/var/www/html/paulegan
+dsturl=https://dev.mydeco.com/paulegan
+
+import -pause 1 $localname
+dstname=`stat --format '%y %n' $localname | sed 's/ +[^.]*//;y/ /T/'`
+scp -q $localname $dstpath/$dstname
+echo $dsturl/$dstname | xclip
+echo -e '\a'

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec xulrunner -app ~/.mozilla/firefox/*.default/extensions/refractor@developer.mozilla.org/prism/application.ini "$@"

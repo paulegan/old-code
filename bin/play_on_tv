@@ -1,0 +1,2 @@
+#!/bin/sh
+exec xinit -e /usr/bin/mplayer -fs "$@" -- -layout TV

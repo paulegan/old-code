@@ -1,0 +1,17 @@
+#!/bin/sh -f
+
+if [ $# -lt 1 ]; then
+	echo 'Usage: hgrep [OPTIONS] SEARCH_PATTERN [FILE_PATTERN]'
+	exit 1
+fi
+
+flags="-ns"
+until [ "$pattern" ]; do
+	case "$1" in
+		-*) flags="$flags $1";;
+		*) pattern="$1";;
+	esac
+	shift
+done
+
+exec hg locate -0 "$@" | xargs -0 grep $flags "$pattern"

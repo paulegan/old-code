@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# disable ibus
+#export GTK_IM_MODULE=gtk-im-context-simple
+
+editor="gvim"
+
+# use -n flag to determine gvim server name, otherwise use cwd
+if getopts ":n:" flag && [ "$flag" = "n" ]; then
+	servername="$OPTARG"
+	shift 2
+else
+	servername="GVIM$SUDO_USER`pwd | md5sum | cut -b -8`"
+fi
+
+[ $# -gt 0 ] && editor+=" --servername $servername --remote-tab-silent"
+
+# open files at correct location by converting filenames like foo:10: to +10 foo
+if [[ "$1" =~ ":" ]] && [ -f "${1%%:*}" ]; then
+	args=("+${1#*:}" "${1%%:*}")
+	shift
+fi 
+
+exec $editor "${args[@]}" "$@" &

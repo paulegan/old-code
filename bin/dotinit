@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i "/^MY_HOSTS/a$1" ~/.distfile
+rdist -P /usr/bin/ssh -f ~/.distfile -m $1

@@ -1,0 +1,70 @@
+#!/usr/bin/python2.7
+"""List ec2 instances."""
+import os
+from socket import gethostbyname
+from urlparse import urlparse
+from optparse import OptionParser
+from boto.ec2 import EC2Connection, regions
+
+parser = OptionParser(usage="%prog [options]")
+parser.add_option("-g", "--group")
+parser.add_option("-p", "--public", action="store_true")
+parser.add_option("--dns-domain", action="store_true")
+parser.add_option("--hosts", action="store_true")
+parser.add_option("-v", "--verbose", action="store_true")
+options, args = parser.parse_args()
+
+
+def list_instances(conn):
+    tags = conn.get_all_tags()
+    name_tags = dict((tag.res_id, tag.value) for tag in tags if tag.name == 'Name')
+    group_tags = dict((tag.res_id, tag.value.split()) for tag in tags if tag.name == 'Groups' and tag.res_type == 'instance')
+    instance_ids = None
+    security_group_filter = None
+    if options.group:
+        instance_ids = [id for id, groups in group_tags.items() if options.group in groups]
+        if not instance_ids:
+            security_group_filter = options.group
+
+    for reservation in conn.get_all_instances(instance_ids):
+        security_groups = [group.name for group in reservation.groups 
+                            if group.name not in ('default', 'dev')]
+        if security_group_filter and security_group_filter not in security_groups:
+            continue
+        for instance in reservation.instances:
+            if options.public:
+                dns_name = instance.public_dns_name
+            else:
+                dns_name = instance.private_dns_name
+            if options.hosts:
+                print "\t".join((
+                    gethostbyname(dns_name),
+                    instance.id,
+                    name_tags.get(instance.id, ''),
+                ))
+            else:
+                print " ".join((
+                    instance.id,
+                    instance.instance_type,
+                    instance.placement,
+                    instance.launch_time.replace('.000Z', ''),
+                    instance.spot_instance_request_id or '-',
+                    instance.state,
+                    ",".join(group_tags.get(instance.id) or security_groups),
+                    dns_name if options.dns_domain else dns_name.split('.')[0],
+                    name_tags.get(instance.id, ''),
+                ))
+                if options.verbose:
+                    for device, volume in instance.block_device_mapping.items():
+                        print " ".join((device, volume.volume_id, name_tags.get(volume.volume_id, '')))
+
+
+# First try quick connection to end-point specified in env
+# otherwise drop back to slower loop over regions
+try:
+    EC2Connection.DefaultRegionEndpoint = \
+            urlparse(os.environ.get('EC2_URL')).netloc
+    list_instances(EC2Connection())
+except AttributeError:
+    for region in regions():
+        list_instances(EC2Connection(region=region))
