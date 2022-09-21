@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Position List</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System admin search form.">
+ <META NAME="Keywords"          CONTENT="redeployment,search,admin">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=550 HEIGHT=100></A>
+</P>
+
+<SERVER>
+ if ( !request.auth_user ) error("This directory must be protected!");
+
+ var jobs = new Jobs();
+ var list = jobs.list(request.auth_user,request.sortColumn);
+
+ if ( list.length==0 ){
+</SERVER>
+
+ <P ALIGN=CENTER>
+  No positions assigned to <SERVER>write(request.auth_user)</SERVER> found
+  in the database.
+ </P>
+
+<SERVER> }else{ </SERVER>
+ 
+ <FORM NAME="sort" METHOD=POST>
+ <TABLE BORDER=0 WIDTH=500><TR><TD ALIGN=LEFT VALIGN=MIDDLE>
+  Select the position to list the applications of.
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ </TD><TD ALIGN=RIGHT VALIGN=MIDDLE>
+   <SELECT NAME="sortColumn" onChange="sort.submit();">
+    <OPTION VALUE="ref" `(request.sortColumn=="ref"?"SELECTED":"")`>Sort by Reference
+    <OPTION VALUE="title" `(request.sortColumn=="title"?"SELECTED":"")`>Sort by Title
+    <OPTION VALUE="num_positions" `(request.sortColumn=="num_positions"?"SELECTED":"")`>Sort by no. of Positions
+    <OPTION VALUE="num_applications" `(request.sortColumn=="num_applications"?"SELECTED":"")`>Sort by no. of Applications
+   </SELECT>
+   <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Sort"></NOSCRIPT>
+ </TD></TR></TABLE>
+ </FORM>
+
+ <TABLE BORDER=1 WIDTH=500 CELLSPACING=0 CELLPADDING=3>
+
+  <TR BGCOLOR=#C0C0C0><TH>Reference</TH><TH>Title</TH><TH>#Positions</TH><TH>#Applications</TH></TR>
+
+  <SERVER>
+   while(list.next()){
+     write(" <TR><TD><FONT SIZE=-1><A HREF=\"listAppl.html?ref="+list.REF+'"');
+     write(" onMouseOver=\"window.status='Select "+list.REF+"';return true;\" ");
+     write(">"+list.REF+"</A></FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.TITLE+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.NUM_POSITIONS+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.NUM_APPLICATIONS+"</FONT></TD></TR>\n");
+   }
+  </SERVER>
+
+ </TABLE>
+
+<SERVER>
+ }// End else results.. 
+
+ list.close();
+</SERVER>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

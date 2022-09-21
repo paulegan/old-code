@@ -1,0 +1,25 @@
+WDIG::Run version 1.0
+=====================
+
+$Id$
+
+Generic function for running a command and verifying its output
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   perl -I blib/lib -w t/Run.t
+   make install
+
+DEPENDENCIES
+
+WDIG::File::Slurp 1.0
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Time-HiRes-1.45.tar.gz' => {
+    'md5-ungz' => '729f0a666bd345f4d8e143fe3d30120b',
+    'md5' => 'dc942ebd34e25ab744c73a94216f24e3',
+    'size' => '27266'
+  }
+};

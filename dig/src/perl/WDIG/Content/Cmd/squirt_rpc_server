@@ -1,0 +1,137 @@
+#!/usr/bin/perl -w
+
+# $Id$
+
+=head1 NAME
+
+squirt - XML RPC interface to the WDIG::Content::Cmd modules
+
+=head1 AUTHOR
+
+ $Author$
+ $Date$
+
+ Initial Author: paul.x.egan.-nd@email.disney.com
+ Date: 2003/08/28
+
+=head1 SYNOPSIS
+
+ squirt_rpc_server [options]
+
+=head1 OPTIONS
+
+  config - Specify an XML config file containing defaults for each option
+    as defined by the WDIG::Content::Cmd defaults option.
+  log_conf_file - The Log4perl configuration file.
+
+=head1 DESCRIPTION
+
+This script starts an XML RPC server which publishes the commands
+implemented in the WDIG::Content::Cmd framework.
+
+=head1 HISTORY
+
+ $Log: squirt_rpc_server,v $
+ Revision 1.1  2003/08/28 23:43:03  pegan
+ Initial revision
+
+
+=head1 COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+=cut
+
+######################################################################
+
+use 5.006_001;
+use strict;
+use warnings;
+
+use lib('/share/src/perl/test_lib','/share/lib/perl5/5.6.1','/share/lib/perl5/site_perl');
+use Getopt::Long;
+use Pod::Usage;
+use XML::Simple;
+use RPC::XML::Server;
+use RPC::XML::Function;
+use WDIG::Content::Cmd;
+use WDIG::Content::Cmd::Error qw(:try);
+
+my @Opt_Config = (
+  'defaults|config=s',
+  'log_conf_file=s',
+  'help|?'
+);
+
+my @Valid_Cmds = (
+  'push_drop',
+  'refresh_app',
+  'enable_url',
+  'disable_url',
+  'null'
+);
+
+my $Squirt_Defaults = '/share/lib/cms_config.xml';
+my $Default_Port = 8042;
+my $Default_Name_Base = 'squirt';
+
+umask(0002);
+
+
+######################################################################
+# Process command line arguments:
+
+my %opt = ();
+GetOptions(\%opt, @Opt_Config) or pod2usage();
+pod2usage(-exitstatus=>0, -verbose=>1) if ( $opt{help} );
+
+apply_defaults($opt{defaults} || $Squirt_Defaults, \%opt);
+$opt{defaults} = undef;
+
+
+######################################################################
+
+my $name_base = $opt{rpc_server}->{name_base} || $Default_Name_Base;
+
+my $server = new RPC::XML::Server(port=>$Default_Port, %{$opt{rpc_server}});
+
+foreach my $cmd_name ( @Valid_Cmds ) {
+  my $cmd = new WDIG::Content::Cmd($cmd_name, %opt);
+  my $proc = new RPC::XML::Function( {
+    name => "$name_base.$cmd_name",
+    code => sub { return $cmd->exec(@_) ? "".$cmd->output() : undef },
+  } );
+  $server->add_proc($proc);
+}
+
+$server->server_loop();
+
+exit(0);
+
+
+######################################################################
+# apply_defaults($defaults,\%opt) - Combines default options with
+# the current values.
+#
+
+sub apply_defaults
+{
+ my $defaults = shift();
+ my $opt = shift();
+
+ if ( ref($defaults) ne 'HASH' ) {
+
+   warn("Unable to parse defaults '$defaults': $@\n")
+     if ( ! eval { $defaults = XMLin($defaults, ForceArray=>0, KeyAttr=>{}) } );
+
+ }
+
+ if ( $defaults and ref($defaults) eq 'HASH' ) {
+   %$opt = ( %$defaults, %$opt );
+   return (1);
+ } else {
+   return (undef);
+ }
+}
+
+__END__

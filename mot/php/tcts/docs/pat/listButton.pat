@@ -1,0 +1,15 @@
+<FORM METHOD=POST ACTION="list.phtml">
+<INPUT TYPE=HIDDEN NAME="stage" VALUE="search">
+<INPUT TYPE=HIDDEN NAME="status" VALUE="#status#">
+<INPUT TYPE=HIDDEN NAME="option" VALUE="#option#">
+<INPUT TYPE=HIDDEN NAME="adminCID" VALUE="#adminCID#">
+<INPUT TYPE=HIDDEN NAME="start" VALUE="#next_start#">
+<INPUT TYPE=HIDDEN NAME="end" VALUE="#next_end#">
+<INPUT TYPE=HIDDEN NAME="transID" VALUE="#transID#">
+<INPUT TYPE=HIDDEN NAME="empCID" VALUE="#empCID#">
+<INPUT TYPE=HIDDEN NAME="day" VALUE="#day#">
+<INPUT TYPE=HIDDEN NAME="mth" VALUE="#mth#">
+<INPUT TYPE=HIDDEN NAME="year" VALUE="#year#">
+
+<INPUT TYPE=SUBMIT VALUE="#submitValue#">
+</FORM>    

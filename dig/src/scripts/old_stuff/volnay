@@ -1,0 +1,48 @@
+#!/usr/bin/sh
+# Condition entries
+
+. /opt/customer/local/bin/akamai_library/function_dev
+. /opt/customer/local/bin/akamai_library/function_staging
+. /opt/customer/local/bin/akamai_library/function_live
+
+if test -z "$1" -o -z "$2"
+then
+        echo "Please enter the complete paramter list"
+                echo "volnay [dev,staging,live] [country_code]"
+        exit
+fi
+        
+# DEFINITION DES VARIABLES
+TAR_SRC="directory"
+COUNTRY_CODE=$2
+TIMESTAMP=`date +%H%M%S_%d%m%y`
+
+HTML_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_html_file_list"
+ACTUAL_PATH=`pwd`
+
+case $1 in
+        dev)            WEB_STRING="dev.";AKA_STRING="Dev";echo "Processing on Dev";;
+        staging)        WEB_STRING="staging.";AKA_STRING="Staging";echo "Processing on Staging";;
+        live)           WEB_STRING="www.";AKA_STRING="Live";echo "Processing on Live";;
+        *)              echo "Please enter the server you want your content moved to (dev/staging/live)";exit 1;;
+esac
+
+#Remplissage des listes
+#Attribution temporaire d'une liste
+echo "dir" > $HTML_FILE_LIST
+
+NUMBER_OF_HTML_FILES=`find ./ -name "*.[Hh][Tt][Mm]" -o -name "*.[Hh][Tt][Mm][Ll]" | wc -l`
+NUMBER_OF_SCRIPTS_FILES=`find ./ -name "*.[Cc][Gg][Ii]" -o -name "*.[Pp][Ll]" | wc -l`
+echo "$ACTUAL_PATH,$AKA_STRING,$COUNTRY_CODE,$NUMBER_OF_HTML_FILES,$NUMBER_OF_SCRIPTS_FILES,*" >> /pool/staging/akamai_config/staging_weekly_webmasters_metrics.csv
+
+# Akamaizing Process
+####################
+
+case $1 in
+        dev)            extractDev;;
+        staging)        extractStaging;;
+        live)           extractLive;;
+        *)              echo "Please enter the server you want your content moved to (dev/staging/live)";rm $GLOBAL_FILE_LIST;exit 1;;
+esac
+
+exit

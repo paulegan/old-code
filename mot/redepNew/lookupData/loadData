@@ -1,0 +1,21 @@
+#!/bin/tcsh -fb
+
+# paul@hr.emea.mot.com		18.4.1999
+
+set dbUser	= "redepV2"
+set dbPasswd	= "r3d3p"
+set loader	= "${ORACLE_HOME}/bin/sqlload"
+set loadFlags	= "userid=${dbUser}/${dbPasswd} errors=1000000"
+
+if ( "$1" == "" ) then 
+  foreach table ( *.ctl )
+    echo ${table:r}
+    ${loader} control=${table} ${loadFlags} > /dev/null
+  end
+else
+  if ( -e ${1}.ctl ) then
+    ${loader} control=${1} ${loadFlags} > /dev/null
+  else
+    echo "${1}.ctl doesn't exist!"
+  endif
+endif

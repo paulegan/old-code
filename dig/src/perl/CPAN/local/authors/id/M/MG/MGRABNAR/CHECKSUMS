@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'File-Tail-0.98.tar.gz' => {
+    'md5-ungz' => '4781b4c444ffb505d7c0ba2e8ceccfa1',
+    'md5' => 'd16d67052577a5cdcde03d5cd2dc5569',
+    'size' => '14149'
+  }
+};

@@ -1,0 +1,1 @@
+exec cat /var/adm/authlog | sed "s/^.*${HOST} //;s/ [oO][nN] [^ ]*//" | grep -v 'last message repeated' | sort | uniq -c

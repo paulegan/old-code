@@ -1,0 +1,48 @@
+<Service>
+        <Name>Virtual Server iPlanet 6.0 test</Name>
+        <Host>se-adev02.go.com</Host>
+        <Domain-Name>.go.com</Domain-Name>
+        <Port>8000</Port>
+        <Lame-Browser-Url>www.microsoft.com</Lame-Browser-Url>
+
+        <Default-Login-Page-Url>http://registerqa.go.com/go/login</Default-Login-Page-Url>
+        <Default-Upsell-Page-Url>/goauth/deny/Upsell.html</Default-Upsell-Page-Url>
+        <Default-Access-Denied-Page-Url>/goauth/deny/AccessDenied.html</Default-Access-Denied-Page-Url>
+        <Default-Signup-Page-Url>/goauth/deny/Signup.html</Default-Signup-Page-Url>
+
+        <Free-Area>/goauth/GoAuthFreeZone/*</Free-Area>
+
+        <Default-Required-Data> email, geocode, gender </Default-Required-Data>
+
+  <Premium-Area>
+     <Name>se-adev02-Area00</Name>
+     <Request-Urls>/goauth/GoAuthPremium/articles/*</Request-Urls>
+     <Tokens-Required> 10 </Tokens-Required>
+  </Premium-Area>
+
+  <Premium-Area>
+     <Name>se-adev02-Area01</Name>
+     <Request-Urls>/goauth/GoAuthPremium/movies/*</Request-Urls>
+     <Tokens-Required> 1 </Tokens-Required>
+  </Premium-Area>
+
+  <Premium-Area>
+     <Name>se-annevs1-Area00</Name>
+     <Request-Urls>/vs1-goauth/GoAuthPremium/articles/*</Request-Urls>
+     <Tokens-Required> 1 </Tokens-Required>
+     <Upsell-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/Upsell.html</Upsell-Page-Url>
+     <Access-Denied-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/AccessDenied.html</Access-Denied-Page-Url>
+     <Signup-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/Signup.html</Signup-Page-Url>
+  </Premium-Area>
+
+  <Premium-Area>
+     <Name>se-annevs1-Area01</Name>
+     <Request-Urls>/vs1-goauth/GoAuthPremium/sports/*</Request-Urls>
+     <Tokens-Required> 9 </Tokens-Required>
+     <Upsell-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/Upsell.html</Upsell-Page-Url>
+     <Access-Denied-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/AccessDenied.html</Access-Denied-Page-Url>
+     <Signup-Page-Url>http://se-annevs1.go.com:8000/vs1-goauth/deny/Signup.html</Signup-Page-Url>
+  </Premium-Area>
+
+</Service>
+

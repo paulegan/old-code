@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE url_map [
+  <!ELEMENT url_map (url+) >
+  <!ELEMENT url (machine, root, platform, role, param*) >
+  <!ATTLIST url host CDATA #REQUIRED
+                protocol CDATA #REQUIRED >
+  <!ELEMENT machine (#PCDATA) >
+  <!ATTLIST machine type CDATA #IMPLIED >
+  <!ELEMENT root (#PCDATA) >
+  <!ELEMENT platform (#PCDATA) >
+  <!ELEMENT role (#PCDATA) >
+  <!ELEMENT param (#PCDATA) >
+  <!ATTLIST param name CDATA #REQUIRED >
+]>
+
+<!-- $Id$ -->
+
+<url_map>
+
+ <url host="pingu" protocol="http">
+   <machine>localhost</machine>
+   <root>t</root>
+   <platform>standard</platform>
+   <role>live</role>
+ </url>
+
+ <url host="app.pingu" protocol="http">
+   <machine>localhost</machine>
+   <root>t</root>
+   <platform>advanced</platform>
+   <role>live</role>
+   <param name="domain_name">live</param>
+   <param name="app_name">pingu</param>
+ </url>
+
+</url_map>

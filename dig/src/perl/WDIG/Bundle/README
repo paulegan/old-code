@@ -1,0 +1,24 @@
+Bundle::WDIG version 1.0
+========================
+
+$Id$
+
+
+INSTALLATION
+
+This package is used to install all WDIG packages.  Try
+something like this:
+
+make dist
+cp Bundle* /share/src/perl/CPAN/WDIG
+/share/src/perl/CPAN/update_checksums /share/src/perl/CPAN/WDIG
+perl -I/share/src/perl -MCPAN -e "install Bundle::WDIG"
+
+DEPENDENCIES
+
+CPAN
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

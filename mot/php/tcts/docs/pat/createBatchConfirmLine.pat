@@ -1,0 +1,1 @@
+<TR><TD><FONT FACE="Arial, Helvetica" SIZE=3>#transID#</FONT></TD><TD colspan="2"><FONT FACE="Arial, Helvetica" SIZE=3>#empName#</FONT></TD><TD><FONT FACE="Arial, Helvetica" SIZE=3>#typeName#</FONT></TD></TR>

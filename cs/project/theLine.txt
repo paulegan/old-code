@@ -1,0 +1,1 @@
+alias lsh 'rsh `ruptime -rl | grep '\''inter[0-9] '\'' | awk '\'' NR==1 { print $1 }'\'' `  "cd $cwd ;\!* " '

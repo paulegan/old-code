@@ -1,0 +1,11 @@
+#!/usr/bin/tcsh -fb
+
+# $Id$
+
+foreach f ( $* )
+  set site = `echo $f | sed 's/\.access.*//'`
+  set date = `echo $f | sed 's/.*\.\([0-9]\{6\}\).*/\1/'`
+  set loadLog = `echo $0 | sed 's/load$/loadLog/'`
+  echo $f
+  gunzip -c $f | $loadLog $site $date 
+end

@@ -1,0 +1,142 @@
+#!/usr/bin/sh
+# Condition entries
+
+. /opt/customer/local/bin/akamai_library/function_dev
+. /opt/customer/local/bin/akamai_library/function_staging
+. /opt/customer/local/bin/akamai_library/function_live
+
+if test -z "$1" -o -z "$2" -o -z "$3"
+then
+        echo "Please enter the complete paramter list"
+		echo "margaux [File name] [dev,staging,live] [country_code]"
+        exit
+fi
+        
+# DEFINITION DES VARIABLES
+TAR_SRC=$1
+COUNTRY_CODE=$3
+TIMESTAMP=`date +%H%M%S_%d%m%y`
+
+GLOBAL_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_global_file_list"
+EXEC_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_exec_file_list"
+DATA_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_data_file_list"
+HTML_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_html_file_list"
+TEMPORARY_FILE=$TAR_SRC"_"$TIMESTAMP"_temporary_file"
+FORBIDDEN_FILE_LIST=$TAR_SRC"_"$TIMESTAMP"_forbidden_file_list"
+ACTUAL_PATH=`pwd`
+TEMP_FILE_HTML_LIST_CREATION1="temp1"$TIMESTAMP
+TEMP_FILE_HTML_LIST_CREATION2="temp2"$TIMESTAMP
+TEMP_FILE_HTML_LIST_CREATION3="temp3"$TIMESTAMP
+
+case $2 in
+        dev)            WEB_STRING="dev.";PERL_STRING="/pool/dev";AKA_STRING="Dev";echo "Processing on Dev";;
+        staging)        WEB_STRING="staging.";PERL_STRING="/pool/staging";AKA_STRING="Staging";echo "Processing on Staging";;
+        live)           WEB_STRING="www.";PERL_STRING="/pool/live";AKA_STRING="Live";echo "Processing on Live";;
+        *)              echo "Please enter the server you want your content moved to (dev/staging/live)";rm $GLOBAL_FILE_LIST $DATA_FILE_LIST $HTML_FILE_LIST $FORBIDDEN_FILE_LIST $EXEC_FILE_LIST;exit 1;;
+esac
+
+#Remplissage des listes
+#Attribution temporaire d'une liste
+# File extraction.
+###################################
+echo "FILE EXTRACTION"
+echo "Please Hold On"
+tar -xmvf $1 > $GLOBAL_FILE_LIST
+find . -perm u+r,g+r,o+r -exec chmod 775 {} \;
+echo "$1 has  been extracted"
+
+sed -n -e "/\.[Cc][Gg][Ii]/p" -e "/\.[Pp][Ll]/p" $GLOBAL_FILE_LIST > $EXEC_FILE_LIST
+sed -n -e "/\.[Tt][Xx][Tt]/p" -e "/\.[Dd][Aa][Tt]/p" -e "/\.[Da][Bb]/p" $GLOBAL_FILE_LIST > $DATA_FILE_LIST
+sed -n -e "/\.[Hh][Tt][Mm]/p" $GLOBAL_FILE_LIST > $TEMP_FILE_HTML_LIST_CREATION1
+
+touch $TEMP_FILE_HTML_LIST_CREATION2
+for i in `more $TEMP_FILE_HTML_LIST_CREATION1`
+do
+echo $ACTUAL_PATH >> $TEMP_FILE_HTML_LIST_CREATION2
+done
+paste -d'/' $TEMP_FILE_HTML_LIST_CREATION2 $TEMP_FILE_HTML_LIST_CREATION1 > $HTML_FILE_LIST
+
+rm $TEMP_FILE_HTML_LIST_CREATION1 $TEMP_FILE_HTML_LIST_CREATION2
+
+# Test de noms invalides #
+##########################
+touch $FORBIDDEN_FILE_LIST
+for i in `more /opt/customer/local/bin/akamai_library/forbiden_symbols.conf`
+do
+        grep -s $i $GLOBAL_FILE_LIST >> $FORBIDDEN_FILE_LIST
+done
+grep -s " " $GLOBAL_FILE_LIST >> $FORBIDDEN_FILE_LIST
+if test -s $FORBIDDEN_FILE_LIST
+then 
+        echo "Archive contains forbidden characters in file names. Archive rejected"
+        more $FORBIDDEN_FILE_LIST
+		echo "Do you want to delete those files from the server? [y/N]"
+		echo "Only those files are going to be deleted. Deleted files are irrecoverable."
+		echo ""
+		read answer
+		echo ""
+		if [ "$answer" != y ]
+		then
+			echo "Deletion cancelled."
+		else
+		/opt/customer/local/bin/akamai_library/file_remover.pl $FORBIDDEN_FILE_LIST
+		rm $GLOBAL_FILE_LIST $DATA_FILE_LIST $HTML_FILE_LIST $FORBIDDEN_FILE_LIST $EXEC_FILE_LIST        
+		exit 0
+		fi
+fi
+
+# Chmod 775 for executable
+##########################
+for i in `more $EXEC_FILE_LIST`
+do
+chmod 775 "$i"
+# Changing on the fly the files, removing any ^M or ^M^M sign
+#############################################################
+tr -d "\015" < "$i" > $TEMPORARY_FILE
+mv $TEMPORARY_FILE $i
+chmod 775 "$i"
+#sed "/^$/d" $TEMPORARY_FILE > "$i"
+done
+
+# Chmod 666 for datas
+#####################
+for i in `more $DATA_FILE_LIST`
+do
+chmod 666 "$i"
+done
+
+# Changes path to match to location (www to dev or to staging)
+##############################################################
+#for string in `more /opt/customer/local/bin/akamai_library/extractor.conf"`
+#do
+        #for i in `more $EXEC_FILE_LIST`
+        #do
+                #if test `grep -s $string $i`
+                #then 
+                        #sed "s/www\./$WEB_STRING/g" $i > $TEMPORARY_FILE
+                        #sed "s/\/pool\/live$\/$PERL_STRING/g" $TEMPORARY_FILE > $i
+                #fi
+        #done
+#done
+
+# Statistics Part
+#################
+
+NUMBER_OF_HTML_FILES=`more $HTML_FILE_LIST | wc -l`
+NUMBER_OF_SCRIPTS_FILES=`more $EXEC_FILE_LIST | wc -l`
+NUMBER_OF_FORBIDDEN_FILES=`more $FORBIDDEN_FILE_LIST | wc -l`
+echo "$TAR_SRC,$AKA_STRING,$COUNTRY_CODE,$NUMBER_OF_HTML_FILES,$NUMBER_OF_SCRIPTS_FILES,$NUMBER_OF_FORBIDDEN_FILES" >> /pool/live/akamai_config/weekly_webmasters_metrics.csv
+
+
+# Akamaizing Process
+####################
+
+case $2 in
+        dev)            extractDev;;
+        staging)        extractStaging;;
+        live)           extractLive;;
+        *)              echo "Please enter the server you want your content moved to (dev/staging/live)";rm $GLOBAL_FILE_LIST $DATA_FILE_LIST $HTML_FILE_LIST $FORBIDDEN_FILE_LIST $EXEC_FILE_LIST $TEMPORARY_FILE;exit 1;;
+esac
+
+rm $GLOBAL_FILE_LIST $DATA_FILE_LIST $HTML_FILE_LIST $FORBIDDEN_FILE_LIST $EXEC_FILE_LIST 
+exit

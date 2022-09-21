@@ -1,0 +1,35 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+  
+  /* main method */
+  
+  if ($transID != "")
+  {
+    $tt = new TransactionTable; 
+    if ($tt->isValidTransID($transID))
+    {
+      if ($stage == "reject")
+      {
+        $rc = new RejectionCodes;
+	$center = $tt->getCenter($transID);
+        if (!$rc->isValidCode($reason,$center))
+	   hris_printError("Rejection reason ($reason) is not valid");
+	else {
+               $cid = hris_emailID2CID(GetEnv('REMOTE_USER'));
+	       if (!hris_isCID($cid))
+	          hris_printError("The closed by value ($cid) is not a valid CID");
+	       else {      
+                      if ($tt->reject($transID,$cid,$reason))
+	  	         printSuccess($transID,"rejected.pat");
+		      else hris_printError("The reject function did not complete successfully");
+	            }
+	     }
+      }
+      else printDetailsForm($transID,"reject","reject.pat");
+    }
+    else hris_printError("Invalid transaction ID : $transID");
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

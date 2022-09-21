@@ -1,0 +1,40 @@
+#!/www/php/php-current
+<?php
+  $patDir = "/www/docs/transactionCentre/tcts/pat";
+  $workingDir = "/www/php/lib/app/tcts";
+  
+  include('includes.php3');
+  include('authenication.php3');
+  include("$workingDir/DB_tcts.php3");
+  include("$workingDir/Admin.php3");
+  include("$workingDir/Transaction.php3");
+  include("$workingDir/CodeTables.php3");
+  include("$workingDir/TransactionTable.php3");
+  include("$workingDir/new.php3");  
+  include("$workingDir/update.php3");
+  
+  /* main method */
+  
+  if ($transID != "")
+  {
+    $tt = new TransactionTable; 
+    if ($tt->isValidTransID($transID))
+    {
+      if ($stage == "delete")
+      {
+         $cid = hris_emailID2CID(GetEnv('REMOTE_USER'));
+	 if (!hris_isCID($cid))
+	    hris_printError("The closed by value ($cid) is not a valid CID");
+	 else {      
+                if ($tt->delete($transID,$cid))
+	  	   printSuccess($transID,"deleted.pat");
+		else hris_printError("The delete function did not complete successfully");
+	      }              
+      }
+      else printDetailsForm($transID,"delete","delete.pat");
+    }
+    else hris_printError("Invalid transaction ID : $transID");
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

@@ -1,0 +1,77 @@
+POST /rpc HTTP/1.0
+Host: intlappsdev
+Content-Length: 214
+Content-Type: text/xml
+
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>pluto.getUserData</methodName>
+  <params>
+    <param>
+      <value>
+        <string>pegan</string>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>country</name>
+            <value>GB</value>
+          </member>
+          <member>
+            <name>secondaryContactName</name>
+            <value/>
+          </member>
+          <member>
+            <name>secondaryContactEmail</name>
+            <value/>
+          </member>
+          <member>
+            <name>fax</name>
+            <value>1939</value>
+          </member>
+          <member>
+            <name>postalAddress</name>
+            <value>.</value>
+          </member>
+          <member>
+            <name>username</name>
+            <value>pegan</value>
+          </member>
+          <member>
+            <name>role</name>
+            <value>Admin</value>
+          </member>
+          <member>
+            <name>mainContactEmail</name>
+            <value>paul.x.egan.-nd@dig.com</value>
+          </member>
+          <member>
+            <name>phone</name>
+            <value>2792</value>
+          </member>
+          <member>
+            <name>company</name>
+            <value>WDIG</value>
+          </member>
+          <member>
+            <name>mainContactName</name>
+            <value>Paul Egan</value>
+          </member>
+          <member>
+            <name>mobilePhoneNumber</name>
+            <value/>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>

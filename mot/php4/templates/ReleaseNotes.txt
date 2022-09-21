@@ -1,0 +1,45 @@
+
+PACKAGE:    	Framework Templates v1.1
+FILE:	    	$Source$
+DESCRIPTION:	Instructions for installing HRIS PHP framework templates
+CREATED:    	2001/02/07
+CREATED BY: 	Paul Egan
+LAST EDITED:	$Date$
+EDITED BY:  	$Author$
+ID:	    	$Id$
+
+--------------------------------------------------------------------------------
+
+RELEASE NOTES HISTORY:
+
+$Log$
+Revision 1.2  2001/02/07 16:41:28  eganp
+Templates now include extraneous system files
+
+Revision 1.1  2001/02/07 16:28:17  eganp
+Initial release of templates
+
+
+--------------------------------------------------------------------------------
+
+PREREQUISITES:
+
+None.
+
+--------------------------------------------------------------------------------
+
+INSTALLATION STEPS:
+
+Export files from CVS repository to templates directory -
+cvs export -r fw_templates_1_1_0_0 -d /www/php4/templates php4/apps/templates
+Ensure that files are readable by the web server user
+
+Link to main.css & images/HR_EMEA_header.gif from web server document root.
+ln -s /www/php4/templates/main.css /www/docs/main.css
+ln -s /www/php4/templates/images/HR_EMEA_header.gif /www/docs/images/HR_EMEA_header.gif
+
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+
+Verify correct operation of framework libraries v1.1.

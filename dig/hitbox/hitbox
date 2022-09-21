@@ -1,0 +1,462 @@
+#!/bin/perl -w
+
+######################################################################
+#
+# ID:		$Id$
+#
+# Author:	paul.egan@disney.com
+# 		2001/05/01
+#
+# Last update:	$Author$
+# 		$Date$
+#
+# Description:	Script for adding HitBox code to HTML & JSP files based
+#		on XML configuration files.
+#
+# Log:		$Log$
+# Log:		Revision 2.1  2002/07/16 12:58:01  root
+# Log:		Commented out paramcache - doesn't work when batch tagging files
+# Log:
+# Log:		Revision 2.0  2002/02/01 14:14:56  root
+# Log:		Script rewritten to work on a list of files rather then
+# Log:		a site; saving state to a BDB file.
+# Log:
+#
+######################################################################
+
+use strict;
+use bytes;
+
+use Getopt::Std;
+use File::Spec::Functions ('rel2abs');
+use File::Spec::Unix;
+use File::Find;
+use XML::Simple;
+use MLDBM ('DB_File','Storable');
+
+
+my $LOG = *STDERR;
+my $configFile = './config.xml';
+
+
+#########################
+# Initialization:
+
+
+$SIG{__DIE__} = sub { print $LOG "ERROR: ".$_[0]; exit(-1); };
+$ENV{'PATH'} = "/bin";
+
+use vars ('$opt_n','$opt_l','$opt_c','$opt_t');			# Validate arguments
+if (!getopts('l:c:t:n') || !@ARGV){
+  print STDERR "Usage: $0 [-n] [-c config] [-t N] [-l log] file ...\n";
+  print STDERR "   -n Don't actually tag the files - will generate a log file with details.\n";
+  print STDERR "   -c Location of a configuration file.\n";
+  print STDERR "   -l Specifies the location of a log file.  STDERR is used if none given.\n";
+  print STDERR "   -t Override ref DB timeout.\n";
+  exit(1);
+}
+
+my $config;							# Read config file
+if ( ! eval { $config = XMLin($opt_c || $configFile) } ){
+  die("Could not parse config file - $@\n");
+}
+
+if ($opt_l){							# Open the log file (or use STDERR
+  open(LOG,">>$opt_l") || die("Could not open log : $!");	# if none given)
+  $LOG = *LOG;
+}
+
+$config->{'ref_db_timeout'} = $opt_t if ($opt_t);		# Override DB timeout
+
+
+my $urlMap;							# Read the URL mapping
+if ( ! eval { $urlMap = XMLin($config->{'url_map_file'},
+       forcearray => [ 'path' ],
+       keyattr => [ 'root','pattern' ] ) } ){
+  die("Could not parse the url map file - $@\n");
+}
+
+my $hitboxMap;							# Read the HitBox mapping
+if ( ! eval { $hitboxMap = XMLin($config->{'hitbox_map_file'},
+       forcearray => [ 'map' ]) } ){
+ die("Could not parse the hitbox map file - $@\n");
+}
+
+my $tag_std;							# Read the standard tag
+if ( ! -r $config->{'tag_std'} ){
+ die("Tag file ".$config->{'tag_std'}." - $!\n");
+}
+$tag_std = slurpFile($config->{'tag_std'});
+
+my $tag_flash;							# Read the flash tag
+if ( ! -r $config->{'tag_flash'} ){
+ die("Tag file ".$config->{'tag_flash'}." - $!\n");
+}
+$tag_flash = slurpFile($config->{'tag_flash'});
+
+my %refDB;							# Open the ref DB
+if ( ! tie(%refDB, 'MLDBM', $config->{'ref_db_file'} ) ){
+ die("Could not open the ref DB ".$config->{'ref_db_file'}." - $!\n");
+}
+
+
+#########################
+# Main:
+
+my @fileList;
+
+foreach my $file ( @ARGV ){				# Verify files & expand dirs
+  $file = rel2abs($file);
+  if ( ! -e $file ){
+    print $LOG "ERROR: $file - no such file or directory\n";
+  }elsif ( -d $file ){
+    find(sub { push(@fileList,$File::Find::name) if (-f && ! -l && /$config->{'file_match'}/i); },$file);
+  }else{
+    push(@fileList,$file);
+  }
+}
+
+FILE:
+foreach my $file ( @fileList ){				# For every file ...
+
+  $file =~ s/\\/\//g;
+
+  foreach my $pat ( @{$config->{'filter'}->{'pattern'}} ){
+    $pat =~ s/(?<!\.)\*/\/?(.*?)\/?/og;			# Skip filtered files
+    if ( $file =~ /$pat/i ){
+      print $LOG "WARNING: $file - skipped; matched filter $pat\n";
+      next FILE;
+    }
+  }
+
+  my $contents = slurpFile($file);			# Read file contents
+
+  if ($contents =~ /$config->{'refresh_page_pattern'}/is){ # Skip refresh pages
+    print $LOG "WARNING: $file - skipped; contains refresh\n";
+    next FILE;
+  }
+
+  my $fileParameters = getParams($file);		# Get URL params
+  if (!$fileParameters){
+    print $LOG "ERROR: $file - No document root matches\n";
+    next FILE;
+  }
+  if (!$fileParameters->{'country'}){
+    print $LOG "WARNING: $file - No parameters in map\n";
+    next FILE;
+  }
+							# Get HitBox vars
+  $fileParameters->{'hitbox_vars'} = getHitBoxVars($fileParameters);
+  if (!$fileParameters->{'hitbox_vars'}){
+    print $LOG "ERROR: $file - No HitBox map found\n";
+    next FILE;
+  }
+							# Parse include parent
+  while ( $contents =~ /$config->{'ssi_include_pattern'}|$config->{'jsp_include_pattern'}/sogi ){
+    my $inc = $1 || $2;
+    $inc = File::Spec::Unix->catfile($fileParameters->{($inc =~ /^\//)?'doc_root':'path'},$inc);
+    markAsChild(canonpath($inc),$file,'include');
+  }
+
+  my $isFrameSet = 0;					# Parse frameset
+  while ( $contents =~ /$config->{'frame_pattern'}/sogi ){
+    my ($frame,$tag) = ($1,$&);
+    if ( $& !~ /$config->{'content_frame_pattern'}/oi ){
+      $frame = File::Spec::Unix->catfile($fileParameters->{($frame =~ /^\//)?'doc_root':'path'},$frame);
+      markAsChild(canonpath($frame),$file,'frame');
+    }
+    $isFrameSet = 1;
+  }
+
+  if ($isFrameSet){					# Skip framesets
+    print $LOG "WARNING: $file - skipped; frameset\n";
+    next FILE;
+  }
+
+  if (my $parent = isChild($file)){			# Skip non-content frames & includes
+    print $LOG "WARNING: $file - skipped; has parent $parent\n";
+    removeTag($file);
+    next FILE;
+  }
+
+							# Generate correct tag
+  my $tag = ($contents =~ /$config->{'flash_page_pattern'}/soi)? $tag_flash : $tag_std;
+  while ( my ($var,$value) = each(%{$fileParameters->{'hitbox_vars'}}) ){
+    $tag =~ s/\Q$var\E/$value/g;
+  }
+							# Insert tag
+  if ( $contents =~ /$config->{'tag_begin'}.*$config->{'tag_end'}/so ){
+    if ($& eq $tag){ # Ignore if right tag is already present
+      print $LOG "$file ".$fileParameters->{'hitbox_vars'}->{'CONTENT+CATEGORY'}."\n";
+      next FILE;
+    }
+    $contents =~ s/$config->{'tag_begin'}.*$config->{'tag_end'}/$tag/so;
+  }elsif ( $contents !~ /$config->{'insert_point'}/soi ){
+    print $LOG "ERROR: $file - No insert point!\n";
+    next FILE;
+  }else{
+    $contents =~ s/$config->{'insert_point'}/$tag$&/si;
+  }
+  
+  if ( !$opt_n ){					# Write result
+    if ( !open(F,">$file") ){
+      print $LOG "ERROR: $file - Could not open for writing\n";
+      next FILE;
+    }
+    print F $contents;
+    close(F);
+  }
+
+  print $LOG "$file ".$fileParameters->{'hitbox_vars'}->{'CONTENT+CATEGORY'}."\n";
+
+}
+
+untie(%refDB);
+close($LOG);
+
+exit(0);
+
+
+
+#########################################################################
+# getHitBoxVars(fileParams) - returns a hash with HitBox variables and
+# values for inserting into the HitBox code.  
+#
+sub getHitBoxVars
+{
+ my $fileParams = $_[0];
+ my $vars = {};
+
+ my $map = 0;			# Find matching HitBox map
+ foreach my $unit ( @{$hitboxMap->{'unit'}} ){
+   if ($unit->{'country_code'} eq $fileParams->{'country'} &&
+       $unit->{'unit_code'} eq $fileParams->{'unit'} &&
+       $unit->{'brand_code'} eq $fileParams->{'brand'}){
+     $map = $unit->{'map'};
+     last;
+   }
+ }
+
+ return (0) if (!$map);
+
+ my (@cat,@acct);		# Combine the resulting categories & accounts
+ foreach my $m ( @{$map} ){
+   push(@acct,$m->{'account'});
+   push(@cat,File::Spec::Unix->catdir($m->{'category'},
+                               $fileParams->{'site_name'} || "",
+                               $fileParams->{'path_less_pattern'} || ""));
+ }
+
+ $vars->{'ACCOUNT+ID+LIST'} = join(";",@acct);
+ $vars->{'CONTENT+CATEGORY'} = join(";",@cat);
+ $vars->{'PUT+PAGE+NAME+HERE'} = $fileParams->{'filename'};
+ $vars->{'ENTRY+CAMPAIGN+ID'} = "";
+ $vars->{'GOAL+CAMPAIGN+ID'} = "";
+ $vars->{'SEGMENT+ID'} = "";
+
+ return ($vars);
+}
+
+#########################################################################
+# getParams(file) - determines the appropriate parameters for a file
+# based on the url XML mapping.
+#
+my $paramCache;	# Static var for cache
+sub getParams
+{
+ my $file = $_[0];
+ my $match = {};
+ my $contentBase = $config->{'content_base'};
+ my $docRoot;
+ my %copy;
+				# Restore the results from the cache if found
+ #if ( $paramCache->{$file} ){
+ #  %copy = %{$paramCache->{$file}};
+ #  return (\%copy);
+ #}
+				# Determine document root
+ foreach my $root ( keys(%{$urlMap->{'site'}}) ){
+   $docRoot = $root if ($file =~ /^$contentBase$root/);
+ }
+ return (0) if (!$docRoot);
+
+   				# Find matching path pattern with highest order:
+ $match->{'order'} = -1;
+ while ( my ($pat,$param) = each(%{$urlMap->{'site'}->{$docRoot}->{'path'}}) ){
+   $pat =~ s/(?<!\.)\*/\/?(.*?)\/?/og; # DWIMify the pattern
+   if ( $param->{'order'} > $match->{'order'} &&
+        ( ( my @subExp ) = ($file =~ /^$contentBase$docRoot$pat$/) ) ){
+     $match = $param;
+     $match->{'path_less_pattern'} = join("/",@subExp);
+   }
+ }
+				# Add extra params
+ $match->{'filename'} = (File::Spec::Unix->splitpath($file))[2];
+ $match->{'path'} = (File::Spec::Unix->splitpath($file))[1];
+ $match->{'path_less_pattern'} = (File::Spec::Unix->splitpath($match->{'path_less_pattern'}))[1];
+ $match->{'doc_root'} = $contentBase.$docRoot;
+
+ $paramCache->{$file} = $match;	# Cache reference
+
+ %copy = %{$match};
+ return (\%copy);
+}
+
+
+#########################################################################
+# removeTag(file) - removes the HitBox code from a file.
+#
+sub removeTag
+{
+ my $file = $_[0];
+
+ return (0) if ($opt_n || ! -e $file);
+
+ my $contents = slurpFile($file);
+
+ if ( $contents =~ /$config->{'tag_begin'}.*$config->{'tag_end'}/so ){
+   $contents =~ s/$config->{'tag_begin'}.*$config->{'tag_end'}//so;
+   if ( !open(F,">$file") ){
+     print $LOG "ERROR: $file - Could not open for writing\n";
+     return (0);
+   }
+   print F $contents;
+   close(F);
+   return (1);
+ }
+
+ return (0);
+}
+
+
+#########################################################################
+# markAsChild(file,parent,type) - updates the ref DB to mark a file as
+# a child and removes the HitBox code.
+#
+sub markAsChild
+{
+ my $file = $_[0];
+ my $parent = $_[1];
+ my $type = $_[2];
+ my $record = $refDB{$file} || {};
+
+ $record->{$parent} = {};
+ $record->{$parent}->{'lastUpdate'} = time();
+ $record->{$parent}->{'type'} = $type;
+
+ $refDB{$file} = $record;
+
+ if (removeTag($file)){
+   print $LOG "WARNING: $file - removed tag; has parent $parent\n";
+ }
+
+ return (1);
+}
+
+
+#########################################################################
+# isChild(file) - returns true if the file is marked as a child in the
+# ref DB.  If the data timeout has been reached the references are
+# re-validated.
+#
+sub isChild
+{
+ my $file = $_[0];
+ my $record = $refDB{$file};
+ my $now = time();
+ my $ret;
+
+ return (0) if (!$record);
+
+ foreach my $parent ( keys(%$record) ){
+
+   if (($now - $record->{$parent}->{'lastUpdate'}) > $config->{'ref_db_timeout'}){
+
+     my $contents = slurpFile($parent);
+     my $fileParameters = getParams($parent);
+
+     if ($record->{$parent}->{'type'} eq "include"){
+       while ( $contents =~ /$config->{'ssi_include_pattern'}|$config->{'jsp_include_pattern'}/sogi ){
+         my $inc = $1 || $2;
+         $inc = File::Spec::Unix->catfile($fileParameters->{($inc =~ /^\//)?'doc_root':'path'},$inc);
+         $record->{$parent}->{'lastUpdate'} = $now if ($file eq canonpath($inc));
+       }
+     }
+
+     if ($record->{$parent}->{'type'} eq "frame"){
+       while ( $contents =~ /$config->{'frame_pattern'}/sogi ){
+         my ($frame,$tag) = ($1,$&);
+         if ( $& !~ /$config->{'content_frame_pattern'}/oi ){
+           $frame = File::Spec::Unix->catfile($fileParameters->{($frame =~ /^\//)?'doc_root':'path'},$frame);
+           $record->{$parent}->{'lastUpdate'} = $now if ($file eq canonpath($frame));
+         }
+       }
+     }
+
+     if ($record->{$parent}->{'lastUpdate'} == $now){
+       $ret = $ret?"$parent and others":$parent;
+     }else{
+       delete($record->{$parent});
+     }
+
+   }else{
+
+     my @parents = keys(%$record);
+     $ret = $parents[0].($#parents?" and others":"");
+
+   }
+ }
+
+ if (!%$record){
+   delete($refDB{$file});
+   return (0);
+ }else{
+   $refDB{$file} = $record;
+   return ($ret);
+ }
+}
+
+
+#########################################################################
+# slurpFile(file) - returns the contents of a file as a single string
+#
+sub slurpFile
+{
+ my $file = $_[0];
+ my $contents = "";
+ local $/ = undef;
+
+ if ( !open(F,"<$file") ){
+   print $LOG "ERROR: $file - Could not open for reading\n";
+ }else{
+   $contents = <F>;
+   close(F);
+ }
+
+ return ($contents);
+}
+
+
+#########################################################################
+# canonpath(file) - as from File::Spec::Unix but with the resolution
+# of parent ".." references.
+#
+sub canonpath
+{
+ my $path = $_[0];
+
+ $path =~ s|/+|/|g unless($^O eq 'cygwin');	# xx////xx  -> xx/xx
+ $path =~ s|(/\.)+/|/|g;			# xx/././xx -> xx/xx
+ $path =~ s|^(\./)+||s unless $path eq "./";	# ./xx      -> xx
+ $path =~ s|^/(\.\./)+|/|s;			# /../../xx -> xx
+ $path =~ s|/\Z(?!\n)|| unless $path eq "/";	# xx/       -> xx
+
+ while ($path =~ m|/\.\./|){
+   $path =~ s|[^/]*/\.\./||;	# /xx/../ -> /
+ }
+
+ return ($path);
+}
+
+
+1;

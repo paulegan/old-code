@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hitbox_map PUBLIC "-//Disney Enterprises, Inc.//DTD HitBox Account Map 1.1//EN" "http://hitbox.disneyinternational.com/hitbox_map.dtd">
+
+<!-- $Id$ -->
+
+<hitbox_map>
+
+ <unit country_code="UK" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510315GDEN38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK</category></map>
+ </unit>
+<unit country_code="UK" unit_code="DOL" brand_code="DIS">
+ <map><account>DM510315GDEN38EN3</account><category>/DOL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/UK/DOL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/DOL</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM520417A6DA38EN3</account><category>/</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/BVHE</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="BVHE" brand_code="BVH">
+  <map><account>DM510315GDEN38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/BVHE</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/UK</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/BVI</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="BVI" brand_code="FIL">
+  <map><account>DM510528L3NA38EN3</account><category>/</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/BVI</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="DI" brand_code="DIS">
+  <map><account>DM5110081DEV38EN3</account><category>/</category></map>
+  <map><account>DM5105283PND38EN3</account><category>/UK</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/DI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/DI</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/UK</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/DLP</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="DOL" brand_code="TEST">
+  <map><account>DM510315GDEN38EN3</account><category>/DOL/printstation</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/DOL/printstation</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/DOL/printstation</category></map>
+  <map><account>DM51070271RF38EN3</account><category>/EMEA/UK/DOL/printstation</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="TDC" brand_code="DIS">
+  <map><account>DM510824KMFV38EN3</account><category>/</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/TDC</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="TDC" brand_code="DIG">
+  <map><account>DM510315CBAZ38EN3</account><category>/</category></map>
+  <map><account>DM510824KMFV38EN3</account><category>/DIGGIT</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/TDC/DIGGIT</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/TDC/DIGGIT</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/TDC/DIGGIT</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="TDS" brand_code="DIS">
+  <map><account>DM510315GDEN38EN3</account><category>/TDS</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/TDS</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/TDS</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="THEATRE" brand_code="DIS">
+  <map><account>DM510315GDEN38EN3</account><category>/THEATRE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/THEATRE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/THEATRE</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM52032250SA38EN3</account><category>/</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/UK</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/WDPRO</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/WDPRO</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="WDPRO_TOUR" brand_code="DIS">
+  <map><account>DM510528PJZE38EN3</account><category>/</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/WDPRO/waltdisneyworld/content_syndication</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/WDPRO/waltdisneyworld/content_syndication</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/WDPRO/waltdisneyworld/content_syndication</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="WDTC" brand_code="DIS">
+  <map><account>DM510528C8MD39EN3</account><category>/popups</category></map>
+  <map><account>DM52032250SA38EN3</account><category>/waltdisneyworld/V/popups</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/UK/waltdisneyworld/V/popups</category></map>
+  <map><account>DM510315GDEN38EN3</account><category>/WDPRO/waltdisneyworld/V/popups</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/WDPRO/waltdisneyworld/V/popups</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/WDPRO/waltdisneyworld/V/popups</category></map>
+ </unit>
+ <unit country_code="UK" unit_code="DIG" brand_code="APPS">
+  <map><account>DM51070271RF38EN3</account><category>/</category></map>
+ </unit>
+
+ <unit country_code="FR" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510528MBFC38FR3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM510528MBFC38FR3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/BVHE</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/FR</category></map>
+  <map><account>DM510528MBFC38FR3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/BVI</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="DI" brand_code="DIS">
+  <map><account>DM511008FORE38EN3</account><category>/</category></map>
+  <map><account>DM5105283PND38EN3</account><category>/FR</category></map>
+  <map><account>DM510528MBFC38FR3</account><category>/DI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/DI</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="DOL" brand_code="DIS">
+  <map><account>DM510528MBFC38FR3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/DOL</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/FR</category></map>
+  <map><account>DM510528MBFC38FR3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/DLP</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="TDC" brand_code="DIS">
+  <map><account>DM510824IDDV38EN3</account><category>/</category></map>
+  <map><account>DM510528MBFC38FR3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/TDC</category></map>
+ </unit>
+ <unit country_code="FR" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM510528MBFC38FR3</account><category>/WDPRO</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FR/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FR/WDPRO</category></map>
+ </unit>
+
+ <unit country_code="DE" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510528PNMA38GE3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM510528PNMA38GE3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/BVHE</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/DE</category></map>
+  <map><account>DM510528PNMA38GE3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/BVI</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="DCP" brand_code="DIS">
+  <map><account>DM510528PNMA38GE3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/DCP</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="DI" brand_code="DIS">
+  <map><account>DM51100831DS38EN3</account><category>/</category></map>
+  <map><account>DM5105283PND38EN3</account><category>/DE</category></map>
+  <map><account>DM510528PNMA38GE3</account><category>/DI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/DI</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="DOL" brand_code="DIS">
+  <map><account>DM510528PNMA38GE3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/DOL</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/DE</category></map>
+  <map><account>DM510528PNMA38GE3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/DLP</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="TDC" brand_code="DIS">
+  <map><account>DM51082416AW38EN3</account><category>/</category></map>
+  <map><account>DM510528PNMA38GE3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/TDC</category></map>
+ </unit>
+ <unit country_code="DE" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM510528PNMA38GE3</account><category>/WDPRO</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/WDPRO</category></map>
+ </unit>
+
+ <unit country_code="IT" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108N5CW38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT</category></map>
+ </unit>
+
+ <unit country_code="IT" unit_code="NONE" brand_code="ALPHA">
+  <map><account>DM511108N5CW38EN3</account><category>/ALPHAGO</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/ALPHAGO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/ALPHAGO</category></map>
+ </unit>
+
+ <unit country_code="IT" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108N5CW38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/BVHE</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/IT</category></map>
+  <map><account>DM511108N5CW38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/BVI</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="DCP" brand_code="DIS">
+  <map><account>DM511108N5CW38EN3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/DCP</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="DI" brand_code="DIS">
+  <map><account>DM51100878DE38EN3</account><category>/</category></map>
+  <map><account>DM5105283PND38EN3</account><category>/IT</category></map>
+  <map><account>DM511108N5CW38EN3</account><category>/DI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/DI</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/IT</category></map>
+  <map><account>DM511108N5CW38EN3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/DLP</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108N5CW38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/DOL</category></map>
+ </unit>
+ <unit country_code="IT" unit_code="TDC" brand_code="DIS">
+  <map><account>DM510824P8AR38EN3</account><category>/</category></map>
+  <map><account>DM511108N5CW38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/IT/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/TDC</category></map>
+ </unit>
+
+ <unit country_code="ES" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108F7WN38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES</category></map>
+ </unit>
+ <unit country_code="ES" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108F7WN38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES/BVHE</category></map>
+ </unit>
+ <unit country_code="ES" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/ES</category></map>
+  <map><account>DM511108F7WN38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES/BVI</category></map>
+ </unit>
+ <unit country_code="ES" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/ES</category></map>
+  <map><account>DM511108F7WN38EN3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES/DLP</category></map>
+ </unit>
+ <unit country_code="ES" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108F7WN38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES/DOL</category></map>
+ </unit>
+ <unit country_code="ES" unit_code="TDC" brand_code="DIS">
+  <map><account>DM510824LASM38EN3</account><category>/</category></map>
+  <map><account>DM511108F7WN38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/ES/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/ES/TDC</category></map>
+ </unit>
+
+ <unit country_code="NL" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108KISF38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NL</category></map>
+ </unit>
+ <unit country_code="NL" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108KISF38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NL/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NL/BVHE</category></map>
+ </unit>
+ <unit country_code="NL" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/NL</category></map>
+  <map><account>DM511108KISF38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NL/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NL/BVI</category></map>
+ </unit>
+ <unit country_code="NL" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/NL</category></map>
+  <map><account>DM511108KISF38EN3</account><category>/DLP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NL/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NL/DLP</category></map>
+ </unit>
+ <unit country_code="NL" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108KISF38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NL/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NL/DOL</category></map>
+ </unit>
+
+ <unit country_code="BE" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108M8FD38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/BE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/BE</category></map>
+ </unit>
+ <unit country_code="BE" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/BE</category></map>
+  <map><account>DM511108M8FD38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/BE/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/BE/BVI</category></map>
+ </unit>
+ <unit country_code="BE" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108M8FD38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/BE/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/BE/BVHE</category></map>
+ </unit>
+ <unit country_code="BE" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108M8FD38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/BE/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/BE/DOL</category></map>
+ </unit>
+
+ <unit country_code="DK" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108IOCE38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK</category></map>
+ </unit>
+ <unit country_code="DK" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108IOCE38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/BVHE</category></map>
+ </unit>
+ <unit country_code="DK" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/DK</category></map>
+  <map><account>DM511108IOCE38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/BVI</category></map>
+ </unit>
+ <unit country_code="DK" unit_code="DCP" brand_code="DIS">
+  <map><account>DM511108IOCE38EN3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/DCP</category></map>
+ </unit>
+ <unit country_code="DK" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108IOCE38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/DOL</category></map>
+ </unit>
+ <unit country_code="DK" unit_code="TDC" brand_code="DIS">
+  <map><account>DM53011667RD38EN3</account><category>/DK</category></map>
+  <map><account>DM511108IOCE38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DK/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/TDC</category></map>
+ </unit>
+
+ <unit country_code="NO" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51110890NZ38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO</category></map>
+ </unit>
+ <unit country_code="NO" unit_code="TDC" brand_code="DIS">
+  <map><account>DM53011667RD38EN3</account><category>/NO</category></map>
+  <map><account>DM51110890NZ38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/TDC</category></map>
+ </unit>
+ <unit country_code="NO" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM51110890NZ38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/BVHE</category></map>
+ </unit>
+ <unit country_code="NO" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/NO</category></map>
+  <map><account>DM51110890NZ38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/BVI</category></map>
+ </unit>
+ <unit country_code="NO" unit_code="DCP" brand_code="DIS">
+  <map><account>DM51110890NZ38EN3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/DCP</category></map>
+ </unit>
+ <unit country_code="NO" unit_code="DOL" brand_code="DIS">
+  <map><account>DM51110890NZ38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/NO/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/DOL</category></map>
+ </unit>
+
+ <unit country_code="SE" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108NFWW38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE</category></map>
+ </unit>
+ <unit country_code="SE" unit_code="TDC" brand_code="DIS">
+  <map><account>DM53011667RD38EN3</account><category>/SE</category></map>
+  <map><account>DM511108NFWW38EN3</account><category>/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/TDC</category></map>
+ </unit>
+ <unit country_code="SE" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108NFWW38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/BVHE</category></map>
+ </unit>
+ <unit country_code="SE" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/SE</category></map>
+  <map><account>DM511108NFWW38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/BVI</category></map>
+ </unit>
+ <unit country_code="SE" unit_code="DCP" brand_code="DIS">
+  <map><account>DM511108NFWW38EN3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/DCP</category></map>
+ </unit>
+ <unit country_code="SE" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108NFWW38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/SE/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/DOL</category></map>
+ </unit>
+
+ <unit country_code="FI" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51110802FN38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI</category></map>
+ </unit>
+ <unit country_code="FI" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM51110802FN38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FI/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI/BVHE</category></map>
+ </unit>
+ <unit country_code="FI" unit_code="BVI" brand_code="DIS">
+  <map><account>DM530126L7MZ38EN3</account><category>/FI</category></map>
+  <map><account>DM51110802FN38EN3</account><category>/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FI/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI/BVI</category></map>
+ </unit>
+ <unit country_code="FI" unit_code="DCP" brand_code="DIS">
+  <map><account>DM51110802FN38EN3</account><category>/DCP</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FI/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI/DCP</category></map>
+ </unit>
+ <unit country_code="FI" unit_code="DOL" brand_code="DIS">
+  <map><account>DM51110802FN38EN3</account><category>/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/FI/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI/DOL</category></map>
+ </unit>
+
+ <unit country_code="CH" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510531AMWB38EN3</account><category>/CH</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/CH</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/CH</category></map>
+ </unit>
+ <unit country_code="CH" unit_code="BVI" brand_code="DIS">
+  <map><account>DM510531AMWB38EN3</account><category>/CH/BVI</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/CH/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/CH/BVI</category></map>
+ </unit>
+ <unit country_code="CH" unit_code="DOL" brand_code="DIS">
+  <map><account>DM510531AMWB38EN3</account><category>/CH/DOL</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/CH/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/CH/DOL</category></map>
+ </unit>
+
+ <unit country_code="IE" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510531AMWB38EN3</account><category>/IE</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/IE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/IE</category></map>
+ </unit>
+
+ <unit country_code="ME" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510531AMWB38EN3</account><category>/ME</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/ME</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/ME</category></map>
+ </unit>
+ <unit country_code="ME" unit_code="TDC" brand_code="DIS">
+  <map><account>DM510927H2FA38EN3</account><category>/</category></map>
+  <map><account>DM510531AMWB38EN3</account><category>/ME/TDC</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/OTHER/ME/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/ME/TDC</category></map>
+ </unit>
+
+ <unit country_code="XX" unit_code="NONE" brand_code="FOX">
+  <map><account>DM520514JJMA38SP3</account><category>/</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/FOXKIDS-LA</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/FOXKIDS-LA</category></map>
+ </unit>
+
+ <unit country_code="XX" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/BVHE</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/BVHE</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="BVI" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/BVI</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/BVI</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="DOL" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/DOL</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/DOL</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="WDR" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/RD</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/RD</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/RD</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="TDC" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/TDC</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/TDC</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM51052859MA38SP3</account><category>/WDPRO/LA</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/WDPRO/LA</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/WDPRO/LA</category></map>
+ </unit>
+ <unit country_code="XX" unit_code="WDPRO" brand_code="WDPRO">
+  <map><account>DM520709J8VW38SP3</account><category>/</category></map>
+  <map><account>DM51052859MA38SP3</account><category>/WDPRO/LA/waltdisneyworld</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/WDPRO/LA/waltdisneyworld</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/WDPRO/LA/waltdisneyworld</category></map>
+  <map><account>DM510507H7SE38EN3</account><category>/LA/waltdisneyworld</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/LA/waltdisneyworld</category></map>
+  <map><account>DM51030813MR38EN3</account><category>/WDPRO/LA/waltdisneyworld</category></map>
+ </unit>
+
+ <unit country_code="ZZ" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM511120HIVV38SP3</account><category>/WDW-ES/Content</category></map>
+  <map><account>DM510507H7SE38EN3</account><category>/WDW-ES/Content</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/WDW-ES/Content</category></map>
+  <map><account>DM51052859MA38SP3</account><category>/WDPRO/US</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/LA/WDPRO/US</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/LA/WDPRO/US</category></map>
+ </unit>
+
+ <unit country_code="BR" unit_code="NONE" brand_code="FOX">
+  <map><account>DM520514J7AZ38PO3</account><category>/</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/FOXKIDS-BR</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/FOXKIDS-BR</category></map>
+ </unit>
+
+ <unit country_code="BR" unit_code="NONE" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/BVHE</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/BVHE</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="BVI" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/BVI</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/BVI</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="BVI" brand_code="BVI">
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BVI-BR</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="DCP" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/DCP</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/DCP</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="DOL" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/DOL</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/DOL</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="TDC" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/TDC</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/TDC</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/WDPRO</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/WDPRO</category></map>
+ </unit>
+ <unit country_code="BR" unit_code="WDTV" brand_code="DIS">
+  <map><account>DM5105283DDN38PO3</account><category>/WDTV</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/BR/WDTV</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/BR/WDTV</category></map>
+ </unit>
+
+ <unit country_code="CA" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM5105318OMV38EN3</account><category>/CA/WDPRO</category></map>
+  <map><account>DM5105285HSE38EN3</account><category>/OTHER/CA/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/AMERICAS/OTHER/CA/WDPRO</category></map>
+ </unit>
+
+ <unit country_code="AA" unit_code="TDC" brand_code="DIS">
+  <map><account>DM511210DNVD38EN3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/ASIATDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/ASIATDC</category></map>
+ </unit>
+
+ <unit country_code="SG" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51052826ER38EN3</account><category>/SG</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/OTHER/SG</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/OTHER/SG</category></map>
+ </unit>
+
+ <unit country_code="TW" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51110854ZV38EN3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/TW</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/TW</category></map>
+ </unit>
+ <unit country_code="TW" unit_code="BVI" brand_code="DIS">
+  <map><account>DM51110854ZV38EN3</account><category>/BVI</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/TW/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/TW/BVI</category></map>
+ </unit>
+ <unit country_code="TW" unit_code="DOL" brand_code="DIS">
+  <map><account>DM51110854ZV38EN3</account><category>/DOL</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/TW/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/TW/DOL</category></map>
+ </unit>
+ <unit country_code="TW" unit_code="TDC" brand_code="DIS">
+  <map><account>DM51110854ZV38EN3</account><category>/TDC</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/TW/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/TW/TDC</category></map>
+ </unit>
+
+ <unit country_code="AU" unit_code="NONE" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/BVHE</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="BVI" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/BVI</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/BVI</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="DCP" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/DCP</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/DCP</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="DOL" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/DOL</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/DOL</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="TDC" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/TDC</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/TDC</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/TDC</category></map>
+ </unit>
+ <unit country_code="AU" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM51110865CA38EN3</account><category>/WDPRO</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/AU/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/AU/WDPRO</category></map>
+ </unit>
+
+ <unit country_code="KR" unit_code="NONE" brand_code="DIS">
+  <map><account>DM511108CLBR38EN3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/KR</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/KR</category></map>
+ </unit>
+ <unit country_code="KR" unit_code="DOL" brand_code="DIS">
+  <map><account>DM511108CLBR38EN3</account><category>/DOL</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/KR/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/KR/DOL</category></map>
+ </unit>
+ <unit country_code="KR" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM511108CLBR38EN3</account><category>/BVHE</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/KR/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/KR/BVHE</category></map>
+ </unit>
+ <unit country_code="KR" unit_code="BVI" brand_code="DIS">
+  <map><account>DM511108CLBR38EN3</account><category>/BVI</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/KR/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/KR/BVI</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="NONE" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="WDIG" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDIG</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDIG</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDIG</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="HELP" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDIG_HELPS</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDIG_HELPS</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDIG_HELPS</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="HKDL" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/HKDL</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/HLDL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/HLDL</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="MOBI" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/MOBILE_HK</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/MOBILE_HK</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/MOBILE_HK</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="TV" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/TV</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/TV</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/TV</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="PUB" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/PUBLISHING</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/PUBLISHING</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/PUBLISHING</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="TDS" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/TDSHK</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/TDSHK</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/TDSHK</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="WDI" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDI_I-DAY</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDI_I-DAY</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDI_I-DAY</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="STITCH" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/SYNERGY_STITCH</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/SYNERGY_STITCH</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/SYNERGY_STITCH</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="WDIG_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDIG_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDIG_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDIG_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="HELP_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDIG_HELPS_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDIG_HELPS_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDIG_HELPS_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="HKDL_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/HKDL_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/HLDL_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/HLDL_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="MOBI_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/MOBILE_HK_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/MOBILE_HK_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/MOBILE_HK_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="TV_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/TV_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/TV_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/TV_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="PUB_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/PUBLISHING_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/PUBLISHING_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/PUBLISHING_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="TDS_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/TDSHK_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/TDSHK_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/TDSHK_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="WDI_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/WDI_I-DAY_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/WDI_I-DAY_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/WDI_I-DAY_EN</category></map>
+ </unit>
+
+ <unit country_code="HK" unit_code="STITCH_EN" brand_code="DIS">
+  <map><account>DM520701M7CN38JA3</account><category>/SYNERGY_STITCH_EN</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/HK/SYNERGY_STITCH_EN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/HK/SYNERGY_STITCH_EN</category></map>
+ </unit>
+
+ <unit country_code="JP" unit_code="NONE" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="BVHE" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/BVHE</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/BVHE</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="BVHE" brand_code="FCL">
+  <map><account>DM510528KKFV38JA3</account><category>/BVHE</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/BVHE</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/BVHE</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="BVI" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/BVI</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/BVI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/BVI</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DCP" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/DCP</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/DCP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/DCP</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DCP" brand_code="D100">
+  <map><account>DM5105282OZE38EN3</account><category>/JP/D100</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/D100</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DI" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/DI</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/DI</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DISNEY-I" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/DISNEY-I</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/DISNEY-I</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/DISNEY-I</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DOL" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/DOL</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/DOL</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/DOL</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="DPWW" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/DPWW</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/DPWW</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/DPWW</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="TDS" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/TDSJ</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/TDSJ</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/TDSJ</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="WDTV" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/TV</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/TV</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/TV</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="WDPRO" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/WDPRO</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/WDPRO</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="WDPRO" brand_code="WDW">
+  <map><account>DM511120H9VN38JA3</account><category>/WDW-JP/Content</category></map>
+  <map><account>DM510507H7SE38EN3</account><category>/WDW-JP/Content</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/WDW-JP/Content</category></map>
+  <map><account>DM510528KKFV38JA3</account><category>/WDPRO</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/WDPRO</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="WDPRO" brand_code="DLR">
+  <map><account>DM5111200OCN38JA3</account><category>/DLR-JP/Content</category></map>
+  <map><account>DM510507H6FV38EN3</account><category>/DLR-JP/Content</category></map>
+  <map><account>DM510308OCSA38EN3</account><category>/DLR-JP/Content</category></map>
+  <map><account>DM510528KKFV38JA3</account><category>/WDPRO</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/WDPRO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/WDPRO</category></map>
+ </unit>
+ <unit country_code="JP" unit_code="WDR" brand_code="DIS">
+  <map><account>DM510528KKFV38JA3</account><category>/WDR</category></map>
+  <map><account>DM5105282OZE38EN3</account><category>/JP/WDR</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/ASIAPAC/JP/WDR</category></map>
+ </unit>
+
+ <unit country_code="NONE" unit_code="DLP" brand_code="DIS">
+  <map><account>DM510528CENM38FR3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DLP</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DLP</category></map>
+ </unit>
+
+ <unit country_code="NONE" unit_code="DI" brand_code="DIS">
+  <map><account>DM5105283PND38EN3</account><category>/</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/DI</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DI</category></map>
+ </unit>
+
+ <unit country_code="UK" unit_code="Mobile" brand_code="TMO">
+  <map><account>DM510315GDEN38EN3</account><category>/Mobile/TMO</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/Mobile/TMO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/Mobile/TMO</category></map>
+  <map><account>DM52042453VA38EN3</account><category>/TMO/UK</category></map>
+</unit>
+
+ <unit country_code="UK" unit_code="Mobile" brand_code="GEN">
+  <map><account>DM510315GDEN38EN3</account><category>/Mobile/GEN</category></map>
+  <map><account>DM5103154GMW38EN3</account><category>/UK/Mobile/GEN</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/UK/Mobile/GEN</category></map>
+  <map><account>DM52042453VA38EN3</account><category>/GEN/UK</category></map>
+</unit>
+
+ <unit country_code="DE" unit_code="Mobile" brand_code="TMO">
+  <map><account>DM510528PNMA38GE3</account><category>/Mobile/TMO</category> </map>
+  <map><account>DM5103154GMW38EN3</account><category>/DE/Mobile/TMO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/DE/Mobile/TMO</category></map>
+  <map><account>DM52042453VA38EN3</account><category>/TMO/DE</category></map>
+
+</unit>
+
+ <unit country_code="AT" unit_code="Mobile" brand_code="TMO">
+  <map><account>DM510531AMWB38EN3</account><category>/AT/Mobile/TMO</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/OTHER/AT/Mobile/TMO</category></map>
+  <map><account>DM5103083LCA38EN3</account><category>/EMEA/OTHER/AT/Mobile/TMO</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TMO/AT</category></map>
+ </unit>
+
+<unit country_code="FI" unit_code="Mobile" brand_code="TEL">
+ <map><account>DM51110802FN38EN3</account><category>/Mobile/TEL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/FI/Mobile/TEL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/FI/Mobile/TEL</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TEL/FI</category></map>
+</unit>
+
+<unit country_code="DK" unit_code="Mobile" brand_code="TEL">
+ <map><account>DM51110810CE38EN3</account><category>/Mobile/TEL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/DK/Mobile/TEL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/DK/Mobile/TEL</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TEL/DK</category></map>
+</unit>
+
+
+<unit country_code="NO" unit_code="Mobile" brand_code="TEL">
+ <map><account>DM51110890NZ38EN3</account><category>/Mobile/TEL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/NO/Mobile/TEL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/NO/Mobile/TEL</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TEL/NO</category></map>
+</unit>
+
+
+<unit country_code="SE" unit_code="Mobile" brand_code="TEL">
+ <map><account>DM511108NFWW38EN3</account><category>/Mobile/TEL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/SE/Mobile/TEL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/SE/Mobile/TEL</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TEL/SE</category></map>
+</unit>
+
+<unit country_code="IT" unit_code="Mobile" brand_code="TIM">
+ <map><account>DM511108N5CW38EN3</account><category>/Mobile/TIM</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/IT/Mobile/TIM</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/IT/Mobile/TIM</category></map>
+ <map><account>DM52042453VA38EN3</account><category>/TIM/IT</category></map> 
+</unit>
+
+<unit country_code="INTL" unit_code="NONE" brand_code="DIS">
+ <map><account>DM510531AMWB38EN3</account><category>/INTL</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/INTL</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/INTL</category></map>
+</unit>
+
+<unit country_code="INTL" unit_code="BVI" brand_code="DIS">
+ <map><account>DM510531AMWB38EN3</account><category>/INTL/BVI</category></map>
+ <map><account>DM5103154GMW38EN3</account><category>/INTL/BVI</category></map>
+ <map><account>DM5103083LCA38EN3</account><category>/EMEA/INTL/BVI</category></map>
+</unit>
+
+</hitbox_map>

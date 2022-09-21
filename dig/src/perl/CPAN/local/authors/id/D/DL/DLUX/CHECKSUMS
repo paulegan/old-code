@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'Parallel-ForkManager-0.7.5.tar.gz' => {
+    'md5-ungz' => '13339c8022d6e386de5b08a997e9f892',
+    'md5' => 'ec12f36370329e2c235284f5cb4ed427',
+    'size' => '5935'
+  }
+};

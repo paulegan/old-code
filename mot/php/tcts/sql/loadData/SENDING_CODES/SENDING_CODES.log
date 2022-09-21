@@ -1,0 +1,51 @@
+
+SQL*Loader: Release 8.1.6.0.0 - Production on Tue Sep 19 13:55:44 2000
+
+(c) Copyright 1999 Oracle Corporation.  All rights reserved.
+
+Control File:   SENDING_CODES.ctl
+Data File:      SENDING_CODES.dat
+  Bad File:     SENDING_CODES.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 65536 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table SENDING_CODES_TB, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+CODE                                FIRST     *   |       CHARACTER            
+NAME                                 NEXT     *   |       CHARACTER            
+COUNTRY                              NEXT     *   |       CHARACTER            
+    NULL if COUNTRY = BLANKS
+
+
+Table SENDING_CODES_TB:
+  8 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  49536 bytes(64 rows)
+Space allocated for memory besides bind array:        0 bytes
+
+Total logical records skipped:          0
+Total logical records read:             8
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Tue Sep 19 13:55:44 2000
+Run ended on Tue Sep 19 13:55:46 2000
+
+Elapsed time was:     00:00:01.86
+CPU time was:         00:00:00.07    

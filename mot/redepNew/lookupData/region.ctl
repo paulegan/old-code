@@ -1,0 +1,6 @@
+LOAD DATA INFILE region.dat
+REPLACE INTO TABLE region
+FIELDS TERMINATED BY "|"
+(
+  name	CHAR
+)

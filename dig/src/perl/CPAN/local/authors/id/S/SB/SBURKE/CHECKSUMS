@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'HTML-Tagset-3.03.tar.gz' => {
+    'md5-ungz' => '4e008290672706f9b81f57361eae2e8f',
+    'md5' => '47c56ab15771fac1a6fdfcbf8bff4288',
+    'size' => '6642'
+  }
+};

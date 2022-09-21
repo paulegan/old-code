@@ -1,0 +1,134 @@
+#!/usr/local/bin/perl
+
+# Author	: maria@hr.emea.mot.com 	
+# DevDate	: 19980915
+# TestedWith	:
+# TestDate	: 
+# ReviewedBy	: 
+# ReviewDate	: 
+# ProdDate	:
+# History	: 
+# ApprovedBy	:
+# Description	: A script to be called from server side parsed documents or CGIs that determines the URI and outputs the HTML for the corresponding left bar.
+# Notes		: If called from a server parsed document the output will begin with the content type.
+# Keywords	:
+
+require '/www/programs/cgi-bin/leftBar/imgTree.pl';
+
+$treeLocation = uri2treeLocation(getCurrentURI());
+@imgList = createImgList($treeLocation);
+print leftBar($treeLocation,\@imgList);
+
+
+#
+# uri2treeLocation(uri) : Takes a URI and finds the location within 
+# the site tree which is the closest match. e.g "/foo/bar.html" might 
+# go to "/foo/". Returns the node name.
+#
+sub uri2treeLocation{
+
+  my $uri = $_[0];
+  my $treeLocation;
+
+  $uri =~ s|^([^/])|/$1|;	# Ensure there's a leading slash.
+  while ( !defined($treeLocation) ){
+    while ( my ($node,$contents) = each(%imageTree) ){
+      my ($parent,$path,$children) = @{$contents};
+      if ( $path =~ /^$uri\/*$/ ){
+	$treeLocation = $node;
+	last;
+      }
+    }
+    $uri =~ s|[^/]*.$||;
+  }
+
+  return $treeLocation;
+}# uri2treeLocation
+
+
+#
+# createImgList(treeLocation) : Build a list of images to be displayed.
+# Goes from the given node and generates the corresponding branch in the
+# tree.
+#
+sub createImgList
+{
+  my $treeLocation = $_[0];
+  my $images = $imageTree{$treeLocation}[2];
+  my $parent = $imageTree{$treeLocation}[0];
+
+  while ($parent ne ""){
+    ( $temp = $imageTree{$parent}[2] ) =~ s/$treeLocation/$treeLocation $images/;
+    $images = $temp;
+    $treeLocation = $parent;
+    $parent = $imageTree{$treeLocation}[0];
+  }
+  my (@imgList) = split(/ +/,$images);
+
+  return @imgList;
+}# createImgList
+
+
+#
+# leftBar(highlightImg,imageList) : Returns the left bar HTML for the given list
+# of images. The specified image is highlighted.
+#
+sub leftBar
+{
+  my ($highlightImg,$imgListRef) = @_;
+  my $preloadString = "";
+  my $linknImageString = "";
+
+  foreach $image (@{$imgListRef}){
+    $preloadString .= $preloadImgPat;
+    $preloadString =~ s|#IMAGE#|$image|g;
+    $preloadString =~ s|#NR#|$greySuffix|g;
+    $preloadString =~ s|#HL#|$highlightSuffix|g;
+    $linknImageString .= $linkPat;
+    $linknImageString =~ s|#URI#|$imageTree{$image}[1]|g;
+    $linknImageString =~ s|#IMAGE#|$image|g;
+    if ($image eq $highlightImg){
+      $linknImageString =~ s|#NR#|$highlightSuffix|g;
+    }else{
+      $linknImageString =~ s|#NR#|$greySuffix|g;
+    }
+    $linknImageString =~ s|#HL#|$highlightSuffix|g;
+  }
+  $leftBarPat =~ s|#PRELOADIMAGES#|$preloadString|;
+  $leftBarPat =~ s|#LINKSnIMAGES#|$linknImageString|;
+
+  return $leftBarPat;
+}# leftBar
+
+#
+# getCurrentURI() : Returns the URI which the calling page/script is at.
+#
+sub getCurrentURI
+{
+ my $uri;
+
+ if ( defined($ENV{'DOCUMENT_URI'}) ){
+   print "Content-type: text/html \n\n";
+   $uri = $ENV{'DOCUMENT_URI'};
+ }elsif ( defined($ENV{'SCRIPT_NAME'}) ){
+   $uri = $ENV{'SCRIPT_NAME'};
+ }elsif ( defined($ARGV[0]) ){
+   $uri = $ARGV[0];
+ }else{
+   $uri = "/";
+ }
+
+ return $uri;
+}# getCurrentURI
+
+
+#
+# contentsOfFile(fileName) : Return contents of a file in a string
+#
+sub contentsOfFile
+{
+ open (FILE,"$_[0]") || die "Can't Open $_[0]: $!\n";
+  @fileContents = <FILE>;
+ close (FILE);
+ join($",@fileContents);
+}# contentsOfFile

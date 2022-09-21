@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'AppConfig-1.55.tar.gz' => {
+    'md5-ungz' => '921bcd52290fd9208bf9e74f33844787',
+    'md5' => '20d81571e7ef7da092613b4dd69fed33',
+    'size' => '45687'
+  }
+};

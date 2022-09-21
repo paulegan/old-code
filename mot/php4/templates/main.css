@@ -1,0 +1,46 @@
+/*
+ *******************************************************************************
+ * 
+ * File:		$Source$
+ * 
+ * Description:		
+ * 
+ * Created:		2001/01/02
+ * Created By:		Paul Egan
+ * 
+ * Last Edited:		$Date$
+ * Edited By:		$Author$
+ * 
+ * ID:			$Id$
+ * 
+ * History:		$Log$
+ * History:		Revision 1.2  2001/01/31 15:34:56  eganp
+ * History:		Removed background image
+ * History:
+ * History:		Revision 1.1  2001/01/31 13:46:08  eganp
+ * History:		Initial import
+ * History:		
+ * 
+ *******************************************************************************
+ */
+ 
+body {
+  margin: 10px 10px 10px 10px;
+  font-family: Helvetica;
+  color: black;
+  background: white;
+}
+
+th, td { /* NS needs explicit font spec for tables */
+  font-family: Helvetica;
+}
+
+a {
+  color: #333366;
+}
+
+.copyright {
+  color: #999999;
+  font-size: small;
+}
+

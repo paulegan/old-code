@@ -1,0 +1,16 @@
+Makefile.PL
+MANIFEST
+README
+HitBox.pm
+HitBox/Param_Map.pm
+HitBox/URL_Map.pm
+hitbox
+t/01hitbox.t
+t/02url_map.t
+t/03param_map.t
+t/04hitbox.t
+t/config.xml
+t/docs.tar
+t/hitbox_map.xml
+t/tag.txt
+t/url_map.xml

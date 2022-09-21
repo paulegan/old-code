@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>COAP SDS - Help</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="User documentation for the COAP SDS application." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="coap.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/31
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/02/01 16:22:54  eganp
+  - History:	       Copy of SSJS html files with start on change to template form.
+  - History:	       Also converted to xhtml
+  - History:
+  -
+  -->
+
+<body>
+
+<a name="contents"></a>
+<p>
+ Contents
+</p>
+
+<p>
+ <ul>
+  <li><a href="images/quickGuide.gif" onclick="window.open('images/quickGuide.gif','coap_qg','width=970,height=510,resizable=1,scrollbars=yes'); return false;">Quick Guide</a></li>
+  <li><a href="#tabSel">Selecting a table/data set</a></li>
+  <li><a href="#empSel">Selecting an employee</a></li>
+  <li><a href="#nonEIC">Non Easter Inch or ex-employees</a></li>
+  <li><a href="#recUpd">Updating a record</a></li>
+  <li><a href="#recAdd">Adding a record</a></li>
+  <li><a href="#caCIDs">The HR & team leader corrective action fields</a></li>
+  <li><a href="#userAdd">Adding a new user</a></li>
+  <li><a href="#userUpd">Updating user access</a></li>
+  <li><a href="#plAdd">Adding a pick-list item</a></li>
+ </ul>
+</p>
+
+<a name="tabSel"></a>
+<p>
+ Selecting a table/data set
+</p>
+
+<p>
+ Use the tabs at the top of the grey form to switch between data
+ sets.  Each user may have a different set of tabs - to select one
+ simply click on the word as you would a normal web link.  The page
+ will then be refreshed to display the selected data set.  The current
+ selected tab appears slightly raised and the title is not underlined.
+</p>
+
+<a name="empSel"></a>
+<p>
+ Selecting an employee
+</p>
+
+<p>
+ An employee is select by CID ( Commerce ID ).  If the employee's CID
+ is already known you can type the CID directly in to the field provided
+ and press enter.  To search for an employee click on the words "Select New",
+ that appear directly under the CID field.  This will bring up a window
+ with a name field.  Here you can type in the employee's name or a subset of
+ the name. e.g. to search for Joe Smith you can type "joe", "smith" or "joe smith".
+ After typing in the name click on the search button or press enter.  The window
+ will refresh with a list of the employees who match the name given.  To select
+ an employee click on their CID - the search window will close and the main window
+ should refresh with that employee's record.  The currently selected employee's
+ name and supervisor is displayed to the left of the CID field.
+</p>
+
+<a name="nonEIC"></a>
+<p>
+ Non Easter Inch or ex-employees
+</p>
+
+<p>
+ The employee search window will only list current Easter Inch employees.
+ The CID field in the employee select form will allow any valid CID however.
+ You can use this fact to review or update records for any Motorola employee -
+ past or present.  Note however that the system will not display the employee's
+ name or supervisor.
+</p>
+
+<a name="recUpd"></a>
+<p>
+ Updating a record
+</p>
+
+<p>
+ To update a record first select the correct <a href="#tabSel">data set</a>
+ and <a href="#empSel">employee</a>.  If any records for that selection
+ exist then a table containing these records will be displayed.  Click on the
+ pen in the "Edit" column to update that record.  A new window will open
+ with an update form.  Change the fields by typing in new values or by selecting
+ a new item from the pick-lists.  When you have changed the fields as required,
+ click on the update button.  The update window will close and the main window
+ will be refreshed with the updated data.
+</p>
+
+<a name="recAdd"></a>
+<p>
+ Adding a record
+</p>
+
+<p>
+ To update a record first select the correct <a href="#tabSel">data set</a>
+ and <a href="#empSel">employee</a>.  Click on the button labelled "Add New
+ Record".  A new window will open with an update form.  Fill in the fields by
+ typing in text values or by selecting a new item from the pick-lists.  When you
+ have completed the fields as required, click on the update button.  The update
+ window will close and the main window will be refreshed with the new record.
+</p>
+
+<a name="caCIDs"></a>
+<p>
+ The HR & team leader corrective action fields
+</p>
+
+<p>
+ The HR & team leader fields in a corrective action record expect CIDs.  You
+ can select an individual by name however by clicking the title of the field.
+ This will open a new employee search window.  The window will contain an
+ initial list of all HR staff and all supervisors for the respective fields.
+ Click on the employee's CID to select.
+</p>
+
+<a name="userAdd"></a>
+<p>
+ Adding a new user
+</p>
+
+<p>
+ To add a new user you must have access to the admin tab. First
+ <a href="#tabSel">select the admin tab</a> and then use the pick-list
+ at the top of the form to select "Access Control" - (this is the default).
+ Once the page has refreshed two forms will be displayed.  Use the bottom
+ form for adding a user.  First type in the user core/X500 ID.  If you do
+ not know the user's ID you can look it up by clicking on the link marked
+ "Lookup" directly under the User ID field.  This will open a window that
+ operates almost exactly like the <a href="#empSel">employee search window</a>.
+ Next select which tabs the user will have access to by clicking on the
+ corresponding checkboxes.  When finished click on the "Add New User" button;
+ the window will then be refreshed to include the new user.
+</p>
+
+<a name="userUpd"></a>
+<p>
+ Updating user access
+</p>
+
+<p>
+ To update the access privileges for a user first
+ <a href="#tabSel">select the admin tab</a> and then use the pick-list
+ at the top of the form to select "Access Control" - (this is the default).
+ A list of all current users will be displayed.  Only the names of current
+ Easter Inch employees are shown.  Use the checkboxes on the user's row
+ to change which tabs they have access to.  You can update more than one
+ user at the same time.  When you have selected the correct checkboes click
+ on the "Update" button to commit the changes.  The window will be refreshed
+ with the updated privileges.  If you do not select any tab for a particular
+ user then that user will be removed from the list.
+</p>
+
+<a name="plAdd"></a>
+<p>
+ Adding a pick-list item
+</p>
+
+<p>
+ To add a pick-list item you must have access to the admin tab. First
+ <a href="#tabSel">select the admin tab</a> and then use the pick-list
+ at the top of the form to select the list you wish to access.
+ A list of all current items in the list will be displayed, followed
+ by a form to add a new item.  Simply type in the name of the new item
+ and click on the "Add New Entry" button.  The window will be refreshed
+ to include the new item in the list.  You cannot update or delete an item
+ from a pick-list.
+</p>
+
+<p class="copyright">
+ Copyright &#169; 2001 Motorola Internal Use Only
+</p>
+
+</body>
+
+</html>

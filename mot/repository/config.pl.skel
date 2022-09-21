@@ -1,0 +1,20 @@
+
+#Author       :paul@hr.emea.mot.com 
+#DevDate      :19990226
+#TestedWith   :
+#TestDate     :
+#ReviewedBy   :
+#ReviewDate   :
+#ApprovedBy   :
+#ProdDate     :
+#History      :
+#Description  :Config file for doc repository.
+#Notes        :
+
+$patternFile	= "main.pat";
+$docDir		= "docs";
+$filesPerRow	= 4;
+$groupName	= "#GROUP_NAME#";
+$repositoryName	= "#REP_NAME#";
+
+1;

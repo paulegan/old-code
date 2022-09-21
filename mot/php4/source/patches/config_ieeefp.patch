@@ -1,0 +1,12 @@
+*** configure.orig	Fri Feb  2 12:03:36 2001
+--- configure	Fri Feb  2 12:03:59 2001
+***************
+*** 5746,5751 ****
+--- 5746,5752 ----
+  crypt.h \
+  fcntl.h \
+  grp.h \
++ ieeefp.h \
+  limits.h \
+  locale.h \
+  netinet/in.h \

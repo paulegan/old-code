@@ -1,0 +1,5 @@
+#!/usr/bin/perl -w
+
+use lib('/share/src/perl');
+use CPAN;
+shell;

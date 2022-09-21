@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Contrôler les Listes</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="fr_FR" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Formez pour contrôler les listes." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/26
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/01/26 18:19:37  eganp
+  - History:	       Added temporary French translation
+  - History:
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/fr_FR/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">Contrôler les Listes</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/listEdit.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'manage lists')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+
+ function addItem(list,item)
+ {
+  if (item.value){
+    list.options[list.length] = new Option(item.value,item.value);
+    item.value = "";
+    list.options[list.length-1].selected = true;
+    return (true);
+  }else{
+    return (false);
+  }
+ }
+ 
+ function removeItem(list,item)
+ {
+  if (list.options[list.selectedIndex].value){
+    item.value = list.options[list.selectedIndex].value;
+    list.options[list.selectedIndex] = null;
+    item.select();
+    item.focus();
+    return (true);
+  }else{
+    return (false);
+  }
+ }
+ 
+ function selectAll(list)
+ {
+  for (var i=0; i<list.options.length; i++)
+    list.options[i].selected = true;
+  return (true);
+ }
+ 
+//-->
+</script>
+    
+ <!-- MESSAGE commit_success -
+ <p class="error">
+  Les changements à la liste ont été sauvegardés.
+ </p>
+    - MESSAGE commit_success -->
+
+   
+<table class="form" width="650" border="0" cellpadding="0" cellspacing="0"><tr><td>
+
+<table border="0" cellpadding="10" cellspacing="0">
+
+<tr><td>
+
+ <form method="post" action="{PHP_SELF}">
+ <input type="hidden" name="_op" value="manage lists" />
+  <table border="0" cellpadding="2" cellspacing="2">
+   <tr><td style="background: #333366">
+    <p style="color: #FFFFFF">Choisir une liste:</p>
+   </td></tr>
+   <tr><td style="background: #CCCCFF">  
+    <select name="listName" onchange="this.form.submit();">
+     <option value="type" {type_selected}>Types de Transaction</option>
+     <option value="reject_reason" {reject_reason_selected}>Raisons de Rejet</option>
+     <option value="submission_type" {submission_type_selected}>Types de Soumission</option>
+    </select>
+   </td></tr>
+  </table>
+ </form>
+
+</td><td rowspan="2" align="left" valign="top">
+
+  <form method="post" name="listForm" action="{PHP_SELF}" onsubmit="return selectAll(this['listItems[]']);">
+   <small><select name="listItems[]" size="15" multiple="multiple">
+    <!-- BEGIN list_options -->
+    <option value="{list_value}">{list_value}</option>
+    <!-- END list_options -->
+   </select></small>
+   <br />
+   <input type="hidden" name="_op" value="manage lists" />
+   <input type="hidden" name="_stage" value="commit" />
+   <input type="hidden" name="listName" value="{listName}" />
+   <input type="submit" value="Commettez Changements" />
+  </form>
+
+</td></tr><tr><td>
+
+ <form>
+  <table border="0" cellpadding="2" cellspacing="2">
+   <tr><td style="background: #333366">
+    <p style="color: #FFFFFF">Nouvel élément:</p>
+   </td></tr>
+   <tr><td style="background: #CCCCFF">
+    <input type="text" size="30" maxlength="50" name="itemName" value="" />
+   </td></tr>
+   <tr><td style="background: #CCCCFF">
+    <input type="button" value=" Ajoutez &gt;&gt;&gt;" onclick="addItem(document.listForm['listItems[]'],this.form.itemName);" />
+   </td></tr>
+   <tr><td style="background: #CCCCFF">
+    <input type="button" value="&lt;&lt;&lt; Retirent" onclick="removeItem(document.listForm['listItems[]'],this.form.itemName);" />
+   </td></tr>
+  </table>
+ </form>
+ 
+</td></tr>
+
+
+</table>
+
+</td></tr></table>
+    
+</form>
+
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+</body>
+
+</html>

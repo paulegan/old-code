@@ -1,0 +1,10 @@
+<?xml encoding="ISO-8859-1"?>
+<!-- $Id: hitbox_map.dtd,v 1.1 2001/11/06 23:35:23 pegan Exp $ -->
+<!ELEMENT hitbox_map (unit+) >
+<!ELEMENT unit (map+) >
+<!ATTLIST unit country_code CDATA #REQUIRED
+               unit_code CDATA #REQUIRED
+               brand_code CDATA #REQUIRED >
+<!ELEMENT map (account,category) >
+<!ELEMENT account (#PCDATA) >
+<!ELEMENT category (#PCDATA) >

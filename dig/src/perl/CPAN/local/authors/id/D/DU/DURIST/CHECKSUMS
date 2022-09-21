@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'Proc-ProcessTable-0.38.tar.gz' => {
+    'md5-ungz' => '5bcca18d24118358947f7fb3405edc02',
+    'md5' => '69d25190ed3bfd56f12c9e6932528c62',
+    'size' => '48137'
+  }
+};

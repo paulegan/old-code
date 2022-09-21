@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'File-ReadBackwards-0.99.tar.gz' => {
+    'md5-ungz' => '7a6a66ca1b22b959e01005c38ace1afe',
+    'md5' => '72fc99ddd1b79329b84b46505771dc5e',
+    'size' => '5963'
+  }
+};

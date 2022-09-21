@@ -1,0 +1,48 @@
+
+SQL*Loader: Release 8.0.4.3.0 - Production on Sun Apr 18 21:1:23 1999
+
+(c) Copyright 1997 Oracle Corporation.  All rights reserved.
+
+Control File:   country.ctl
+Data File:      country.dat
+  Bad File:     country.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 1000000
+Bind array:     64 rows, maximum of 65536 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table COUNTRY, loaded from every logical record.
+Insert option in effect for this table: REPLACE
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+NAME                                FIRST     *   |       CHARACTER            
+REGION                               NEXT     *   |       CHARACTER            
+
+
+Table COUNTRY:
+  33 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  33024 bytes(64 rows)
+Space allocated for memory besides bind array:        0 bytes
+
+Total logical records skipped:          0
+Total logical records read:            33
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Sun Apr 18 21:01:23 1999
+Run ended on Sun Apr 18 21:01:23 1999
+
+Elapsed time was:     00:00:00.16
+CPU time was:         00:00:00.04    

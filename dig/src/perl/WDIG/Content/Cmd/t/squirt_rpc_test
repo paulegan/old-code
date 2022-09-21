@@ -1,0 +1,14 @@
+#!/usr/bin/perl -w
+
+use RPC::XML::Client;
+use WDIG::Content::Drop;
+
+my $c = new RPC::XML::Client("http://localhost:8042/");
+my $drop = new WDIG::Content::Drop("file://tmp","http://pingu/");
+my $response = $c->send_request("squirt.push_drop","$drop");
+
+if ( !ref($response) or $response->is_fault() ) {
+  die("RPC Error: ".(ref($response)?$response->string():$response));
+}
+ 
+print $response->value();

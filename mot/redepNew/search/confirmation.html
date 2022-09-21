@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Application Confirmation</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990418">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System page confirming that the users application has been processed.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,description,apply,confirmation">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+ <IMG SRC="images/confirmhead.gif" ALT="Application Confirmation" BORDER=0 WIDTH=317 HEIGHT=18>
+
+ <SERVER>
+
+  var application = new Application(request.cid,request.ref);
+  var status = new ApplicationStatus();
+
+  if ( !(status=application.canContinue()).cont ){
+
+    write("<P>\n");
+    write(" "+status.mesg+"\n");
+    write("</P>\n");
+
+  }else if (!application.submit(request)){
+
+    addToLog("Resume store failed - "+application.errorMessage+".");
+    write("<P>\n");
+    write(" An error occured when trying to store your resume!<BR>\n");
+    write(application.errorMessage);
+    write("</P>\n");
+
+  }else if (!mailResume()){
+
+    addToLog("Sendmail failed for "+request.cid+".");
+    write("<P>\n");
+    write(" An error occured when trying to mail your resume!<BR>\n");
+    write(" Please contact the <A HREF=\"mailto:"+project.contactEmail+"\">Redeployment System Adminstrator</A>\n");
+    write("</P>\n");
+
+  }else{
+
+    write("<P>\n");
+    write(" Your application for the position of &quot;"+request.jobTitle+"&quot; -");
+    write(" "+request.ref+" has been processed.\n");
+    write("</P>\n");
+    if ( request.email )
+      write("<P>A copy of the application will also be sent to you at <TT>"+request.email+"</TT></P>\n");
+  
+  }
+ </SERVER>
+
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function gotoPage(dest)
+  {
+   document.propsForm.action = dest;
+   document.propsForm.submit();
+   return false;
+  }
+
+  // -->
+ </SCRIPT>
+
+ <FORM NAME="propsForm" METHOD=POST ACTION="">
+  <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+  <INPUT TYPE=HIDDEN NAME="cid" VALUE=`request.cid`>
+  <INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")`>
+ </FORM>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 WIDTH=500><TR>
+  <TD ALIGN=LEFT>
+   <A HREF="main.html" onMouseOver="window.status='Go back to the search form.';return true;"><IMG SRC="images/returnsearch.gif" ALT="Search Form" BORDER=0 WIDTH=150 HEIGHT=15></A>
+   <BR>
+   <SERVER> if (request.jobNext && request.jobNext!="undefined") { </SERVER>
+     <A HREF=`"results.html?jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")+"&refs="+request.refs` onClick="return gotoPage('results.html');"><IMG SRC="images/returnresult.gif" ALT="Results" BORDER=0 WIDTH=162 HEIGHT=15></A>
+     <BR>
+     <A HREF=`"details.html?ref="+request.ref+"&jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")+"&refs="+request.refs` onClick="return gotoPage('details.html');"><IMG SRC="images/returndescript.gif" ALT="Position Description" BORDER=0 WIDTH=214 HEIGHT=15></A>
+   <SERVER> }else{ </SERVER>
+     <A HREF=`"details.html?ref="+request.ref` onMouseOver="window.status='Go back to vacancy details.';return true;"><IMG SRC="images/returndescript.gif" ALT="Position Description" BORDER=0 WIDTH=214 HEIGHT=15></A>
+   <SERVER> } </SERVER>
+  </TD>
+  <TD ALIGN=CENTER WIDTH=70%><P ALIGN=CENTER><FONT SIZE=2>
+   Copyright &copy; 1999 Motorola Internal Use Only
+   <BR>
+   For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+  </FONT></P></TD>
+ </TR></TABLE>
+
+</TD></TR></TABLE>
+
+</FORM>
+
+</CENTER>
+
+</BODY>
+
+</HTML>
+ 

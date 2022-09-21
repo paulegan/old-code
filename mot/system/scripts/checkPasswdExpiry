@@ -1,0 +1,40 @@
+#!/usr/local/bin/perl
+
+# paul@hr.emea.mot.com		19990729
+
+
+$shadow = "/etc/shadow";
+$defaults = "/etc/default/passwd";
+$mail = "/usr/bin/mailx";
+$host = `/usr/bin/hostname`;
+$now = time()/(60*60*24);
+
+chomp($host);
+
+open(DEFAULTS,"$defaults") || die "Could not open $defaults! $!";
+while (<DEFAULTS>){
+  chomp;
+  $default{$1} = $2 if /^(\w+)=(\w+)/;
+}
+close(DEFAULTS);
+
+open(SHADOW,"$shadow") || die "Could not open $shadow! $!";
+while (<SHADOW>){
+  ($user,undef,$lastChg,undef,$max,$warn,undef) = split(/:/);
+  if ( $lastChg ne "" ){
+    $daysToExpire = int($lastChg+($max?$max:($default{'MAXWEEKS'}*7))-$now);
+    warnUser($user,$daysToExpire) if ($daysToExpire>0 && $daysToExpire<($warn?$warn:($default{'WARNWEEKS'}*7)));
+  }
+}
+close(SHADOW);
+
+sub warnUser
+{
+ my ($user,$daysToExpire) = @_;
+
+ open(MAIL,"|$mail -s \"Password on $host about to expire!\" $user") || die "Could not open mail pipe! $!";
+   print MAIL "\nThe password for user $user\@$host will expire in $daysToExpire days time.\n";
+   print MAIL "Please log on and change your password.\n\n";
+ close(MAIL);
+}
+

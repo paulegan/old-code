@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Application Update Confirmation</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System application update confirmation.">
+ <META NAME="Keywords"          CONTENT="redeployment,application,update">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=550 HEIGHT=100></A>
+</P>
+
+
+<TABLE BORDER=0 WIDTH=500><TR><TD>
+ <P><SERVER>
+  var appl = new Application(request.cid,request.ref);
+
+  if (!appl.update()){
+    write("Unable to update application.");
+  }else{
+    write("The application has been updated.");
+  }
+ </SERVER></P>
+
+</TD></TR></TABLE>
+
+<BR CLEAR=ALL>
+
+<TABLE BORDER=0 WIDTH=500><TR>
+ <TD ALIGN=LEFT>
+  <A HREF="main.html" onMouseOver="window.status='Go back to the position list.';return true;"><IMG SRC="images/position_list.gif" ALT="Position List" BORDER=0 WIDTH=162 HEIGHT=15></A>
+  <A HREF=`"listAppl.html?ref="+request.ref` onMouseOver="window.status='Go back to the application list.';return true;"><IMG SRC="images/application_list.gif" ALT="Application List" BORDER=0 WIDTH=162 HEIGHT=15></A>
+  <A HREF=`"application.html?ref="+request.ref+"&cid="+request.cid` onMouseOver="window.status='Go back to the application.';return true;"><IMG SRC="images/application.gif" ALT="Application" BORDER=0 WIDTH=162 HEIGHT=15></A>
+ </TD>
+ <TD ALIGN=CENTER WIDTH=70%><P ALIGN=CENTER><FONT SIZE=2>
+  Copyright &copy; 1999 Motorola Confidential Proprietary
+  <BR>
+  For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+ </FONT></P></TD>
+</TR></TABLE>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

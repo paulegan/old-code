@@ -1,0 +1,69 @@
+
+PACKAGE:    	TCTS Application v3.1
+FILE:	    	$Source$
+DESCRIPTION:	Instructions for installing the TCTS application
+CREATED:    	2001/01/17
+CREATED BY: 	Paul Egan
+LAST EDITED:	$Date$
+EDITED BY:  	$Author$
+ID:	    	$Id$
+
+--------------------------------------------------------------------------------
+
+RELEASE NOTES HISTORY:
+
+$Log$
+Revision 1.2  2001/02/07 16:04:42  eganp
+Updated for v3.1 - addition of open_date and mandatory CID check
+
+Revision 1.1  2001/02/07 15:49:03  eganp
+First set of release notes for version 3.
+
+
+--------------------------------------------------------------------------------
+
+PREREQUISITES:
+
+TCTS v3.0 (see 'cvs export -r tcts_3_0_0_0 -d . php4/apps/tcts/ReleaseNotes.txt')
+
+PHP4 (assumed to be installed in /www/php4)
+HRIS framework library v1.1 (/www/php4/lib)
+HRIS framework templates v1.1 (/www/php4/templates)
+PHP base library (/www/php4/lib/phplib)
+
+--------------------------------------------------------------------------------
+
+INSTALLATION STEPS:
+
+Export files from CVS repository to TCTS app directory -
+cvs export -r tcts_3_1_0_0 -d /www/php4/apps/tcts php4/apps/tcts
+
+Edit config.php and set DB_USER, DB_PASSWD & TXC_EMAIL_ADDR to the
+appropriate values.
+
+Add open_date column to the trans table -
+sqlplus tcts/#####
+> ALTER TABLE trans_tb ADD open_date DATE;
+
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+
+Enter the TCTS URL into your web browser (probably http://hrisdrax/tcts).
+Verify that a login screen is displayed.
+Login with a valid user ID & password.
+
+Go to the "Create Transaction" screen.  Add an extra line to the form.
+Enter a valid CID on the first line and an invalid CID on the second.
+Click on the Add button and verify that the form is redisplayed with
+the name of the first employee and a warning that the second CID is
+invalid.
+Click on the add button again and verify that this time the transactions
+are created.
+Repeat for "Submit Batch" screen.
+Go to "View" and open one of the transactions created.  Verify that the
+open date is displayed and that it is set to today.
+Open on of the transactions submitted and verify that the open date is
+not set.
+Click on the "Integrate" button and verify that the open date is now set
+to today.

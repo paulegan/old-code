@@ -1,0 +1,1452 @@
+#!/usr/bin/perl -wT
+######################################################################
+#
+# ID:		$Id$
+#
+# Author:	paul.egan@disney.com
+# 		2001/08/16
+#
+# Last update:	$Author$
+# 		$Date$
+#
+# Description:	Script to manage FTP user accounts & files.  Designed
+#		to be run through ssh each operation is read from
+#		STDIN.  Operations implemented include:
+#		
+#		enable <ftp_url> <mail_url>: Enables the specified FTP
+#		url - i.e. the specified user receives write access
+#		to the resource.
+#
+#		disable <ftp_url>: Disables the url - user will no
+#		longer have write access to resource.
+#
+#		del <ftp_url>: Deletes the specified resource.
+#
+#		mkdir <ftp_url>: Creates the specified directory.
+#
+#		list <user>: Lists all files owned by the user.
+#
+#		get <user>: Return newly modified and validated files
+#		owned by the user in tar format.  Modification is
+#		compared to the time the get operation was last
+#		executed.  Files which fail to validate are deleted
+#		and a report is mailed to the user.
+#
+# Log:		$Log: plutoShell,v $
+# Log:		Revision 2.19  2003/02/19 17:42:51  root
+# Log:		added browse and pull functions for pluto v2
+# Log:
+# Log:		Revision 2.18  2003/02/06 16:04:57  root
+# Log:		added autoflush
+# Log:		added extra response checking
+# Log:
+# Log:		Revision 2.17  2002/11/08 09:36:09  root
+# Log:		changed $accessFile ownership when  created
+# Log:
+# Log:		Revision 2.16  2002/10/15 15:45:58  root
+# Log:		added touch function
+# Log:
+# Log:		Revision 1.2  2002/10/14 14:06:54  dbolton
+# Log:		modified to support "correct" handling of duplicate projects
+# Log:
+# Log:		Revision 1.1  2002/10/14 10:22:45  dbolton
+# Log:		Initial revision
+# Log:
+# Log:		Revision 2.13  2002/09/03 13:04:13  root
+# Log:		modified to include support for GNU tar
+# Log:		extra debugging output added
+# Log:		set autoflush on
+# Log:
+# Log:		Revision 2.12  2002/07/08 09:13:56  root
+# Log:		added 'projectsfile' functionality to keep GCOS field information seperate from passwdfile
+# Log:		so as to not break FTP server when GCOS field gets really really long.
+# Log:		added reportErrors() function so developers get emailed when bad filenames are nuked by
+# Log:		plutoShell.
+# Log:		now ignores HTTP status codes rather than thinking they're bad filenames.
+# Log:
+# Log:		Revision 2.11  2002/02/27 10:43:17  root
+# Log:		fixed bug in remove ftp user account
+# Log:
+# Log:		Revision 2.10  2002/02/15 16:12:54  root
+# Log:		fixed bug in get requests to not log tar output to logfile
+# Log:		fixed bug in recieveFiles when called without trailing slash on URI
+# Log:		fixed bug in file exclusion files for not copying .htaccess or .ftpaccess files
+# Log:
+# Log:		Revision 2.9  2002/02/15 09:18:39  root
+# Log:		added checks to silently not push .LCK or .htaccess files.
+# Log:		removed blocking factor from tar (since linux didn't like cbf1)
+# Log:		added check to silently delete .LCK files when files are retrieved
+# Log:		   (from the ftp server, usually)
+# Log:		added check to silently refuse to retrieve .htaccess files
+# Log:		   (from the ftp server, usually)
+# Log:
+# Log:		Revision 2.8  2002/02/13 13:01:00  root
+# Log:		modified slightly to not push .ftpaccess files, and to ssh into intlftp01
+# Log:		as root rather than disweb (for adding users to ftp passwd file)
+# Log:
+# Log:		Revision 2.7  2002/02/01 13:57:52  pegan
+# Log:		Added content queue code
+# Log:		No longer ssh if source & dest on same host with push
+# Log:		Fixed oversight with timestamp in send function
+# Log:
+# Log:		Revision 2.6  2002/01/29 02:52:37  pegan
+# Log:		Correctly set .ftpaccess file mode
+# Log:		FIxed timestamp error in list function
+# Log:		Fixed doc root bug in send function
+# Log:
+# Log:
+#
+######################################################################
+
+use vars('$plutoDir','$configFile');
+
+BEGIN {
+ $plutoDir = '/share/lib/plutoShell';
+ $configFile = $plutoDir.'/config.xml';
+}
+
+use bytes;
+use strict;
+use warnings;
+use lib($plutoDir,'/share/lib/perl5/5.6.1','/share/lib/perl5/site_perl');
+use File::Find;
+use File::Copy;
+use XML::Simple(':strict');
+use URI;
+use IPC::Open2;
+use Sys::Hostname;
+use FileUtil;
+use UserDB;
+use IO::Handle;
+
+my $GID = "101"; # used to force ownership of new dirs to disweb
+#
+# This is a workaround to permit intlapp servers to pretend to be 
+# intladm01 for the purposes of the remote/local mappings in the site map
+# so they can copy files locally over NFS without having to SSH in.
+
+my $thisHost = hostname();
+
+
+
+#########################
+# Initialization:
+
+STDOUT->autoflush(1);
+
+*LOG = *STDERR;
+
+$SIG{__DIE__} = sub { print "500 Internal Error\n"; write2log($_[0]); exit(-1); };
+$ENV{'PATH'} = "/bin";
+
+my $errorCount = 0;
+my $errorReportTemplate = '/home/disweb/plutoShell/errorReportTemplate';
+my $mailer = '/usr/lib/sendmail -t';
+
+my $config;
+if (! -r $configFile || !eval {$config = XMLin($configFile, keyattr=>[], forcearray=>0, normalisespace=>2)} ){
+  print STDERR "Could not read config file - $@\n";
+  print "503 Service Unavailable\n";
+  exit(1);
+}
+
+# dynamically work out where the logfile should be.
+# this should be changed in the pluto config.xml later so that the 
+# 'intladm01' hostname is replaced with something more obvious for this
+# search and replace operations - such as 'HOSTNAME'.
+my $logFileName = $config->{'log_file'};
+if (! open(LOG,">>".$logFileName) ){
+  print "503 Service Unavailable\n";
+  exit(1);
+}else{
+  LOG->autoflush(1);
+  write2log(scalar(localtime())."\n");
+}
+
+my $siteMap;
+if (! -r $config->{'site_map_file'} ||
+    !eval {$siteMap = XMLin($config->{'site_map_file'}, keyattr=>['remote'], forcearray=>0, normalisespace=>2)} ){
+  write2log("Error reading or parsing the site map file - $@\n");
+  close(LOG);
+  print "503 Service Unavailable\n";
+  exit(1);
+}
+
+my $userDB = new UserDB($config->{'user_file'});
+if (! $userDB ){
+  write2log("Error initializing userDB\n");
+  close(LOG);
+  print "503 Service Unavailable\n";
+  exit(1);
+}
+
+my $projectsDB = new UserDB($config->{'projects_file'});
+ if (! $projectsDB ){
+   write2log("Error initializing projectsDB\n");
+   close(LOG);
+   print "503 Service Unavailable\n";
+   exit(1);
+}
+
+
+
+umask(0000);
+
+
+#########################
+# Main:
+
+while (<STDIN>){
+
+  write2log("Read: $_");
+
+  chomp();
+  my ($op, @args) = split();
+
+  next if (!$op || !@args);
+					# Verify that 1st arg is a valid URL
+  my $url = new URI($args[0]);
+  if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https|file)$/){
+    write2log("Invalid URL!\n"); write2log("400 Bad Request\n");
+    print "400 Bad Request\n";
+    $errorCount++;
+    next;
+  }
+
+  my $host;				# Determine host to execute operation
+  if ($url->scheme() eq "file"){
+    $host = $url->host() || $thisHost;
+  }else{
+    if (!$url->host() || !$siteMap->{'map'}->{$url->scheme()."://".$url->host()} ){
+      write2log("Invalid host - ".$url->host()."\n"); write2log("400 Bad Request\n");
+      print "400 Bad Request\n";
+      $errorCount++;
+      next;
+    }
+    $host = URI->new($siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'})->host();
+  }
+
+  my $response = "";
+
+  if ($host eq "localhost" || $host eq $thisHost){	# If local, do it
+
+    if ($op =~ /^(enable|add)/i){
+      $response = enable(@args);
+    }elsif ($op =~ /^(disable|remove)/i){
+      $response = disable(@args);
+	}elsif ($op =~ /^(browse)/i){
+      $response = browseFiles(@args);
+    }elsif ($op =~ /^(list)/i){
+      $response = listFiles(@args);
+    }elsif ($op =~ /^(touch)/i){
+	$response = touchFiles(@args);
+	}elsif ($op =~ /^(del)/i){
+      $response = deleteFile(@args);
+    }elsif ($op =~ /^(mkdir)/i){
+      $response = makeDir(@args);
+   }elsif ($op =~ /^(push|promote|copy)/i){
+      $response = pushFiles(@args);
+    }elsif ($op =~ /^(pull)/i){
+      $response = pullFiles(@args);
+    }elsif ($op =~ /^(send|get)/i){
+      $response = sendFiles(@args);
+    }elsif ($op =~ /^(receive)/i){
+      $response = receiveFiles(@args); 
+    }else{
+      $response = "501 Not Implemented\n";
+    }
+
+    write2log($response);
+    print $response;
+    $errorCount++ if ($response && $response !~ /^200/);
+
+  }else{				# Otherwise execute it over ssh
+
+    write2log("Executing operation on $host\n");
+
+   my $ssh_user = "disweb";
+   if ($host eq "intlftp01") { $ssh_user = "root" }
+
+    my @cmd = ( $config->{'ssh'}->{'path'},
+                split(/\s/,$config->{'ssh'}->{'options'}),
+                '-i', $config->{'ssh'}->{'key'},
+                #'-l', $config->{'ssh'}->{'user'},
+                '-l', $ssh_user,
+                $host, $config->{'ssh'}->{'cmd'} );
+    write2log("running @cmd");
+    my ($fd_out,$fd_in,$output);
+
+    my $pid = open2($fd_out, $fd_in, @cmd);
+    $fd_out->autoflush(1);
+    $fd_in->autoflush(1);
+    print $fd_in join(" ",$op,@args);
+    close($fd_in);
+
+    while (<$fd_out>){
+      $response .= $_;
+    }
+
+    waitpid($pid,0);
+
+    $errorCount += ( $? >> 8 );
+    if ($op ne "get") {
+     write2log($response); # Don't log the output of tar!
+    }
+    
+    print $response;
+
+  }
+
+}
+
+close(LOG);
+
+exit($errorCount);
+
+
+
+######################################################################
+# pushFiles() - 
+#
+
+sub pushFiles
+{
+ my $source = new URI($_[0]);
+ my $dest = new URI($_[1]);
+ my @fileList;
+ my @cmd;
+					# Validate the source URL
+ if (!$source->scheme() || $source->scheme() ne "file"){
+   write2log("Source URI ".$ARGV[0]." is invalid\n");
+   return ("451 Source URL is invalid\n");
+ }elsif ($source->dir() =~ /\.\./ || $source->dir() !~ /^([\w\\\/.:-]+?)\/*$/){
+   write2log("Source ".$source->dir()." is invalid\n");
+   return ("451 Source URL is invalid\n");
+ }elsif (! -d $1){
+   write2log("Source ".$1." does not exist\n");
+   return ("461 Source does not exist\n");
+ }else{
+   $source = $1;
+ }
+					# Validate the dest URL
+ if (!$dest->scheme() || $dest->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Destination URI is invalid\n");
+   return ("452 Destination URL is invalid\n");
+ }elsif (!$dest->host() || !$siteMap->{'map'}->{$dest->scheme()."://".$dest->host()} ){
+   write2log("Invalid dest host\n");
+   return ("462 Destination does not exist\n");
+ }
+ my $host = URI->new($siteMap->{'map'}->{$dest->scheme()."://".$dest->host()}->{'local'})->host();
+
+ while (<STDIN>){			# Read file list
+
+   write2log("Read: $_");
+   chomp();
+
+   if ($_ =~ /\.\./ || $_ !~ /^\/*([\w\/.-]+?)\/*$/){
+     write2log("Invalid file name - $_\n");
+     print "450 URL is invalid\n";
+   }elsif ( ! -e "$source/$1" ){
+     write2log("Cannot read $source/$1\n");
+     print "460 URL does not exist\n";
+   }elsif ( -d "$source/$1" ){
+     write2log("Ignoring directory - $source/$1\n");
+     print "450 URL is invalid\n";
+   }elsif ( $1 =~ /[\S]+\.LCK$/ ) {
+     write2log("Refusing to push Dreamwaver .LCK file $1\n");
+   }
+   elsif ( $1 =~ /\.htaccess$/ ) {
+     write2log("Refusing to push htaccess file \n");
+   }else{
+     print "200 OK\n";
+     push(@fileList, $1);
+   }
+
+ }
+
+ 
+ if ($host ne "localhost" && $host ne $thisHost){
+    # 
+    # we need to copy to a remote server, use original tar over ssh method
+    #
+   write2log("Executing receive on $host\n");
+   @cmd = ( $config->{'ssh'}->{'path'},
+ 	     split(/\s/,$config->{'ssh'}->{'options'}),
+ 	     '-i', $config->{'ssh'}->{'key'},
+ 	     '-l', $config->{'ssh'}->{'user'},
+ 	     $host, $config->{'ssh'}->{'cmd'} );
+
+ write2log("running @cmd");
+ my ($fd_out,$fd_in,$output);
+
+ my $pid = open2($fd_out, $fd_in, @cmd);
+ $fd_in->autoflush(1);
+ $fd_out->autoflush(1);
+ print $fd_in "receive ".$dest->as_string()."\n";
+
+ local $/ = undef;
+ chdir($source);
+ open(P,$config->{'tar_cmd'}." -cBf- ".join(" ",@fileList)."|");
+ P->autoflush(1);
+ print $fd_in <P>;
+ close(P);
+ close($fd_in);
+ $output = <$fd_out>;
+ waitpid($pid,0);
+
+ write2log("ERROR from receiving end : $output\n") if ($output !~ /^200/);
+
+ } else {
+ #
+ # we're copying to our local server, so use File::Copy to circumvent some 
+ # possible pipe problems.
+
+ write2log("DEBUG: source is: $source");
+
+ my $output = receiveFiles($dest->as_string(), $source, \@fileList);
+
+ write2log("ERROR from receiving end : $output\n") if ($output !~ /^200/);
+
+ }
+
+ return ("");
+}
+
+######################################################################
+# pullFiles() -
+#
+
+sub pullFiles
+{
+ my $inputURI = $_[0];
+ my $localSource = $_[1];
+ my @fileList;
+
+ if ( $inputURI !~ /([\S]+)\/$/ ) {     # Add a trailing slash if !exists.
+        write2log("receiveFiles called without trailing slash on URI\n");
+        write2log("$inputURI changed to ");
+        $inputURI =~ s/([\S]+)/$1\//;
+        write2log("$inputURI\n");
+        }
+
+ #my $url = new URI($_[0]);
+ my $url = new URI($inputURI);
+                                        # Verify that we have an FTP URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Non ftp URL!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $root;                              # Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+                                        # Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+                                        # Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $dir = $root.$1;
+                                        # Create dir if required
+ if ( ! -e $dir && !mkdir_p($dir) ){
+   write2log("Could not create dir - $dir\n");
+   return ("500 Internal Error\n");
+ }
+
+ my ($fd_out,$fd_in,$output);
+
+ if ($localSource) {
+        write2log("DEBUG: Source is $dir, dest is $localSource");
+        while (<STDIN>) {
+                write2log ("Got filename: $_");
+                chomp();
+                my $arg = $_;
+                $arg =~ /([\S]+)/;
+                push(@fileList, $arg);
+                }
+
+        copyFiles (\@fileList, $dir, $localSource);
+        return("200 OK\n");
+        }
+ return ("200 OK\n");
+}
+
+
+######################################################################
+# receiveFiles() - 
+#
+
+sub receiveFiles
+{
+ my $inputURI = $_[0];
+ my $localSource = $_[1];
+ my @fileList;
+ # if we're doing a local copy, the filelist is passed as an array directly
+ if ($localSource) {
+      @fileList = @{$_[2]};
+      }
+
+ if ( $inputURI !~ /([\S]+)\/$/ ) { 	# Add a trailing slash if !exists.
+        write2log("receiveFiles called without trailing slash on URI\n");
+	write2log("$inputURI changed to ");
+        $inputURI =~ s/([\S]+)/$1\//;
+        write2log("$inputURI\n");
+        }
+
+ #my $url = new URI($_[0]);
+ my $url = new URI($inputURI);
+					# Verify that we have an FTP URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Non ftp URL!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+
+ # This next line is a modification required to support the intlapp local
+ # pushes over NFS without having to use SSH to intladm01
+ $root =~ s/\/intladm01\///;
+
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ } 
+ $dir = $root.$1;
+					# Create dir if required
+ if ( ! -e $dir && !mkdir_p($dir) ){
+   write2log("Could not create dir - $dir\n");
+   return ("500 Internal Error\n");
+ }
+
+ my ($fd_out,$fd_in,$output);
+
+ if ($localSource) {
+	write2log("DEBUG: dest is $dir, source is $localSource");
+	copyFiles (\@fileList, $localSource, $dir);
+	return("200 OK\n");
+	}
+
+ write2log("DEBUG: intladm01 asked to receive for $url");
+ chdir($dir);
+ my $pid = open2($fd_out, $fd_in,  $config->{'tar_cmd'}, "-xvBRf", "-");
+ $fd_in->autoflush(1);
+ $fd_out->autoflush(1);
+ local $/ = undef;
+ print $fd_in <STDIN>;
+ close($fd_in);
+ $output = <$fd_out>;
+ 
+ foreach my $file ( split(/\n/,$output) ){
+   if ( $file =~ /^x (.*?),/) {
+     write2log("Got file (solaris tar): $1");
+     push(@fileList,"$dir/$1");
+   }elsif ( ($file =~ /^block (\d+): (.*)/) && ($file !~ /\*/)){
+     write2log("Got file (GNU tar): $2");
+     push(@fileList,"$dir/$2");
+    } else {
+     write2log("can't parse tar output - $file");
+   }
+ }
+ waitpid($pid,0);
+ dropFilesInQueue(@fileList);
+
+ return ("200 OK\n");
+}
+
+
+######################################################################
+# sendFiles() - 
+#
+
+sub sendFiles
+{
+ my $url = new URI($_[0]);
+ my $timestamp = $_[1] || 1;
+
+					# Verify that we have a valid URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Invalid URL scheme!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+
+ my @fileList;
+ my %errors;
+ foreach my $file ( split("\n",listFiles($url,$timestamp,1,1,0)) ){
+   chomp($file);
+ 
+
+   if ($file !~ /^([\w\/_.-]+)$/){
+     # HTTP status codes are NOT filenames! be sure to ignore them.
+     if (($file !~ "200 OK") && 
+	  ($file !~ "400 Bad Request") &&
+	  ($file !~ "404 Not Found") &&
+	  ($file !~ "500 Internal Error") &&
+	  ($file !~ "503 Service Unavailable") &&
+	  ($file !~ "501 Not Implemented")) 
+      {
+      # find the perpetrator of this crime
+
+      my $p_uid = (stat($file))[4];
+      my $naughtyUser;
+      my $pwFile = slurpFile($config->{'user_file'});
+	# unix::passwdFile doesn't have a method for getting username from uid
+      if ($pwFile =~ /([\w]+)\:([\S]+):$p_uid:101:([\S]+);(.*):([\S]+):\/dev\/null/) {
+	$naughtyUser=$3;
+	} else {
+	$naughtyUser="dave.bolton\@dig.com";
+	}
+
+
+      # file has invalid name, delete file
+      write2log("Deleting $file\n");
+      rm_fr($file);
+      # add file to list of errors
+      $errors{$naughtyUser}{$file} = "Invalid file name";
+      }
+   }elsif ($file =~ /[\S]+\.LCK$/){
+     # don't email anyone, just remove silently
+     write2log("Deleting $file\n");
+     rm_fr($file);
+   }elsif ($file =~ /WS_FTP\.LOG$/) {
+     # nuke WSFTP logfiles as well
+     write2log("Deleting $file\n");
+     rm_fr($file);
+   }else{
+     if (-f $file){
+       my ($mtime) = (stat($file))[9]; # Save mtime
+       sanitizeFile($file);
+       utime(time(),$mtime,$file); # Restore mtime
+       $file =~ s/^$root\///;
+      # don't push .ftpaccess files!
+      # or .htaccess files.
+      if (($file !~  /\.ftpaccess$/ ) && ($file !~ /\.htaccess$/ )) {
+         push(@fileList,$file);    
+        }
+     }
+   }
+ }
+
+ # if there were errors, mail the developer and let them know
+ reportErrors("dave.bolton\@dig.com",\%errors) if (%errors);
+
+ if (@fileList){
+   chdir($root);
+   system($config->{'tar_cmd'}." -cbf 1 - ".join(" ",@fileList));
+ }
+
+ return ("");
+}
+
+######################################################################
+# touchFiles 
+# 
+# wrapper for listFiles that allows webmasters the ability to modify
+# the timestamp on all files on the FTP server owned by a particular 
+# developer for a particular project.
+#
+# current thinking is that this is a good idea.
+
+sub touchFiles 
+{
+ return listFiles($_[0], 1, 1, 1, 1);
+}
+
+######################################################################
+# listFiles() - find all files owned by a FTP user under their home
+# directory and returns the list, one per line, followed by the
+# file modification time.
+#
+
+sub listFiles
+{
+ my $url = new URI($_[0]);
+ my $timestamp = $_[1];
+ my $dontUseRemoteUrls = $_[2];
+ my $returnDirectories = $_[3];
+ my $touchFiles = $_[4];
+ my $output = "200 OK\n";
+					# Validate the timestamp
+ if ($timestamp){
+   if ($timestamp !~ /^(\d+)$/){
+     write2log("Invalid timestamp!\n");
+     return ("400 Bad Request\n");
+   }
+   $timestamp = $1;
+ }
+					# Verify that we have a valid URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Invalid URL scheme!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $userID;				# Check that we have a valid user
+
+ if ($url->user()){
+   if ( $url->user() !~ /^(\w{4,10})$/){
+     write2log("Invalid user\n");
+     return ("400 Bad Request\n");	# Verify that the user exists
+   }
+elsif (!($userID = $projectsDB->ID($url->user())) ) {
+         write2log("User does not exist in projectsDB file\n");
+     	return ("404 Not Found\n");
+   }elsif ( !($userID = $userDB->ID($url->user())) ){
+     write2log("User does not exist\n");
+     return ("404 Not Found\n");
+   }else{
+     ($userID) = ( $userID =~ /^(\d+)$/ );
+   }
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $dir = $root.$1;
+					# Check that the directory exists
+ if ( ! -d $dir ){
+   write2log("Dir does not exist - $dir\n");
+   return ("404 Not Found\n");
+ }
+
+ my $touchTime= time;
+
+ find( { untaint => 1,
+ 	 no_chdir => 1,
+ 	 wanted => sub {
+ 	   if ($File::Find::name =~ /(.+)/){
+ 	     my $path = $1;
+ 	     my ($uid,$mtime) = (stat($path))[4,9];
+ 	     return if ($userID && ($uid != $userID));
+ 	     return if ($timestamp && ($mtime < $timestamp));
+	     if (!$returnDirectories)
+		{ return if (-d $path); }
+ 	     if ($dontUseRemoteUrls){
+		   if ($touchFiles) {
+			utime ($touchTime, $touchTime, $path);
+			}
+ 	       $output .= "$path\n";
+ 	     }else{
+ 	       $path =~ s/^$root//;
+ 	       $url->path($path);
+ 	       $output .= $url->as_string()."\n";
+ 	     }
+ 	   }
+ 	 }
+       }, $dir);
+
+ return ($output);
+}
+
+
+######################################################################
+# browseFiles()
+#
+#
+#
+
+sub browseFiles
+{
+ if ( $_[0] !~ /\/$/ ) { $_[0] .= "/"; } 
+ my $url = new URI($_[0]);
+ my $returnDirectories = $_[1] || "FLAT";
+ my $output = "200 OK\n";
+                                        # Verify that we have a valid URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Invalid URL scheme!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $root;                              # Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+                                        # Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+                                        # Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $dir = $root.$1;
+                                        # Check that the directory exists
+ if ( ! -d $dir ){
+   write2log("Dir does not exist - $dir\n");
+   return ("404 Not Found\n");
+ }
+
+if ($returnDirectories !~  /^(FLAT|RECURSIVE)/i) { 
+	print write2log("Browse options are FLAT or RECURSIVE\n");
+	return ("400 Bad Request\n"); 
+}
+
+if ( -d $dir ) {
+               if ($returnDirectories =~ /^FLAT/)
+        	{
+		my $browse_file;
+		opendir(DIR, $dir);
+		while ( defined ($browse_file = readdir DIR))
+	        	{
+        		if ( $browse_file =~ /^\.\.?$/ ) { next; };
+		 	my $full_file_name = "$dir/$browse_file";
+        		if ( -d $full_file_name ) { $browse_file .= "/"; }
+			$browse_file =~ s/$dir/$url/;
+                	print "$url$browse_file\n"
+        	}
+		closedir(DIR);
+
+		}
+        	else
+        	{
+		find( { untaint => 1,
+         		no_chdir => 1,
+         		wanted => sub {
+           		if ($File::Find::name =~ /(.+)/){
+             			my $file = $1;
+             			if ( -d $file ) { $file .= "/"; }
+				$url =~ s/\/$//;
+				$file =~ s/$dir/$url/;
+             			print "$file\n";
+           		}
+         	}
+       		}, $dir);
+
+
+	}
+	
+}
+
+
+
+return ($output);
+}
+
+
+
+
+######################################################################
+# disable() - Removes access to the specified URL.  The the user no
+# longer has any access the account is also removed.  Optionally
+# deletes all files owned by the user.
+#
+
+sub disable
+{
+ my $url = new URI($_[0]);
+ my $removeDirs = $_[1];
+
+					# Verify that we have an FTP URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Non ftp URL!\n");
+   return ("400 Bad Request\n");
+ }
+					# Check that we have a valid user
+ if (!$url->user() || $url->user() !~ /^(\w{4,10})$/){
+   write2log("Invalid user\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $userID;				# Verify that the user exists
+ if ( !( $userID = $userDB->ID($url->user()) ) ){
+   write2log("User does not exist\n");
+   return ("404 Not Found\n");
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ } 
+ $dir = $root.$1;
+					# Check that the directory exists
+ if ( ! -d $dir ){
+   write2log("Directory does not exist - $dir\n");
+   return ("404 Not Found\n");
+ }
+
+ if ($removeDirs){			# Remove all files owned by the user
+   find( { untaint => 1,	  
+  	   bydepth => 1,
+  	   no_chdir => 1,
+  	   wanted => sub {
+  	     if ($_ =~ /(.+)/ && (stat($1))[4] == $userID){
+  	       rm_fr($1);
+  	     }
+  	   }
+  	 }, $dir);
+   write2log("Removed files from $dir\n");
+ }
+					# If FTP, revoke write access
+ if ($url->scheme() eq "ftp" && !disableFTPWriteAccess($url->user(),$dir) ){
+   write2log("Could not disable FTP write access\n");
+   return ("500 Internal Error\n");
+ }
+					# Update the dir list
+ #my @dirs = grep($_ ne $dir,$projectsDB->dirs($url->user()));
+ my @dirs = $projectsDB->dirs($url->user());
+
+ my @gcosDirs;
+ my $foundCount=0;
+ foreach my $gcosDir (@dirs) {
+ if ($dir eq $gcosDir) {
+	# don't push to the stack for the first match, otherwise push it.
+	if ($foundCount > 0)
+	    {
+		push (@gcosDirs, $gcosDir);
+		} else {
+		$foundCount++;
+	    }
+	} else {
+	push (@gcosDirs, $gcosDir);
+	}
+ }
+ @dirs=@gcosDirs;
+
+ if (@dirs && !$projectsDB->dirs($url->user(),@dirs)){
+   write2log("Could not update dir list\n");
+   return ("500 Internal Error\n");
+ }
+					# Remove the account if required
+ if (!@dirs) {
+    if (!$userDB->delete($url->user())){
+    write2log("Could not delete account from userDB\n");
+    return ("500 Internal Error\n");
+    }
+    if (!$projectsDB->delete($url->user())){
+    write2log("Could not delete account from projectsDB\n");
+    return ("500 Internal Error\n");
+    }
+ }
+ 
+ return ("200 OK\n");
+}
+
+
+######################################################################
+# enable() - Gives a user access to the specified URL. Optionally
+# updates the account details.
+#
+
+sub enable
+{
+ my $url = new URI($_[0]);
+ my $mail_url = new URI($_[1]);
+ my $passwd = 'XXX';
+					# Verify that we have a mailto URL
+ if (!$mail_url->scheme() || $mail_url->scheme() ne "mailto"){
+   write2log("No mailto URL!\n");
+   return ("400 Bad Request\n");
+ }
+					# Check for valid mail address
+ if (!$mail_url->to() || $mail_url->to() !~ /^([\w.-]+@[\w.-]+\.[\w.-]+)$/){
+   write2log("Invalid email - \"".$mail_url->to()."\"\n");
+   return ("400 Bad Request\n");
+ }
+					# Verify that we have an FTP URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Non ftp URL!\n");
+   return ("400 Bad Request\n");
+ }
+					# Check that we have a valid user
+ if (!$url->user() || $url->user() !~ /^(\w{4,10})$/){
+   write2log("Invalid user\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $dir = $root.$1;
+					# Determine if user exists
+ if (!$userDB->exists($url->user())){
+   $passwd = $url->password() || genPasswd();
+   if ((!$userDB->create($url->user(),$passwd)) ||
+		(!$projectsDB->create($url->user(),$passwd))) {
+     write2log("Could not create account\n");
+     return ("500 Internal Error\n");
+   }
+   write2log("Created user, ".$url->user()."\n");
+ }
+					# Update email address
+ if ((! $userDB->email($url->user(),$mail_url->to()) ) ||
+		(! $projectsDB->email($url->user(),$mail_url->to()) )) {
+   write2log("Could not update user email\n");
+   return ("500 Internal Error\n");
+ }
+					# Update the dir list
+ #if (! $projectsDB->dirs($url->user(),$dir,
+ #       (grep($_ ne $dir,$projectsDB->dirs($url->user())))) ){
+ if (! $projectsDB->dirs($url->user(),$dir,$projectsDB->dirs($url->user()) ) ){
+   write2log("Could not update user dir list\n");
+   return ("500 Internal Error\n");
+ }
+					# Create the directory if needed
+ if ( ! -d $dir ){
+   my $response = makeDir($url);
+   return ($response) if ( $response !~ /^200/ );
+ }
+					# If FTP, enable write access to directory
+ if ($url->scheme() eq "ftp" && !enableFTPWriteAccess($url->user(),$dir)){
+   write2log("Could not enable FTP write access\n");
+   return ("500 Internal Error\n");
+ }
+
+ return ("200 OK\n$passwd\n");
+}
+
+
+######################################################################
+# deleteFile() - Deletes the specified file or directory
+#
+
+sub deleteFile
+{
+ my $url = new URI($_[0]);
+
+					# Verify that we have a valid URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Invalid URL scheme!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $userID;				# Check that we have a valid user
+ if ($url->user()){
+   if ( $url->user() !~ /^(\w{4,10})$/){
+     write2log("Invalid user\n");
+     return ("400 Bad Request\n");	# Verify that the user exists
+   }elsif ( !($userID = $userDB->ID($url->user())) ){
+     write2log("User does not exist\n");
+     return ("404 Not Found\n");
+   }else{
+     ($userID) = ( $userID =~ /^(\d+)$/ );
+   }
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $file = $url->path();
+ if ($file =~ /\.\./ || $file !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $file = $root.$1;
+					# Check that the directory exists
+ if ( ! -e $file ){
+   write2log("File does not exist - $file\n");
+   return ("404 Not Found\n");
+ }
+
+ if ($userID){				# Remove only files owned by the user
+
+   if ( -d $file ){
+     find( { untaint => 1,
+     	     bydepth => 1,
+     	     no_chdir => 1,
+     	     wanted => sub {
+     	       if ($_ =~ /(.+)/ && (stat($1))[4] == $userID){
+     		 rm_fr($1);
+     	       }
+     	     }
+     	   }, $file);
+     write2log("Removed all user files from dir, $file\n");
+   }else{
+     if ((stat($file))[4] != $userID){
+       write2log("File is not owned by, ".$url->user()."\n");
+       return ("400 Bad Request\n");
+     }else{
+       if (!rm_fr($file)){
+         write2log("Could not delete file - $file\n");
+         return ("500 Internal Error\n");
+       }
+     }
+   }
+
+ }else{
+					# else remove all files
+   if (!rm_fr($file)){
+     write2log("Could not delete file - $file\n");
+     return ("500 Internal Error\n");
+   }
+
+ }
+
+ return ("200 OK\n");
+}
+
+
+######################################################################
+# makeDir() - Creates the specified directory.  If user is specified
+# then the directory chowned to that.
+#
+
+sub makeDir
+{
+ my $url = new URI($_[0]);
+					# Verify that we have a valid URL
+ if (!$url->scheme() || $url->scheme() !~ /^(ftp|http|https)$/){
+   write2log("Invalid URL scheme!\n");
+   return ("400 Bad Request\n");
+ }
+
+ my $userID;				# Check that we have a valid user
+ if ($url->user()){
+   if ( $url->user() !~ /^(\w{4,10})$/){
+     write2log("Invalid user\n");
+     return ("400 Bad Request\n");	# Verify that the user exists
+   }elsif ( !($userID = $userDB->ID($url->user())) ){
+     write2log("User does not exist\n");
+     return ("404 Not Found\n");
+   }else{
+     ($userID) = ( $userID =~ /^(\d+)$/ );
+   }
+ }
+
+ my $root;				# Check that host is on the list
+ if (!$url->host() || !( $root = $siteMap->{'map'}->{$url->scheme()."://".$url->host()}->{'local'} ) ){
+   write2log("Invalid host - ".$url->host()."\n");
+   return ("400 Bad Request\n");
+ }
+ $root = URI->new($root)->dir();
+					# Verify that doc root exists
+ if (! -d $root){
+   write2log("Doc root does not exist - ".$root."\n");
+   return ("500 Internal Error\n");
+ }
+					# Validate path
+ my $dir = $url->path();
+ if ($dir =~ /\.\./ || $dir !~ /^(\/[\w\/.-]*?)\/*$/){
+   write2log("Invalid URL path - \"".$url->path()."\"\n");
+   return ("400 Bad Request\n");
+ }
+ $dir = $root.$1;
+					# Stop if dir already exists
+ if ( -d $dir ){
+   write2log("Directory already exists - $dir\n");
+   return("200 OK\n");
+ }
+					# Create directory
+ if (!mkdir_p($dir)){
+   write2log("Could not create dir - $dir\n");
+   return ("500 Internal Error\n");
+ }
+
+ write2log("Created dir, $dir\n");
+					# Set the dir ownership (silent on error)
+ if ($userID && !chown($userID,$GID,$dir)){
+   write2log("ERROR: Could not change ownership of dir, $dir\n");
+ }
+
+ return("200 OK\n");
+}
+
+######################################################################
+# dropFilesInQueue(filelist) -
+#
+sub dropFilesInQueue
+{
+ my $fileList = join("\n",@_);
+ my $c = $config->{'content_queue'}->{'max_queue_tries'};
+ my $success = 0;
+
+ while ($c--){
+
+   if ( ! -e $config->{'content_queue'}->{'lock_file'} ){
+
+     if (!symlink($config->{'content_queue'}->{'queue_file'},
+             $config->{'content_queue'}->{'lock_file'})){
+       write2log("Could not create queue lock: $!\n");
+       return (0);
+     }
+
+     if (!open(Q,">>".$config->{'content_queue'}->{'queue_file'})){
+       write2log("Could not write to queue file: $!\n");
+       return (0);
+     }
+
+     print Q "$fileList\n";
+     close(Q);
+
+     if (!unlink($config->{'content_queue'}->{'lock_file'})){
+       write2log("Could not remove queue lock: $!\n");
+       return (0);
+     }
+
+     $success = 1;
+     last;
+   }
+
+   sleep(1);
+ }
+
+ write2log("Timeout waiting for queue lock!\n") if (!$success);
+
+ return ($success);
+}
+
+
+######################################################################
+# enableFTPWriteAccess(user,dir) -
+#
+
+sub enableFTPWriteAccess
+{
+ my $user = $_[0];
+ my $dir = $_[1];
+ my $accessFile = "$dir/.ftpaccess";
+
+ if ( ! -d $dir ){
+   write2log("enableFTPWriteAccess: $dir not found\n");
+   return (0);
+ }
+
+ if ( -e $accessFile ){
+
+   if (!open(I,"<$accessFile")){
+     write2log("enableFTPWriteAccess: can't read $accessFile\n");
+     return (0);
+   }
+   if (!open(O,">$accessFile.$$")){
+     write2log("enableFTPWriteAccess: can't open $accessFile.$$\n");
+     return (0);
+   }
+   while (<I>){
+     print O "AllowUser $user\n" if ( /<\/Limit>/i );
+     print O $_;
+   }
+   close(O);
+   close(I);
+   if (!rename("$accessFile.$$",$accessFile)){
+     write2log("enableFTPWriteAccess: can't rename $accessFile.$$\n");
+     return (0);
+   }
+
+ }else{
+
+   if (!open(O,">$accessFile")){
+     write2log("enableFTPWriteAccess: can't open $accessFile\n");
+     return (0);
+   }
+   print O "<Limit STOR MKD>\n";
+   print O "AllowUser $user\n";
+   print O "</Limit>\n";
+   close(O);
+   chmod(0644,$accessFile);
+
+ }
+
+ return (1);
+}
+
+
+######################################################################
+# disableFTPWriteAccess(user,dir) -
+#
+
+sub disableFTPWriteAccess
+{
+ my $user = $_[0];
+ my $dir = $_[1];
+ my $accessFile = "$dir/.ftpaccess";
+ my $userCount = 0;
+ my $dupCount = 0;
+
+ if (!open(I,"<$accessFile")){
+   write2log("disableFTPWriteAccess: can't read $accessFile\n");
+   return (0);
+ }
+ if (!open(O,">$accessFile.$$")){
+   write2log("disableFTPWriteAccess: can't open $accessFile.$$\n");
+   return (0);
+ }
+ while (<I>){
+   $userCount++ if ( /^AllowUser/ );
+   $dupCount++ if ( /^AllowUser $user$/ );
+   print O $_ unless (( /^AllowUser $user$/ ) && ($dupCount < 2));
+ }
+ close(O);
+ close(I);
+ if ($userCount < 2){
+   if (!unlink("$accessFile.$$") || !unlink($accessFile)){
+     write2log("disableFTPWriteAccess: can't delete $accessFile\n");
+     return (0);
+   }
+ }elsif (!rename("$accessFile.$$",$accessFile)){
+   write2log("disableFTPWriteAccess: can't rename $accessFile.$$\n");
+   return (0);
+ }
+
+ return (1);
+}
+
+
+######################################################################
+# write2log() - Write a message to the log
+#
+
+sub write2log
+{
+ chomp(my $msg = $_[0]);
+ print LOG "$$: $msg\n";
+ return;
+}
+
+######################################################################
+# reportErrors() - Emails a list of errors to the specified user.
+#
+
+sub reportErrors
+{
+ my $user = $_[0];
+ my $errors = $_[1];
+ my $template = slurpFile($errorReportTemplate);
+
+while ( my ($user,$errorList) = each(%$errors) ){
+
+ $template =~ s/\$USER/$user/g;
+
+ open(P,"| $mailer 2>&1 > /dev/null") || die("Could not open pipe to mailer: $!\n");
+ print P $template;
+
+ while ( my ($path,$error) = each(%$errorList) ){
+   print P "$path - $error\n";
+  }
+
+ close(P);
+
+ }
+
+ return;
+}
+
+#########################
+# copyFiles
+# used to copy files locally on a machine rather than invoking a new plutoShell
+# thus circumventing problems with pipe buffering and large amounts of files.
+
+sub copyFiles
+{
+ my @files = @{$_[0]};
+ my $source;
+ my $dest;
+ my $file;
+ if ($_[1] =~ /([\S]+)/ ) { $source = $1; }
+ if ($_[2] =~ /([\S]+)/ ) { $dest = $1; }
+ my $parent;
+ my @fullFileList;
+
+ write2log("DEBUG: Copyfiles..");
+ foreach my $tainted_file ( sort(@files) ){
+	if ($tainted_file  =~ /([\S]+)/) {
+		$file = $1;
+		}
+
+   if ( -d "$source/$file" ){
+     if ( ! -e "$dest/$file" && !makeDir("$dest/$file") ){
+       write2log ("ERROR: Could not create dir $dest/$file: $!");
+       next;
+     }
+   }else{
+     mkdir_p($parent) if ( ($parent = dirname("$dest/$file")) && ! -e $parent );
+
+     if (!copy("$source/$file","$dest/$file")){
+       write2log("ERROR: Could not copy $source/$file to $dest/$file: $!");
+       next;
+     } else {
+       push(@fullFileList,"$dest/$file");
+     }
+   }
+   my $sourceMode = (stat("$source/$file"))[2];
+   my $destMode = (stat("$dest/$file"))[2];
+   if ($destMode != $sourceMode && !chmod($sourceMode & 0777,"$dest/$file")){
+     write2log("ERROR: Could not set permissions on $dest/$file");
+   }
+ }
+
+ dropFilesInQueue(@fullFileList);
+ return;
+}
+
+
+1;
+

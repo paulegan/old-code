@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Term-ReadLine-Perl-1.0203.tar.gz' => {
+    'md5-ungz' => 'daa3f107107cef2874bb140e917f7180',
+    'md5' => 'ec5b186a324e5cc29256e142b1b1f17d',
+    'size' => '40904'
+  }
+};

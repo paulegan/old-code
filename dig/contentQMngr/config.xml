@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- $Id$ -->
+
+<config>
+
+ <queue_file>/share/local/var/content.queue</queue_file>
+
+ <queue_lock>/share/local/var/content.queue.lock</queue_lock>
+
+ <nap_time>10</nap_time>
+
+ <lock_timeout>5</lock_timeout>
+
+ <log_file>/share/local/var/contentQMngr.log</log_file>
+
+ <command order="3" match=".*\.html?$">
+   /share/local/bin/akamaize -l /share/local/var/akamai.log $&amp;
+ </command>
+
+ <command order="4" match=".*\.html?$">
+   /share/local/bin/doStream -i $&amp;
+ </command>
+
+ <command order="5" match=".*\.html$">
+   /share/local/bin/akamaizeHomepageContent -i $&amp;
+ </command>
+
+ <command order="6" match="^/share/content/live/.*\.(jsp|s?html?)$">
+   /share/local/bin/adTagger/adTagger -l /share/local/var/adtag.log -c /share/local/bin/adTagger/config.xml $&amp;
+ </command>
+
+
+ <command order="9" match="^/share/content/(staging|live)/.*\.(jsp|html?)$">
+   /share/local/bin/hitbox -c /share/local/lib/hitbox/$1_config.xml $&amp;
+ </command>
+
+</config>

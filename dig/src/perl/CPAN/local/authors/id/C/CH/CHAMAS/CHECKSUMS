@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'MLDBM-2.01.tar.gz' => {
+    'md5-ungz' => '117bb0d1d65bdc4583cc8ce39b7931ef',
+    'md5' => '99550ae2cffbc0bb3eb0358631077c10',
+    'size' => '9568'
+  }
+};

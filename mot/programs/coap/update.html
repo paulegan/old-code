@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>COAP SDS - Update</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990902">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Form to update (or add) a record.">
+ <META NAME="Keywords"          CONTENT="coap,update">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#C0C0C0 TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<SERVER>
+ if (request.tab == "corrective_action")
+   var ct = new CorrectiveAction();
+ else
+   var ct = new CoapTable(request.tab);
+
+ ct.writeUpdateForm(request.row,{startDate:mungeDate(new Date())},ct.updateFormParams,ct.updateFormSubmitCode,"update");
+</SERVER>
+
+</BODY>
+
+</HTML>

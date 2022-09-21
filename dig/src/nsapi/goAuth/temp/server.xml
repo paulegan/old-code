@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- declare any variables to be used in the server.xml file in the ATTLIST below -->
+<!DOCTYPE SERVER SYSTEM "server.dtd" [
+ <!ATTLIST VARS
+    docroot CDATA #IMPLIED
+    adminusers CDATA #IMPLIED
+    webapps_file CDATA #IMPLIED
+    webapps_enable CDATA #IMPLIED
+    accesslog CDATA #IMPLIED
+    user CDATA #IMPLIED
+    group CDATA #IMPLIED
+    chroot CDATA #IMPLIED
+    dir CDATA #IMPLIED
+    nice CDATA #IMPLIED
+ >
+]>
+
+<SERVER legacyls="ls1">
+<VARS accesslog="/nes/https-se-adev02.go.com/logs/access"/>
+    <LS id="ls1" ip="0.0.0.0" port="8000" security="off" acceptorthreads="1">
+    <CONNECTIONGROUP id="group1" matchingip="default" servername="se-adev02.go.com" defaultvs="https-se-adev02.go.com"/>
+    </LS>
+    <MIME id="mime1" file="mime.types" />
+    <ACLFILE id="acl1" file="/nes/httpacl/generated.https-se-adev02.go.com.acl" />
+    <VSCLASS id="defaultclass" objectfile="obj.conf" rootobject="default" acceptlanguage="off">
+    <VARS docroot="/nes/https-se-adev02.go.com/docs" user="" group="" chroot="" dir="" nice=""/>
+      <VS id="https-se-adev02.go.com" connections="group1" mime="mime1" urlhosts="se-adev02.go.com" aclids="acl1">
+        <VARS webapps_file="web-apps.xml" webapps_enable="on" />
+        <USERDB id="default" database="default" />
+      </VS>
+      <VS id="https-se-annevs1.go.com" urlhosts="se-annevs1.go.com" aclids="acl1" mime="mime1" connections="group1">
+        <VARS docroot="/nes/https-se-adev02.go.com/docs/VirtualServer1" webapps_file="web-apps.xml" webapps_enable="on" />
+        <USERDB id="default" database="default"/>
+      </VS>
+    </VSCLASS>
+</SERVER>

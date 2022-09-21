@@ -1,0 +1,30 @@
+#!/usr/local/bin/tcsh -fb
+
+# paul@hr.emea.mot.com		19990719
+
+set sendPage	= /usr/local/bin/pagex
+set aliases	= /etc/pagerAliases
+
+if ( $# < 1 ) then
+  echo "Usage: $0 {pin|alias} ['message']"
+  exit
+endif
+
+set pin = ${1}
+if ( ${pin} !~ [0-9][0-9][0-9][0-9][0-9][0-9] ) then
+  set pin = ( `grep -i "^${pin}:" ${aliases} | awk -F: ' NR==1 { print $2 }' ` )
+  if ( ${#pin} < 1 ) then
+    echo "${pin} not found in ${aliases}!"
+    exit
+  endif
+endif
+
+shift
+if ( $# < 1 ) then
+  set message = "$<"
+else
+  set message = "$*"
+endif
+
+
+exec ${sendPage} ${#pin} ${pin} "${message}"

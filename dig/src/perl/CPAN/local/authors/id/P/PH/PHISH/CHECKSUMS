@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'XML-LibXML-Common-0.12.tar.gz' => {
+    'md5-ungz' => '222cb452589bc35920dc1307ed9839a2',
+    'md5' => '88d201d1b485e8701e836ca1e98052d6',
+    'size' => '12567'
+  }
+};

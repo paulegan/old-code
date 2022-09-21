@@ -1,0 +1,56 @@
+
+/* 			      CS283/5  Exercise 6			*/
+/*				  9-2-1996				*/
+
+/* 			    Paul Egan ( 94312974 )			*/
+
+/*	ex6.lcl - Larch specifications for the 6 functions of		*/
+/*			exercise 6.					*/
+
+
+int what1(int a,int b,int c)
+{
+ requires a<=b;					
+ ensures (result<=a) /\ (result<=b) /\ (result<=c);
+}/* what1 */
+
+
+int what2(int a)	/* ensures (i>0) to avoid needing a miracle!	*/ 
+{
+ requires a>0;
+ ensures (mod(result,a)==0) /\
+ 	 \forall i:int ( ((mod(i,a)==0) /\ (i>0)) => (result<=i) );
+}/* what2 */
+
+
+bool what3(int a)
+{
+ requires a>0;
+ ensures (~result)==
+         (\exists i:int ((i<1) /\ (i<=a) /\ (mod(a,i)==0)));
+}/* what3 */
+
+
+int what4(int a,int b)		/* Could be left at (result<b) !	*/
+{
+ ensures (result<b) /\ (\exists i:int (result==(a-(i*b))));
+}/* what4 */
+   
+
+int what5(int a,int b)
+{
+ requires b!=0;				/* Since a is divided by b 	*/
+ ensures (result==a);
+}/* what5 */
+
+			/* what6 could be implemented using a binary	*/
+			/* search style algorithm.  A binary search can	*/
+			/* be implemented when searching any sorted	*/
+			/* data.  The set of integers are of course	*/
+			/* sorted!					*/
+int what6(int a,int b)
+{
+   requires a!=0 /\ b!=0;
+   ensures (result>=a) /\ (result>=b) /\
+           (mod(result,a)==0) /\ (mod(result,b)==0);
+}/* what6 */

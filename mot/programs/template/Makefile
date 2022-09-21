@@ -1,0 +1,20 @@
+
+# paul@hr.emea.mot.com	19990824
+
+# Uses GNU make specific commands
+
+project		= template
+output		= ${project}.web
+mainFiles	= ${wildcard *.html}
+jsFiles		= ${wildcard js/*.js}
+allFiles	= ${mainFiles} ${jsFiles}
+JSC		= /www/suitespot/bin/https/jsac
+restartURL	= "http://localhost/appmgr/control.html?name=${project}&cmd=restart"
+appmgrID	= "local:appmgr"
+
+${output}: ${allFiles}
+	${JSC} -o $@ $^
+	lwp-request -C ${appmgrID} ${restartURL} > /dev/null
+
+${allFiles}:
+	echo $@

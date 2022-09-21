@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+
+<HEAD>
+ <TITLE>Server Stats</TITLE>
+ <META NAME="Author"		CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990724">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="History"		CONTENT="">
+ <META NAME="Description"       CONTENT="Graphs showing server daily performance.">
+ <META NAME="Keywords"          CONTENT="HRIS,server,statistics,graph,performance">
+ <META NAME="Notes"             CONTENT=""> 
+</HEAD>
+
+#HEADER#
+
+#LEFTBAR#
+
+#FOOTER#
+
+
+</BODY>
+
+</HTML>

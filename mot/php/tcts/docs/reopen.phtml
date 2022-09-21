@@ -1,0 +1,23 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+  
+  /* main method */
+  
+  if ($transID != "")
+  {
+    $tt = new TransactionTable; 
+    if ($tt->isValidTransID($transID))
+    {
+      if ($stage == "reopen")
+      {
+         $newTransID = $tt->reopen($transID);
+	 printSuccess($transID,"reopened.pat",$newTransID);
+      }
+      else printDetailsForm($transID,"reopen","reopen.pat");
+    }
+    else hris_printError("Invalid transaction ID : $transID");
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

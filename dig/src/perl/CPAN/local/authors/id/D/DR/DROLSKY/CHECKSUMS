@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'Log-Dispatch-2.06.tar.gz' => {
+    'md5-ungz' => 'c03c6e150f3dd48b5569197bb6f82c8c',
+    'md5' => '1a7d6f11ceabca75587efa4c2251a134',
+    'size' => '26195'
+  },
+  'Params-Validate-0.58.tar.gz' => {
+    'md5-ungz' => '3a5f84faa1267f8208a568189e51d1ee',
+    'md5' => 'ccdc22e0ec9f8737e6bb410963563695',
+    'size' => '40816'
+  }
+};

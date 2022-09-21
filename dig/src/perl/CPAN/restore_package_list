@@ -1,0 +1,5 @@
+#!/bin/tcsh -fb
+
+foreach list ( `find . -name '0[0-9]*.gz.bak'` )
+  cp $list $list:s/.bak//
+end

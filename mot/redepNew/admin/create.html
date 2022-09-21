@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Position Creation Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980828">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System creation form.">
+ <META NAME="Keywords"          CONTENT="redeployment,position,job,create">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   // Get Cookie Value function
+   function getCookieVal(offset)
+   {
+    var endstr = document.cookie.indexOf (";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+   }// getCookieVal
+
+   // Get Cookie function
+   function getCookie(name)
+   {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+       var j = i + alen;
+       if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+       i = document.cookie.indexOf(" ", i) + 1;
+       if (i == 0) break;
+    }
+    return null;
+   }// getCookie
+
+   function preloadImage(img)
+   {
+    var i = new Image(); 
+    i.src = img; 
+    return(i); 
+   }
+
+   function doSearch(func,action)
+   {
+    document.refForm.func.value = func;
+    document.refForm.action = action;
+    document.refForm.submit();
+
+    return false;
+   }
+
+   browserSupportsJSImages = 
+    (((navigator.appName == "Netscape")			&& (parseInt(navigator.appVersion) >= 3 )) || 
+     ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4 ))    ); 
+
+   if (browserSupportsJSImages){ 
+     newPosition_G = preloadImage("images/newPosition_G.gif");
+     newPosition_W = preloadImage("images/newPosition_W.gif");
+     editPosition_G = preloadImage("images/editPosition_G.gif");
+     editPosition_W = preloadImage("images/editPosition_W.gif");
+     listApplications_G = preloadImage("images/listApplications_G.gif");
+     listApplications_W = preloadImage("images/listApplications_W.gif");
+   }
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF BACKGROUND="images/background.gif" TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>
+
+<TR ALIGN=LEFT VALIGN=TOP><TD WIDTH=150 NOWRAP>
+
+ <FORM NAME="createForm" METHOD=POST ACTION="create.html">
+  <SCRIPT>
+   <!-- 
+   document.write("<INPUT TYPE=HIDDEN NAME=\"defaults\" VALUE=\""+getCookie("creationDefaults")+"\">");
+   // -->
+  </SCRIPT>
+ </FORM>
+ <A HREF="javascript:document.createForm.submit();" onMouseOver="if (browserSupportsJSImages) document['newPosition'].src=newPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['newPosition'].src=newPosition_W.src"><IMG SRC="images/newPosition_W.gif" NAME="newPosition" ALT="Create New Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="editList.html?func=edit" onClick="return doSearch('edit','editList.html');" onMouseOver="if (browserSupportsJSImages) document['editPosition'].src=editPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['editPosition'].src=editPosition_G.src"><IMG SRC="images/editPosition_G.gif" NAME="editPosition" ALT="Edit Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="main.html?func=listAppl" onClick="return doSearch('listAppl','main.html');" onMouseOver="if (browserSupportsJSImages) document['listApplications'].src=listApplications_W.src" onMouseOut="if (browserSupportsJSImages) document['listApplications'].src=listApplications_G.src"><IMG SRC="images/listApplications_G.gif" NAME="listApplications" ALT="List Applications" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR><BR>
+ <FORM NAME="refForm" METHOD=POST ACTION="editList.html">
+  <FONT COLOR=#C0C0C0 FACE="Arial,Helvetica" SIZE=2><B>Position Ref.:</B></FONT><BR>
+  <INPUT TYPE=HIDDEN NAME="func" VALUE="edit">
+  <INPUT TYPE=TEXT NAME="ref" SIZE=12>
+ </FORM>
+
+</TD><TD ALIGN=LEFT>
+
+
+<SERVER>
+ if ( client.creationDefaults!=null ){
+   var defaults = client.creationDefaults.split('|');
+   var havDef = true;
+ }else if ( (request.defaults!=null) && (request.defaults!="null") && (request.defaults.match(/|/)) ){
+   var defaults = request.defaults.split('|');
+   var havDef = true;
+ }else{
+   var havDef = false;
+ }
+
+ var jobs = new Jobs();
+ jobs.writeClientCheck();
+</SERVER>
+
+<FORM METHOD=POST ACTION="confirmCreation.html" onSubmit="return validatePositionForm(this);">
+
+<INPUT TYPE=HIDDEN NAME="ref" VALUE="new">
+
+<CENTER>
+<TABLE BORDER=0 WIDTH=90%>
+ <TR>
+  <TD ALIGN=CENTER COLSPAN=2>
+   <B>Title:</B><BR><INPUT TYPE=TEXT SIZE=40 NAME="title">
+  </TD>
+ </TR>
+ <TR><TD COLSPAN=2>&nbsp;</TD></TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Location:</B><BR>
+   <SERVER>var locationSL = new SelectList("location"); locationSL.write(havDef?defaults[1]:"");</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Department:</B><BR>
+   <INPUT TYPE=TEXT SIZE=7 NAME="department" VALUE=`(havDef?unescape(defaults[2]):"")`>
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Relocation:</B><BR>
+   <SERVER>var relocationSL = new SelectList("relocation"); relocationSL.write(havDef?defaults[3]:"");</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Function:</B><BR>
+   <SERVER>var functionSL = new SelectList("function"); functionSL.write(havDef?defaults[4]:"");</SERVER>
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Sector:</B><BR>
+   <INPUT TYPE=TEXT SIZE=12 NAME="sector" VALUE=`(havDef?unescape(defaults[0]):"")`>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Grade:</B><BR>
+   <SERVER>var gradeSL = new SelectList("grade"); gradeSL.write(havDef?defaults[5]:"");</SERVER>
+  </TD>
+ </TR>
+ <TR><TD COLSPAN=2>&nbsp;</TD></TR>
+ <SERVER>var today = new Date();</SERVER>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Advertise Date:</B><BR>
+   <SERVER>var startDL = new DateLists("start"); startDL.write(today);</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Expiry Date:</B><BR>
+   <SERVER>
+    var expiryDL = new DateLists("expiry");
+    var defaultExpiryDate = new Date();
+    defaultExpiryDate.setTime(today.getTime()+(havDef?parseInt(defaults[6]):project.defaultVacancyLength));
+    expiryDL.write(defaultExpiryDate);
+   </SERVER>
+  </TD>
+ </TR>
+</TABLE>
+</CENTER>
+
+<BR><BR>
+
+<P>
+ <B>Number of positions available:</B>
+ <UL>
+  <INPUT TYPE=TEXT SIZE=4 NAME="numOfPositions" VALUE="1">
+ </UL>
+</P>
+
+<P>
+ <B>Job Description:</B>
+ <UL>
+  <FONT SIZE=-1><TEXTAREA NAME="description" ROWS=15 COLS=60 WRAP=HARD></TEXTAREA></FONT>
+ </UL>
+</P>
+
+<P>
+ <B>Experience Required:</B>
+ <UL>
+  <FONT SIZE=-1><TEXTAREA NAME="experience" ROWS=15 COLS=60 WRAP=HARD></TEXTAREA></FONT>
+ </UL>
+</P>
+
+<B>Contact Person:</B>
+<UL><TABLE BORDER=0 WIDTH=90%>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50%>
+   Name:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactPerson" VALUE=`(havDef?unescape(defaults[7]):"")`>
+  </TD>
+  <TD VALIGN=TOP WIDTH=50%>
+   Email:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactEmail" VALUE=`(havDef?unescape(defaults[8]):"")`>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50% ROWSPAN=2>
+   Address:<BR>
+   <TEXTAREA NAME="contactAddress" ROWS=5 COLS=22 WRAP=HARD><SERVER>var temp=(havDef?unescape(defaults[11]):""); write(temp.replace(/%2C/g,','));</SERVER></TEXTAREA>
+  </TD>
+  <TD VALIGN=TOP WIDTH=50%>
+   Telephone:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactTel" VALUE=`(havDef?unescape(defaults[9]):"")`>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50%>
+   Fax:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactFax" VALUE=`(havDef?unescape(defaults[10]):"")`>
+  </TD>
+ </TR>
+</TABLE></UL>
+
+<P>
+ <B>Hiring Manager email ID:</B> <I>optional</I>
+ <UL>
+  <INPUT TYPE=TEXT SIZE=8 NAME="hiringManager" VALUE=`(havDef?unescape(defaults[12]):"")`>
+  <FONT SIZE=-1><A HREF="javascript:null;" onClick="window.open('emailLookup.html?form=2&field=hiringManager','emailLookup','width=250,height=150,resizable=1,scrollbars=yes'); return false;">Lookup</A></FONT>
+ </UL>
+</P>
+
+<P>
+ <INPUT TYPE=CHECKBOX NAME="useAsDefault" CHECKED> Save selections as default?
+ <BR>
+ <I>If this box is checked, the selections and contact information<BR>
+ entered above will be saved as your default.</I>
+</P>
+
+<CENTER>
+ <INPUT TYPE=IMAGE SRC="images/btn_create.gif" ALT="Create Vacancy" BORDER=0 WIDTH=120 HEIGHT=32 onMouseOver="window.status='Create Vacancy';return true;">
+</CENTER>
+
+</FORM>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR>
+
+</TABLE>
+
+
+</BODY>
+
+</HTML>

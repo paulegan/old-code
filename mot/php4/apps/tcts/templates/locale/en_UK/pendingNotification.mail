@@ -1,0 +1,19 @@
+
+A new batch of transactions has been submitted to the TCTS and
+is pending integration.
+
+Batch:		{batch_id}
+Submitted By:	{submitted_by}
+Submitted Via:	{submitted_via}
+Date:		{trans_date}
+
+Trans ID	Employee CID	Transaction Type
+========	============	================
+<!-- BEGIN transactions -->
+{trans_id}	{employee}	{type}
+<!-- END transactions -->
+
+
+The batch can be viewed here:
+
+{url}

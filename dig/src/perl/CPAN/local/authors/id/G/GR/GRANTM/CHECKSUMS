@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'XML-Simple-2.08.tar.gz' => {
+    'md5-ungz' => 'bafece97faf0d684b1c44656671a9914',
+    'md5' => 'b73d4781e6473ff05317cf9209ea2d1c',
+    'size' => '59179'
+  }
+};

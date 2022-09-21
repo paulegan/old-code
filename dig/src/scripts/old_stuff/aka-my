@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+#
+# akamai queue running script
+#
+# by David Kelly 2001
+
+chomp($hostname=`hostname`);
+$queuedir="/pool/flags/queue";
+$queuefile="$queuedir/akamai.queue";
+$lockfile="$queuedir/akamai.lock";
+$administrator="cyril.abdi\@dig.com";
+$logfile="/pool/logs/disweb/akamai.log";
+
+# exit immediately if a lock file exists
+
+if (-e $lockfile)
+{
+	exit 0;
+};
+
+# otherwise check for the existance of a queue file
+
+if (-e $queuefile)
+{
+        rename $queuefile, $lockfile;
+        
+        open (LOCK,$lockfile) || report_error ();
+        
+        while (<LOCK>)
+        {
+        
+                system "/usr/local/bin/akamaize.pl $_ > $logfile 2>&1";
+        };
+
+        close (LOCK) || report_error ();
+
+	system "rm -rf $lockfile";
+
+	if (-e "/pool/flags/akamai.flag")
+	{
+		unlink("/pool/flags/akamai.flag");
+	};
+};
+
+sub report_error
+{
+	my $date=`date +%d-%m-%Y-%H:%M`;
+	my $failedfile="$queuedir/failed.$date";
+	
+	warn "warning: problem reading $lockfile!!\n";
+	
+	system "cat << EOF | mail -s 'akamaization failed' $administrator
+	WARNING! there was a problem with auto akamization at $date
+
+	lockfile:	$lockfile
+	saved to:	$failedfile
+	EOF";
+
+	rename $lockfile, $failedfile;
+	
+	exit 1;
+};

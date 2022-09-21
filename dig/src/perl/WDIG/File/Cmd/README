@@ -1,0 +1,24 @@
+WDIG::File::Cmd version 1.0
+===========================
+
+$Id$
+
+The cmd module implements some standard file management functions.
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+File modules from standard distribution.
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.

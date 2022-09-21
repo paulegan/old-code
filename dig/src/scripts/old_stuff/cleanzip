@@ -1,0 +1,64 @@
+#!/usr/bin/sh
+#####################################################################
+# Deltes every single zip, ZIP wihtin XX days (default = 15 days )  #
+# Syntax: cleanzip DELAY where delay is the number of days you want #
+# to go back. No ARGS means delays = 15 days                        #
+#####################################################################
+# Created By : Cyril Abdi (BVIGI)                                   #
+# Date : 08/05/99                                                   #
+#####################################################################
+# Modified by :                                                     #
+#####################################################################
+
+if test -z "$1"
+then
+	delay="+15" ;
+else 
+	delay="$1" ;
+fi
+
+
+
+echo 'Looking for files ...' ;
+zipfiles="`find ./ -name '*.[zZ][iI][pP]' -mtime $delay`" ;
+if test  "$zipfiles" 
+then
+	echo '\n-->zip, ZIP' ;
+	#echo $zipfiles ;
+	for i in $zipfiles
+	do
+		echo "$i" ;
+	done
+	areFiles="zip" ;
+fi 
+
+if test "$areFiles"
+then
+	echo '\n\ndeleting files ...' ;
+	if test "$zipfiles"
+	then
+		echo '-->zip, ZIP [y/N] ? \c' ;
+		read response ;
+		case $response in 
+			[yY] | [yY][eE][sS]	) rm -Rf `find ./ -name '*.[zZ][iI][pP]' -mtime $delay` ; echo '---->Files cleaned' ;; 
+			[nN] | [nN][oO]		) nodeletet="1" ;; 
+			*			) continue ;;   
+		esac ;
+
+		if test $nodelete="1"
+		then
+			echo "do you want to start safe_cleanzip [Y/n] ? \c" ;
+			read safe_response ;
+			case $safe_response in
+				[yY] | [yY][eE][sS]     ) safe_cleanzip $1 ;;
+				[nN] | [nN][oO]         ) continue ;;
+				*			) safe_cleanzip $1 ;;
+			esac ;
+		fi
+
+	fi
+
+	echo 'Folder cleaned' ;
+else
+	echo 'No file to delete' ;
+fi

@@ -1,0 +1,18 @@
+# CHECKSUMS file written on Wed Jul  2 23:04:04 2003 by ./update_checksums
+$cksum1 = {
+  'MD5-2.02.tar.gz' => {
+    'md5-ungz' => 'ce975f820143d81e3d3563c051830fca',
+    'md5' => 'def08d091392fe7d643d987514339536',
+    'size' => '2776'
+  },
+  'URI-1.23.tar.gz' => {
+    'md5-ungz' => '85979300cee86bd923c1f7e17a2f98c6',
+    'md5' => '74442dd8de93ea89ff382c07ac0e09ed',
+    'size' => '89351'
+  },
+  'Digest-MD5-2.24.tar.gz' => {
+    'md5-ungz' => 'f9c699f72ab6bf7c6bae23aca855a7b8',
+    'md5' => '1d328e479ac6e7019dd082f6a244a06c',
+    'size' => '42303'
+  }
+};

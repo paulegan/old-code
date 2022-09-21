@@ -1,0 +1,135 @@
+#!/usr/bin/perl -w
+
+# $Id: $
+
+=head1 NAME
+
+make_package_list - A script for building CPAN conformant 02packages.details.txt.gz
+
+=head1 AUTHOR
+
+ $Author: $
+ $Date: $
+
+ Initial Author: paul.x.egan.-nd@email.disney.com
+ Date: 2003/07/01
+
+=head1 SYNOPSIS
+
+ make_package_list authors | gzip -c > modules/02packages.details.txt.gz
+
+=head1 DESCRIPTION
+
+Search the source directory for archive files and builds the
+package list using the module names and versions.
+
+Based on mkpackages from CPAN::Site.
+
+=head1 HISTORY
+
+ $Log: $
+
+=head1 COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+=cut
+
+
+######################################################################
+
+use 5.006_001;
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Pod::Usage;
+use IO::File;
+use File::Find;
+use POSIX qw(strftime);
+
+my @Opt_Config = (
+  'debug',
+  'help|?'
+);
+
+my $packages = {};
+
+######################################################################
+# Process command line arguments:
+
+my %opt = ();
+GetOptions(\%opt, @Opt_Config) or pod2usage();
+pod2usage(-exitstatus=>0, -verbose=>1) if ( $opt{help} );
+
+my $source_dir = shift();
+pod2usage() if ( !$source_dir );
+pod2usage(-message=>"Source dir '$source_dir' not found") if ( !-d $source_dir );
+
+
+######################################################################
+# Find and process archive files:
+
+find(  sub {
+
+  return unless /\.tar\.gz$/;
+
+  print STDERR "processing $File::Find::name ...\n" if ( $opt{debug} );
+
+  my ($file, $package, $version, $buffer);
+  my $input = new IO::File("gzip -cd $_|") or die();
+
+  while ( $input->sysread($buffer, 512) ) {
+  
+    if ($buffer =~ /^(\S*?)\0/) {
+      $file = $1;
+      $package = $version = undef;
+      print STDERR " file: $file\n" if ( $opt{debug} and $file );
+    }
+
+    while ( $buffer =~ s/^([^\n]*)\n// ) {
+      local $_ = $1;
+      if ( /^\s*package\s*((\w+::)*\w+)\s*;/ ) {
+        $package = $1;
+        print STDERR " package: $package\n" if ( $opt{debug} and $package );
+      } elsif ( /^\s*\w*\s*(?:\$(\w+::)*VERSION\s*=\s*)+(.*)$/ ) {
+        $version = eval $2;
+        print STDERR " version: $version\n" if ( $opt{debug} and $version );
+        if ( $package and $version ) {
+          $packages->{$package} = { name=>$package, file=>$file, path=>$File::Find::name, version=>$version };
+        }
+      }
+    }
+    
+  }
+
+}, $source_dir );
+
+
+######################################################################
+# Print out package details:
+
+my $lines = keys(%$packages);
+my $date = strftime("%a, %d %b %Y %H:%M:%S GMT",gmtime());
+
+print <<"EOF";
+File:         02packages.details.txt
+URL:          http://www.perl.com/CPAN/site/02packages.details.txt
+Description:  Package names found in directory $source_dir
+Columns:      package name, version, path
+Intended-For: Automated fetch routines, namespace documentation.
+Line-Count:   $lines
+Written-By:   $0
+Last-Updated: $date
+
+EOF
+
+foreach my $name ( sort(keys(%$packages)) ) {
+  my $p = $packages->{$name};
+  $p->{path} =~ s|.*authors/id/||;
+  printf("%-30s\t%s\t%s\n", $p->{name}, $p->{version}, $p->{path});
+}
+
+exit(0);
+
+__END__

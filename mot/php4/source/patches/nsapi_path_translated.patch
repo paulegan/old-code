@@ -1,0 +1,44 @@
+*** nsapi.c.orig	Tue Jan  2 23:45:45 2001
+--- nsapi.c	Sun Jan 21 16:45:54 2001
+***************
+*** 101,106 ****
+--- 101,108 ----
+  	{ "HTTP_ACCEPT_LANGUAGE",	"accept-language" },
+  	{ "HTTP_AUTHORIZATION",		"authorization" },
+  	{ "HTTP_COOKIE",		"cookie" },
++ 	{ "HTTP_CLIENT_IP",		"client-ip" },
++ 	{ "HTTP_HOST",			"host" },
+  	{ "HTTP_IF_MODIFIED_SINCE",	"if-modified-since" },
+  	{ "HTTP_REFERER",		"referer" },
+  	{ "HTTP_USER_AGENT",		"user-agent" },
+***************
+*** 445,457 ****
+  	char *query_string = pblock_findval("query", NSG(rq)->reqpb);
+  	char *uri = pblock_findval("uri", NSG(rq)->reqpb);
+  	char *path_info = pblock_findval("path-info", NSG(rq)->vars);
+! 	char *path_translated = NULL;
+  	char *request_method = pblock_findval("method", NSG(rq)->reqpb);
+  	char *content_type = pblock_findval("content-type", NSG(rq)->headers);
+  	char *content_length = pblock_findval("content-length", NSG(rq)->headers);
+  
+  	if (uri != NULL)
+  		path_translated = request_translate_uri(uri, NSG(sn));
+  
+  #if defined(NSAPI_DEBUG)
+  	log_error(LOG_INFORM, "nsapi_request_ctor", NSG(sn), NSG(rq),
+--- 447,461 ----
+  	char *query_string = pblock_findval("query", NSG(rq)->reqpb);
+  	char *uri = pblock_findval("uri", NSG(rq)->reqpb);
+  	char *path_info = pblock_findval("path-info", NSG(rq)->vars);
+! 	char *path_translated = pblock_findval("path", NSG(rq)->vars);
+  	char *request_method = pblock_findval("method", NSG(rq)->reqpb);
+  	char *content_type = pblock_findval("content-type", NSG(rq)->headers);
+  	char *content_length = pblock_findval("content-length", NSG(rq)->headers);
+  
++ 	/*
+  	if (uri != NULL)
+  		path_translated = request_translate_uri(uri, NSG(sn));
++ 	*/
+  
+  #if defined(NSAPI_DEBUG)
+  	log_error(LOG_INFORM, "nsapi_request_ctor", NSG(sn), NSG(rq),

@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Ajoutez Utilisateurs</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="fr_FR" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Ajoutez Utilisateurs." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+ <style type="text/css">
+   tr.matrixHead td { background: #333366 }
+   tr.matrixBody td { background: #CCCCFF }
+   tr.even td { background: #FFFFCC }
+ </style> 
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/26
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/01/26 18:19:37  eganp
+  - History:	       Added temporary French translation
+  - History:
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/fr_FR/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">Ajoutez Utilisateurs</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/userAdd.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'manage users')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+
+<table width="650" border="0" cellpadding="0" cellspacing="0"><tr><td>
+
+ <!-- MESSAGE invalid_users -
+ <p class="error">
+  Il y avait une erreur tout en traitant la liste d'utilisateurs. Veuillez
+  s'assurer que chaque ligne commence par une identification d'email ou une
+  identification de commerce, sur option suivie du nom de l'utilisateur.
+  N'incluez aucun utilisateur qui existent déjà. 
+ </p>
+    - MESSAGE invalid_users -->
+
+</td></tr></table>
+
+<form method="post" name="userForm" action="{PHP_SELF}">
+
+<input type="hidden" name="_op" value="manage users" />
+<input type="hidden" name="_stage" value="add commit" />
+
+<table class="form" width="650" border="0" cellpadding="6" cellspacing="0"><tr>
+
+<td width="100">
+
+<small>
+ Écrivez une liste d'email ou de commerce IDs, un par la ligne. 
+</small>
+<br />
+<font face="monospace">
+<textarea name="users" rows="20" cols="35">{users}</textarea>
+</font>
+
+</td><td valign="top">
+
+ <table border="0" cellpadding="1" cellspacing="2">
+ <thead>
+  <tr class="matrixHead">
+   <td>&nbsp;</td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_create.gif" alt="Create" width="11" height="39" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_view.gif" alt="View" width="10" height="28" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_update.gif" alt="Update" width="13" height="41" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_delete.gif" alt="Delete" width="10" height="36" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_submitBatch.gif" alt="Submit Batch" width="11" height="76" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_manageLists.gif" alt="Manage User" width="13" height="75" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_manageUsers.gif" alt="Manage User" width="13" height="83" /></td>
+  </tr>
+ </thead>
+ <tbody>
+  <!-- BEGIN perm_matrix -->
+  <tr class="matrixBody">
+   <td align="right">{center_name}</td>
+   <td><input type="checkbox" name="{center}:create" /></td>
+   <td><input type="checkbox" name="{center}:view" /></td>
+   <td><input type="checkbox" name="{center}:update" /></td>
+   <td><input type="checkbox" name="{center}:delete" /></td>
+   <td><input type="checkbox" name="{center}:submit batch" /></td>
+   <td><input type="checkbox" name="{center}:manage lists" /></td>
+   <td><input type="checkbox" name="{center}:manage users" /></td>
+  </tr>
+  <!-- END perm_matrix -->
+ </tbody>
+ </table>   
+
+<br />
+Rôle:
+<select name="role" onchange="updateMatrix(this.form,this.options[this.selectedIndex].value);">
+ <option value="none">Aucuns Privilèges</option>
+ <option value="all">Tous</option>
+ <option value="standard">Standard</option>
+ <option value="admin">Administrateur</option>
+ <option value="hr">HR</option>
+</select>
+<br /><br />
+<input type="submit" value="Ajoutez Utilisateurs" />
+<br />
+<input type="button" value="    Vérifiez IDs    " onclick="this.form['_stage'].value='add confirm'; this.form.submit(); return (false);" />
+<br /><br />
+<input type="button" value="Éditez  Utilisateurs" onclick="document.location='{PHP_SELF}?_op=manage+users'" />
+
+</td>
+
+</tr></table>
+    
+</form>
+
+<script type="text/javascript">
+<!--
+ 
+ var role = [];
+ 
+ role['all'] = [
+   <!-- BEGIN role_all -->
+   '{center}:create',
+   '{center}:view',
+   '{center}:update',
+   '{center}:delete',
+   '{center}:submit batch',
+   '{center}:manage lists',
+   '{center}:manage users',
+   <!-- END role_all -->
+   ''
+ ];
+ 
+ role['standard'] = [
+   <!-- BEGIN role_standard -->
+   '{center}:create',
+   '{center}:view',
+   '{center}:update',
+   <!-- END role_standard -->
+   ''
+ ];
+ 
+ role['admin'] = [
+   <!-- BEGIN role_admin -->
+   '{center}:create',
+   '{center}:view',
+   '{center}:update',
+   '{center}:delete',
+   <!-- END role_admin -->
+   ''
+ ];
+ 
+ role['hr'] = [
+   <!-- BEGIN role_hr -->
+   '{center}:view',
+   '{center}:submit batch',
+   <!-- END role_hr -->
+   ''
+ ];
+ 
+ function updateMatrix(form,roleName)
+ {
+  if (roleName != 'all')
+    for (var e=0; role['all'][e]; e++)
+      form[role['all'][e]].checked = false;
+  if (roleName != 'none')
+    for (var e=0; role[roleName][e]; e++)
+      form[role[roleName][e]].checked = true;
+ }
+ 
+ for (var o=0; o<document.userForm.role.options.length; o++)
+   if (document.userForm.role.options[o].value == '{role}')
+     document.userForm.role.options[o].selected = true;
+ updateMatrix(document.userForm,'{role}');
+ 
+//-->
+</script> 
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+ 
+</body>
+
+</html>

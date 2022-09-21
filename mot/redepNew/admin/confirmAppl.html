@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Application Update Confirmation</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System application update confirmation.">
+ <META NAME="Keywords"          CONTENT="redeployment,application,update">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   // Get Cookie Value function
+   function getCookieVal(offset)
+   {
+    var endstr = document.cookie.indexOf (";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+   }// getCookieVal
+
+   // Get Cookie function
+   function getCookie(name)
+   {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+       var j = i + alen;
+       if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+       i = document.cookie.indexOf(" ", i) + 1;
+       if (i == 0) break;
+    }
+    return null;
+   }// getCookie
+
+   function preloadImage(img)
+   {
+    var i = new Image(); 
+    i.src = img; 
+    return(i); 
+   }
+
+   function doSearch(func,action)
+   {
+    document.refForm.func.value = func;
+    document.refForm.action = action;
+    document.refForm.submit();
+
+    return false;
+   }
+
+   browserSupportsJSImages = 
+    (((navigator.appName == "Netscape")			&& (parseInt(navigator.appVersion) >= 3 )) || 
+     ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4 ))    ); 
+
+   if (browserSupportsJSImages){ 
+     newPosition_G = preloadImage("images/newPosition_G.gif");
+     newPosition_W = preloadImage("images/newPosition_W.gif");
+     editPosition_G = preloadImage("images/editPosition_G.gif");
+     editPosition_W = preloadImage("images/editPosition_W.gif");
+     listApplications_G = preloadImage("images/listApplications_G.gif");
+     listApplications_W = preloadImage("images/listApplications_W.gif");
+   }
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF BACKGROUND="images/background.gif" TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>
+
+<TR ALIGN=LEFT VALIGN=TOP><TD WIDTH=150 NOWRAP>
+
+ <FORM NAME="createForm" METHOD=POST ACTION="create.html">
+  <SCRIPT>
+   <!-- 
+   document.write("<INPUT TYPE=HIDDEN NAME=\"defaults\" VALUE=\""+getCookie("creationDefaults")+"\">");
+   // -->
+  </SCRIPT>
+ </FORM>
+ <A HREF="javascript:document.createForm.submit();" onMouseOver="if (browserSupportsJSImages) document['newPosition'].src=newPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['newPosition'].src=newPosition_G.src"><IMG SRC="images/newPosition_G.gif" NAME="newPosition" ALT="Create New Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="editList.html?func=edit" onClick="return doSearch('edit','editList.html');" onMouseOver="if (browserSupportsJSImages) document['editPosition'].src=editPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['editPosition'].src=editPosition_G.src"><IMG SRC="images/editPosition_G.gif" NAME="editPosition" ALT="Edit Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="main.html?func=listAppl" onClick="return doSearch('listAppl','main.html');" onMouseOver="if (browserSupportsJSImages) document['listApplications'].src=listApplications_W.src" onMouseOut="if (browserSupportsJSImages) document['listApplications'].src=listApplications_W.src"><IMG SRC="images/listApplications_W.gif" NAME="listApplications" ALT="List Applications" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR><BR>
+ <FORM NAME="refForm" METHOD=POST ACTION="editList.html">
+  <FONT COLOR=#C0C0C0 FACE="Arial,Helvetica" SIZE=2><B>Position Ref.:</B></FONT><BR>
+  <INPUT TYPE=HIDDEN NAME="func" VALUE="edit">
+  <INPUT TYPE=TEXT NAME="ref" SIZE=12>
+ </FORM>
+
+</TD><TD ALIGN=LEFT>
+
+ <P><SERVER>
+  var appl = new Application(request.cid,request.ref);
+
+  if (!appl.update()){
+    write("Unable to update application.");
+  }else{
+    write("The application has been updated.");
+  }
+ </SERVER></P>
+
+ <P ALIGN=CENTER><FONT SIZE=2>
+  Copyright &copy; 1999 Motorola Confidential Proprietary
+  <BR>
+  For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+ </FONT></P>
+
+</TD></TR>
+
+</TABLE>
+
+
+</BODY>
+
+</HTML>

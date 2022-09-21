@@ -1,0 +1,4 @@
+
+Paul Egan		94312974
+
+Will compile under g++ but the STL causes lots of compile warnings!

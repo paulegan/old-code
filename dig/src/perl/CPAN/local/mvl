@@ -1,0 +1,12 @@
+#!/bin/tcsh -fb
+
+set noglob
+foreach f ( `ls | sed 's/[0-9]/[0-9]/g'` )
+  set loc=`grep /$f loc_list | sed -n "s/\(.*\)$f/\1/p" | head -1`
+  if ( "$loc" == "" ) continue
+  echo "$f -> $loc"
+  mkdir -p ../$loc
+  unset noglob
+  mv $f ../$loc
+  set noglob
+end

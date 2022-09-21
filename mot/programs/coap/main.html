@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>COAP SDS</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990902">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Application for maintaining COAP data to be fed to the data mart.">
+ <META NAME="Keywords"          CONTENT="coap">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<SERVER>
+ if (!request.auth_user) error("App must be protected!");
+
+ var userAccess = new UserAccess(request.auth_user);
+ var tabList = userAccess.allowedTabs();
+ var tabForm = new TabForm(tabList);
+
+ if ( !tabList || tabList.length<1 )
+   error("You do not have access to this system.");
+ if ( !request.tab || !userAccess.allowsAccessTo(request.tab) )
+   request.tab = tabList[0].name;
+
+ tabForm.write(request.tab);
+</SERVER>
+
+<BR CLEAR=ALL>
+
+<TABLE BORDER=0>
+ <TR>
+  <TD ALIGN=CENTER><A HREF="help.html" onClick="window.open('help.html','coap_help','width=350,height=550,resizable=1,scrollbars=yes'); return false;"><IMG SRC="images/help.gif" ALT="Help" BORDER=0 WIDTH=32 HEIGHT=32></A></TD>
+  <TD ALIGN=CENTER><A HREF="images/quickGuide.gif" onClick="window.open('images/quickGuide.gif','coap_qg','width=970,height=510,resizable=1,scrollbars=yes'); return false;"><IMG SRC="images/qgIcon.gif" ALT="Quick Guide" BORDER=0 WIDTH=32 HEIGHT=32></A></TD>
+ </TR>
+ <TR>
+  <TD ALIGN=CENTER><A HREF="help.html" onClick="window.open('help.html','coap_help','width=350,height=550,resizable=1,scrollbars=yes'); return false;">Help</A></TD>
+  <TD ALIGN=CENTER><A HREF="images/quickGuide.gif" onClick="window.open('images/quickGuide.gif','coap_qg','width=970,height=510,resizable=1,scrollbars=yes'); return false;">Quick Guide</A></TD>
+ </TR>
+</TABLE>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+</FONT></P>
+
+</BODY>
+
+</HTML>

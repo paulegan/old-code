@@ -1,0 +1,35 @@
+WDIG::Content::Cmd version 1.0
+==============================
+
+$Id$
+
+Implements a set of commands for performing operations on content.
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+Error 0.15
+File::Touch 0.01
+File::Rsync 0.30
+Log::Log4perl 0.31
+XML::Simple 2.05
+Mail::Sendmail 0.79
+WDIG::Content::Drop 1.0
+WDIG::Content::URL_Map 1.0
+WDIG::Content::User 1.0
+WDIG::Pluto 1.0
+WDIG::DB 1.0
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

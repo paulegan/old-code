@@ -1,0 +1,36 @@
+#!/usr/bin/sh
+#####################################################################
+# Deletes every single tar, tar.gz tgz files older than 21 days     # 
+#####################################################################
+# Created By : Cyril Abdi (BVIGI)                                   #
+# Date : 08/04/99                                                   #
+#####################################################################
+# Modified by :  Matteo Moriconi - 12/06/00                         #
+#####################################################################
+
+if test -z "$1"
+then 
+	path="/pool/live/"
+else
+	path="$1"
+fi
+
+myDate="`date +%H%M_%d%m%y`" ;
+myLogDir="$path/tarclean.logs"
+myLogFileName="$myLogDir/TarCleaning_Logs_$myDate.log" ;
+delay="+31" ;
+
+if [ ! -d $myLogDir ] 
+then
+	mkdir $myLogDir
+fi
+
+echo "################################################\n" > $myLogFileName ;
+echo " Log file generated @ $myDate\n" >> $myLogFileName ;
+echo "################################################\n\n" >> $myLogFileName ;
+find $path -name '*.tar*' -mtime $delay > $path/daily_cleantar_tempfile 
+
+ls -l `cat $path/daily_cleantar_tempfile` >> $myLogFileName ;
+rm -Rf `cat $path/daily_cleantar_tempfile` ;
+
+echo "\n################################################\n\n" >> $myLogFileName ;

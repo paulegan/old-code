@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'DateManip-5.40.tar.gz' => {
+    'md5-ungz' => 'fdd8742ce0e96ceddaa8d4370e10ff9e',
+    'md5' => '8db456b068eeaaeaa49eadc4c57baed7',
+    'size' => '121407'
+  }
+};

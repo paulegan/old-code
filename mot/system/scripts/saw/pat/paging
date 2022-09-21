@@ -1,0 +1,25 @@
+
+<APPLET CODE="javachart.applet.dateLineApp.class" ARCHIVE="javachart/jars/line.jar, javachart/jars/base.jar" CODEBASE="." width=550 height=200>
+ <PARAM NAME="titleString"		VALUE="#HOST# paging">
+ <PARAM NAME="titleFont"		VALUE="timeRoman,14,1">
+ <PARAM NAME="plotAreaLeft"		VALUE="0.07">
+ <PARAM NAME="plotAreaRight"		VALUE="0.96">
+ <PARAM NAME="plotAreaBottom"		VALUE="0.10">
+ <PARAM NAME="plotAreaTop"		VALUE="0.85">
+ <PARAM NAME="plotAreaColor"		VALUE="lightGray">
+ <PARAM NAME="yAxisOptions"		VALUE="gridOn">
+ <PARAM NAME="customDatasetHandler"	VALUE="#URL#?host=#HOST#&date=#DATE#&pg=1">
+ <PARAM NAME="dataset0Name" 		VALUE="pgout/s">
+ <PARAM NAME="dataset1Name" 		VALUE="ppgout/s">
+ <PARAM NAME="dataset2Name" 		VALUE="pgfree/s">
+ <PARAM NAME="dataset3Name" 		VALUE="pgscan/s">
+ <PARAM NAME="legendOn"			VALUE="true">
+ <PARAM NAME="legendllX"		VALUE="0.79">
+ <PARAM NAME="legendllY"		VALUE="0.74">
+ <PARAM NAME="iconWidth"		VALUE="0.02">
+</APPLET>
+
+<P ALIGN=RIGHT><A HREF="#URL#?host=#HOST#&date=#DATE#&disk=#DISK#">detail</A></P>
+
+<BR CLEAR=ALL>
+

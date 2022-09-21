@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Email ID Lookup</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990420">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Form for looking up an Email/core ID from a name using TWIN">
+ <META NAME="Keywords"          CONTENT="email,lookup,name,twin,search">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#C0C0C0 TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000 onLoad="document.forms[0].name.select(); document.forms[0].name.focus();">
+
+<SERVER>
+ if ( !request.name ) request.name = "";
+ if ( !request.form ) request.form = "0";
+ if ( !request.field ) request.field = "emailID";
+</SERVER>
+
+<FORM METHOD=POST>
+  Name:
+  <INPUT TYPE=TEXT SIZE=14 NAME="name" VALUE=`request.name`>
+  <INPUT TYPE=SUBMIT VALUE="Search">
+</FORM>
+
+<TABLE BORDER=0>
+ <SERVER>
+  if ( request.name!="" ){
+   var twin = new Twin();
+   var list = twin.name2emailIDs(request.name);
+   if ( list.EMAIL_ID ){
+     do{
+       write("<TR><TD>"+((list.EMAIL_ID)?("<A HREF=\"javascript:window.close();\" onClick=\"window.opener.document.forms['"+request.form+"']['"+request.field+"'].value='"+list.EMAIL_ID+"';\">"+list.EMAIL_ID+"</A>"):("-"))+"</TD><TD>"+list.NAME+"</TD></TR>\n");
+     }while (list.next());
+   }else{
+     write("No match\n");
+   }
+   list.close();
+  }
+ </SERVER>
+</TABLE>
+
+</BODY>
+
+</HTML>

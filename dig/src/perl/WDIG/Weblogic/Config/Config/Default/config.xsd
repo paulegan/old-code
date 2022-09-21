@@ -1,0 +1,2059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+ <element name='Domain'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='Security'/>
+    <element ref='?'/>
+    <element ref='Log'/>
+    <element ref='?'/>
+    <element ref='JTA'/>
+    <element ref='?'/>
+    <element ref='SNMPAgent'/>
+    <element ref='?'/>
+    <element ref='Administrator'/>
+    <element ref='*'/>
+    <element ref='Application'/>
+    <element ref='*'/>
+    <element ref='ApplicationManager'/>
+    <element ref='*'/>
+    <element ref='BridgeDestination'/>
+    <element ref='*'/>
+    <element ref='CachingRealm'/>
+    <element ref='*'/>
+    <element ref='Cluster'/>
+    <element ref='*'/>
+    <element ref='ConnectorComponent'/>
+    <element ref='*'/>
+    <element ref='CustomRealm'/>
+    <element ref='*'/>
+    <element ref='DomainLogFilter'/>
+    <element ref='*'/>
+    <element ref='FileRealm'/>
+    <element ref='*'/>
+    <element ref='FileT3'/>
+    <element ref='*'/>
+    <element ref='JDBCConnectionPool'/>
+    <element ref='*'/>
+    <element ref='JDBCDataSource'/>
+    <element ref='*'/>
+    <element ref='JDBCMultiPool'/>
+    <element ref='*'/>
+    <element ref='JDBCTxDataSource'/>
+    <element ref='*'/>
+    <element ref='JMSConnectionFactory'/>
+    <element ref='*'/>
+    <element ref='JMSFileStore'/>
+    <element ref='*'/>
+    <element ref='JMSJDBCStore'/>
+    <element ref='*'/>
+    <element ref='JMSServer'/>
+    <element ref='*'/>
+    <element ref='JMSTemplate'/>
+    <element ref='*'/>
+    <element ref='JoltConnectionPool'/>
+    <element ref='*'/>
+    <element ref='LDAPRealm'/>
+    <element ref='*'/>
+    <element ref='Machine'/>
+    <element ref='*'/>
+    <element ref='MailSession'/>
+    <element ref='*'/>
+    <element ref='MessagingBridge'/>
+    <element ref='*'/>
+    <element ref='NTRealm'/>
+    <element ref='*'/>
+    <element ref='PasswordPolicy'/>
+    <element ref='*'/>
+    <element ref='RDBMSRealm'/>
+    <element ref='*'/>
+    <element ref='Realm'/>
+    <element ref='*'/>
+    <element ref='Server'/>
+    <element ref='*'/>
+    <element ref='ShutdownClass'/>
+    <element ref='*'/>
+    <element ref='StartupClass'/>
+    <element ref='*'/>
+    <element ref='UnixMachine'/>
+    <element ref='*'/>
+    <element ref='UnixRealm'/>
+    <element ref='*'/>
+    <element ref='VirtualHost'/>
+    <element ref='*'/>
+    <element ref='WLECConnectionPool'/>
+    <element ref='*'/>
+    <element ref='WebServer'/>
+    <element ref='*'/>
+    <element ref='XMLEntityCache'/>
+    <element ref='*'/>
+    <element ref='XMLEntitySpecRegistryEntry'/>
+    <element ref='*'/>
+    <element ref='XMLParserSelectRegistryEntry'/>
+    <element ref='*'/>
+    <element ref='XMLRegistry'/>
+    <element ref='*'/>
+    <element ref='XmlFileRepository'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='ConsoleContextPath' type='string' use='default' value='console'/>
+   <attribute name='ConsoleEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LastModificationTime' type='string' use='default' value='0'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='RootDirectory' type='string' use='optional'/>
+   <attribute name='Servers' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='Security'>
+  <complexType>
+   <attribute name='AuditProviderClassName' type='string' use='optional'/>
+   <attribute name='GuestDisabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PasswordPolicy' type='string' use='optional'/>
+   <attribute name='Realm' type='string' use='optional'/>
+   <attribute name='SystemUser' type='string' use='default' value='system'/>
+  </complexType>
+ </element>
+
+ <element name='Log'>
+  <complexType>
+   <attribute name='FileCount' type='string' use='default' value='7'/>
+   <attribute name='FileMinSize' type='string' use='default' value='500'/>
+   <attribute name='FileName' type='string' use='default' value='weblogic.log'/>
+   <attribute name='FileTimeSpan' type='string' use='default' value='24'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='NumberOfFilesLimited' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='RotationType' use='default' value='none'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='bySize'/>
+      <enumeration value='byTime'/>
+      <enumeration value='none'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='JTA'>
+  <complexType>
+   <attribute name='AbandonTimeoutSeconds' type='string' use='default' value='86400'/>
+   <attribute name='BeforeCompletionIterationLimit' type='string' use='default' value='10'/>
+   <attribute name='ForgetHeuristics' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MaxTransactions' type='string' use='default' value='10000'/>
+   <attribute name='MaxUniqueNameStatistics' type='string' use='default' value='1000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='TimeoutSeconds' type='string' use='default' value='30'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPAgent'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='SNMPLogFilter'/>
+    <element ref='*'/>
+    <element ref='SNMPTrapDestination'/>
+    <element ref='*'/>
+    <element ref='SNMPCounterMonitor'/>
+    <element ref='*'/>
+    <element ref='SNMPStringMonitor'/>
+    <element ref='*'/>
+    <element ref='SNMPAttributeChange'/>
+    <element ref='*'/>
+    <element ref='SNMPGaugeMonitor'/>
+    <element ref='*'/>
+    <element ref='SNMPProxy'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='CommunityPrefix' type='string' use='default' value='public'/>
+   <attribute name='DebugLevel' use='default' value='0'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Enabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MibDataRefreshInterval' type='string' use='default' value='120'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='NMPPort' type='string' use='default' value='161'/>
+   <attribute name='ServerStatusCheckIntervalFactor' type='string' use='default' value='1'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPLogFilter'>
+  <complexType>
+   <attribute name='EnabledServers' type='string' use='optional'/>
+   <attribute name='MessageIds' type='string' use='optional'/>
+   <attribute name='MessageSubstring' type='string' use='required'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='SeverityLevel' type='string' use='default' value='Error'/>
+   <attribute name='SubsystemNames' type='string' use='optional'/>
+   <attribute name='UserIds' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPTrapDestination'>
+  <complexType>
+   <attribute name='Community' type='string' use='default' value='public'/>
+   <attribute name='Host' type='string' use='default' value='localhost'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Port' type='string' use='default' value='162'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPCounterMonitor'>
+  <complexType>
+   <attribute name='EnabledServers' type='string' use='optional'/>
+   <attribute name='Modulus' type='string' use='default' value='0'/>
+   <attribute name='MonitoredAttributeName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanType' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Offset' type='string' use='default' value='0'/>
+   <attribute name='PollingInterval' type='string' use='default' value='0'/>
+   <attribute name='Threshold' type='string' use='default' value='0'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPStringMonitor'>
+  <complexType>
+   <attribute name='EnabledServers' type='string' use='optional'/>
+   <attribute name='MonitoredAttributeName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanType' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='NotifyDiffer' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='NotifyMatch' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='PollingInterval' type='string' use='default' value='0'/>
+   <attribute name='StringToCompare' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPAttributeChange'>
+  <complexType>
+   <attribute name='AttributeMBeanName' type='string' use='optional'/>
+   <attribute name='AttributeMBeanType' type='string' use='optional'/>
+   <attribute name='AttributeName' type='string' use='optional'/>
+   <attribute name='EnabledServers' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPGaugeMonitor'>
+  <complexType>
+   <attribute name='EnabledServers' type='string' use='optional'/>
+   <attribute name='MonitoredAttributeName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanName' type='string' use='optional'/>
+   <attribute name='MonitoredMBeanType' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PollingInterval' type='string' use='default' value='0'/>
+   <attribute name='ThresholdHigh' type='string' use='default' value='0'/>
+   <attribute name='ThresholdLow' type='string' use='default' value='0'/>
+  </complexType>
+ </element>
+
+ <element name='SNMPProxy'>
+  <complexType>
+   <attribute name='Community' type='string' use='default' value='na'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='OidRoot' type='string' use='optional'/>
+   <attribute name='Port' type='string' use='default' value='0'/>
+   <attribute name='Timeout' type='string' use='default' value='5000'/>
+  </complexType>
+ </element>
+
+ <element name='Administrator'>
+  <complexType>
+   <attribute name='EmailAddress' type='string' use='default' value='root'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PhoneNumber' type='string' use='optional'/>
+   <attribute name='WriteAuthorized' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='Application'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='EJBComponent'/>
+    <element ref='*'/>
+    <element ref='WebAppComponent'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='ApplicationDescriptor' type='string' use='optional'/>
+   <attribute name='Deployed' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Path' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='EJBComponent'>
+  <complexType>
+   <attribute name='Application' type='string' use='optional'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='EJBDescriptor' type='string' use='optional'/>
+   <attribute name='ExtraRmicOptions' type='string' use='optional'/>
+   <attribute name='JavaCompiler' type='string' use='optional'/>
+   <attribute name='JavaCompilerPostClassPath' type='string' use='optional'/>
+   <attribute name='JavaCompilerPreClassPath' type='string' use='optional'/>
+   <attribute name='KeepGenerated' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TmpPath' type='string' use='default' value='tmp_ejb'/>
+   <attribute name='URI' type='string' use='required'/>
+   <attribute name='VerboseEJBDeploymentEnabled' type='string' use='default' value='false'/>
+  </complexType>
+ </element>
+
+ <element name='WebAppComponent'>
+  <complexType>
+   <attribute name='Application' type='string' use='optional'/>
+   <attribute name='AuthRealmName' type='string' use='default' value='weblogic'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='IndexDirectoryEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PreferWebInfClasses' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ServletExtensionCaseSensitive' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ServletReloadCheckSecs' type='string' use='default' value='1'/>
+   <attribute name='SessionMonitoringEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='SingleThreadedServletPoolSize' type='string' use='default' value='5'/>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='URI' type='string' use='required'/>
+   <attribute name='WebDescriptor' type='string' use='optional'/>
+   <attribute name='WebServers' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ApplicationManager'>
+  <complexType>
+   <attribute name='AutoDeployedEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='AutoUpdateInterval' type='string' use='default' value='3000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='BridgeDestination'>
+  <complexType>
+   <attribute name='AdapterJNDIName' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Properties' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='CachingRealm'>
+  <complexType>
+   <attribute name='ACLCacheEnable' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ACLCacheSize' type='string' use='default' value='211'/>
+   <attribute name='ACLCacheTTLNegative' type='string' use='default' value='10'/>
+   <attribute name='ACLCacheTTLPositive' type='string' use='default' value='60'/>
+   <attribute name='AuthenticationCacheEnable' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='AuthenticationCacheSize' type='string' use='default' value='211'/>
+   <attribute name='AuthenticationCacheTTLNegative' type='string' use='default' value='10'/>
+   <attribute name='AuthenticationCacheTTLPositive' type='string' use='default' value='60'/>
+   <attribute name='BasicRealm' type='string' use='required'/>
+   <attribute name='CacheCaseSensitive' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='GroupCacheEnable' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='GroupCacheSize' type='string' use='default' value='211'/>
+   <attribute name='GroupCacheTTLNegative' type='string' use='default' value='10'/>
+   <attribute name='GroupCacheTTLPositive' type='string' use='default' value='60'/>
+   <attribute name='GroupMembershipCacheTTL' type='string' use='default' value='300'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PermissionCacheEnable' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='PermissionCacheSize' type='string' use='default' value='211'/>
+   <attribute name='PermissionCacheTTLNegative' type='string' use='default' value='10'/>
+   <attribute name='PermissionCacheTTLPositive' type='string' use='default' value='60'/>
+   <attribute name='UserCacheEnable' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='UserCacheSize' type='string' use='default' value='211'/>
+   <attribute name='UserCacheTTLNegative' type='string' use='default' value='10'/>
+   <attribute name='UserCacheTTLPositive' type='string' use='default' value='60'/>
+  </complexType>
+ </element>
+
+ <element name='Cluster'>
+  <complexType>
+   <attribute name='ClusterAddress' type='string' use='optional'/>
+   <attribute name='DefaultLoadAlgorithm' use='default' value='round-robin'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='round-robin'/>
+      <enumeration value='weight-based'/>
+      <enumeration value='random'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MulticastAddress' type='string' use='optional'/>
+   <attribute name='MulticastSendDelay' type='string' use='default' value='12'/>
+   <attribute name='MulticastTTL' type='string' use='default' value='1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Servers' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='ConnectorComponent'>
+  <complexType>
+   <attribute name='Application' type='string' use='optional'/>
+   <attribute name='AuthenticationMechanisms' type='string' use='optional'/>
+   <attribute name='CapacityIncrement' type='string' use='default' value='1'/>
+   <attribute name='ClassLoader' type='string' use='optional'/>
+   <attribute name='ConfigProperties' type='string' use='optional'/>
+   <attribute name='ConnectionCleanupFrequency' type='string' use='default' value='-1'/>
+   <attribute name='ConnectionDurationTime' type='string' use='default' value='-1'/>
+   <attribute name='ConnectionFactoryDescription' type='string' use='optional'/>
+   <attribute name='ConnectionFactoryImpl' type='string' use='optional'/>
+   <attribute name='ConnectionFactoryInterface' type='string' use='optional'/>
+   <attribute name='ConnectionFactoryName' type='string' use='optional'/>
+   <attribute name='ConnectionImpl' type='string' use='optional'/>
+   <attribute name='ConnectionInterface' type='string' use='optional'/>
+   <attribute name='DelayedBinding' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='Description' type='string' use='optional'/>
+   <attribute name='DisplayName' type='string' use='optional'/>
+   <attribute name='EisType' type='string' use='optional'/>
+   <attribute name='InitialCapacity' type='string' use='default' value='1'/>
+   <attribute name='JndiName' type='string' use='optional'/>
+   <attribute name='LargeIcon' type='string' use='optional'/>
+   <attribute name='LicenseDescription' type='string' use='optional'/>
+   <attribute name='LicenseRequired' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LogFileName' type='string' use='optional'/>
+   <attribute name='LoggingEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ManagedConnectionFactoryClass' type='string' use='optional'/>
+   <attribute name='MapConfigProperties' type='string' use='optional'/>
+   <attribute name='MaxCapacity' type='string' use='default' value='10'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='NativeLibDir' type='string' use='optional'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='RALinkRef' type='string' use='optional'/>
+   <attribute name='SecurityPermissions' type='string' use='optional'/>
+   <attribute name='SecurityPrincipalMaps' type='string' use='optional'/>
+   <attribute name='ShrinkPeriodMinutes' type='string' use='default' value='15'/>
+   <attribute name='ShrinkingEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='SmallIcon' type='string' use='optional'/>
+   <attribute name='SpecVersion' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TransactionSupport' type='string' use='optional'/>
+   <attribute name='URI' type='string' use='required'/>
+   <attribute name='VendorName' type='string' use='optional'/>
+   <attribute name='Version' type='string' use='optional'/>
+   <attribute name='reauthenticationSupport' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='CustomRealm'>
+  <complexType>
+   <attribute name='ConfigurationData' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Password' type='string' use='optional'/>
+   <attribute name='RealmClassName' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='DomainLogFilter'>
+  <complexType>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='SeverityLevel' use='default' value='16'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='64'/>
+      <enumeration value='32'/>
+      <enumeration value='16'/>
+      <enumeration value='8'/>
+      <enumeration value='4'/>
+      <enumeration value='2'/>
+      <enumeration value='1'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='SubsystemNames' type='string' use='optional'/>
+   <attribute name='UserIds' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='FileRealm'>
+  <complexType>
+   <attribute name='MaxACLs' type='string' use='default' value='1000'/>
+   <attribute name='MaxGroups' type='string' use='default' value='1000'/>
+   <attribute name='MaxUsers' type='string' use='default' value='1000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='FileT3'>
+  <complexType>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Path' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JDBCConnectionPool'>
+  <complexType>
+   <attribute name='ACLName' type='string' use='optional'/>
+   <attribute name='CapacityIncrement' type='string' use='default' value='1'/>
+   <attribute name='ConnLeakProfilingEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='DriverName' type='string' use='optional'/>
+   <attribute name='InitialCapacity' type='string' use='default' value='1'/>
+   <attribute name='LoginDelaySeconds' type='string' use='default' value='0'/>
+   <attribute name='MaxCapacity' type='string' use='default' value='1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Password' type='string' use='optional'/>
+   <attribute name='Properties' type='string' use='optional'/>
+   <attribute name='RefreshMinutes' type='string' use='default' value='0'/>
+   <attribute name='ShrinkPeriodMinutes' type='string' use='default' value='15'/>
+   <attribute name='ShrinkingEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='SupportsLocalTransaction' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TestConnectionsOnRelease' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='TestConnectionsOnReserve' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='TestTableName' type='string' use='optional'/>
+   <attribute name='URL' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JDBCDataSource'>
+  <complexType>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='JNDIName' type='string' use='required'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PoolName' type='string' use='optional'/>
+   <attribute name='RowPrefetchEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='RowPrefetchSize' type='string' use='default' value='48'/>
+   <attribute name='StreamChunkSize' type='string' use='default' value='256'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JDBCMultiPool'>
+  <complexType>
+   <attribute name='AlgorithmType' use='default' value='High-Availability'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='High-Availability'/>
+      <enumeration value='Load-Balancing'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='HighAvail' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LoadBalance' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JDBCTxDataSource'>
+  <complexType>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='EnableTwoPhaseCommit' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='JNDIName' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PoolName' type='string' use='optional'/>
+   <attribute name='RowPrefetchEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='RowPrefetchSize' type='string' use='default' value='48'/>
+   <attribute name='StreamChunkSize' type='string' use='default' value='256'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JMSConnectionFactory'>
+  <complexType>
+   <attribute name='AcknowledgePolicy' use='default' value='All'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='All'/>
+      <enumeration value='Previous'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='AllowCloseInOnMessage' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ClientId' type='string' use='optional'/>
+   <attribute name='DefaultDeliveryMode' use='default' value='Persistent'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Persistent'/>
+      <enumeration value='Non-Persistent'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DefaultPriority' type='string' use='default' value='4'/>
+   <attribute name='DefaultRedeliveryDelay' type='string' use='default' value='0'/>
+   <attribute name='DefaultTimeToDeliver' type='string' use='default' value='0'/>
+   <attribute name='DefaultTimeToLive' type='string' use='default' value='0'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='JNDIName' type='string' use='optional'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='10'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='OverrunPolicy' use='default' value='KeepOld'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='KeepOld'/>
+      <enumeration value='KeepNew'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TransactionTimeout' type='string' use='default' value='3600'/>
+   <attribute name='UserTransactionsEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='XAConnectionFactoryEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='JMSFileStore'>
+  <complexType>
+   <attribute name='Directory' type='string' use='required'/>
+   <attribute name='JMSServer' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JMSJDBCStore'>
+  <complexType>
+   <attribute name='ConnectionPool' type='string' use='required'/>
+   <attribute name='JMSServer' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PrefixName' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JMSServer'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='JMSSessionPool'/>
+    <element ref='*'/>
+    <element ref='JMSTopic'/>
+    <element ref='*'/>
+    <element ref='JMSQueue'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='BytesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Store' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TemporaryTemplate' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JMSSessionPool'>
+  <complexType>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='JMSConnectionConsumer' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='AcknowledgeMode' use='default' value='Auto'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Auto'/>
+      <enumeration value='Client'/>
+      <enumeration value='Dups-Ok'/>
+      <enumeration value='None'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ConnectionFactory' type='string' use='optional'/>
+   <attribute name='ListenerClass' type='string' use='required'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='SessionsMaximum' type='string' use='default' value='-1'/>
+   <attribute name='Transacted' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='JMSConnectionConsumer'>
+  <complexType>
+   <attribute name='Destination' type='string' use='required'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Selector' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='JMSTopic'>
+  <complexType>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='JMSDestinationKey' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='BytesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='DeliveryModeOverride' use='default' value='No-Delivery'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Persistent'/>
+      <enumeration value='Non-Persistent'/>
+      <enumeration value='No-Delivery'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ErrorDestination' type='string' use='optional'/>
+   <attribute name='JNDIName' type='string' use='optional'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='MulticastAddress' type='string' use='optional'/>
+   <attribute name='MulticastPort' type='string' use='default' value='6001'/>
+   <attribute name='MulticastTTL' type='string' use='default' value='1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PriorityOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryDelayOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryLimit' type='string' use='default' value='-1'/>
+   <attribute name='StoreEnabled' use='default' value='default'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='false'/>
+      <enumeration value='true'/>
+      <enumeration value='default'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Template' type='string' use='optional'/>
+   <attribute name='TimeToDeliverOverride' type='string' use='default' value='-1'/>
+   <attribute name='TimeToLiveOverride' type='string' use='default' value='-1'/>
+  </complexType>
+ </element>
+
+ <element name='JMSDestinationKey'>
+  <complexType>
+   <attribute name='Direction' use='default' value='Ascending'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Ascending'/>
+      <enumeration value='Descending'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='KeyType' use='default' value='String'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Boolean'/>
+      <enumeration value='Byte'/>
+      <enumeration value='Short'/>
+      <enumeration value='Int'/>
+      <enumeration value='Long'/>
+      <enumeration value='Float'/>
+      <enumeration value='Double'/>
+      <enumeration value='String'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Property' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='JMSQueue'>
+  <complexType>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='JMSDestinationKey' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='BytesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='DeliveryModeOverride' use='default' value='No-Delivery'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Persistent'/>
+      <enumeration value='Non-Persistent'/>
+      <enumeration value='No-Delivery'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ErrorDestination' type='string' use='optional'/>
+   <attribute name='JNDIName' type='string' use='optional'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PriorityOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryDelayOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryLimit' type='string' use='default' value='-1'/>
+   <attribute name='StoreEnabled' use='default' value='default'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='false'/>
+      <enumeration value='true'/>
+      <enumeration value='default'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Template' type='string' use='optional'/>
+   <attribute name='TimeToDeliverOverride' type='string' use='default' value='-1'/>
+   <attribute name='TimeToLiveOverride' type='string' use='default' value='-1'/>
+  </complexType>
+ </element>
+
+ <element name='JMSTemplate'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='JMSTopic'/>
+    <element ref='*'/>
+    <element ref='JMSQueue'/>
+    <element ref='*'/>
+    <element ref='JMSDestinationKey'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='BytesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='BytesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='DeliveryModeOverride' use='default' value='No-Delivery'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Persistent'/>
+      <enumeration value='Non-Persistent'/>
+      <enumeration value='No-Delivery'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ErrorDestination' type='string' use='optional'/>
+   <attribute name='MessagesMaximum' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdHigh' type='string' use='default' value='-1'/>
+   <attribute name='MessagesThresholdLow' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PriorityOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryDelayOverride' type='string' use='default' value='-1'/>
+   <attribute name='RedeliveryLimit' type='string' use='default' value='-1'/>
+   <attribute name='TimeToDeliverOverride' type='string' use='default' value='-1'/>
+   <attribute name='TimeToLiveOverride' type='string' use='default' value='-1'/>
+  </complexType>
+ </element>
+
+ <element name='JoltConnectionPool'>
+  <complexType>
+   <attribute name='ApplicationPassword' type='string' use='optional'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='FailoverAddresses' type='string' use='optional'/>
+   <attribute name='MaximumPoolSize' type='string' use='default' value='1'/>
+   <attribute name='MinimumPoolSize' type='string' use='default' value='0'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PrimaryAddresses' type='string' use='optional'/>
+   <attribute name='RecvTimeout' type='string' use='default' value='0'/>
+   <attribute name='SecurityContextEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='UserName' type='string' use='optional'/>
+   <attribute name='UserPassword' type='string' use='optional'/>
+   <attribute name='UserRole' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='LDAPRealm'>
+  <complexType>
+   <attribute name='AuthProtocol' use='default' value='none'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='none'/>
+      <enumeration value='simple'/>
+      <enumeration value='CRAM-MD5'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Credential' type='string' use='optional'/>
+   <attribute name='GroupDN' type='string' use='optional'/>
+   <attribute name='GroupIsContext' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='GroupNameAttribute' type='string' use='default' value='cn'/>
+   <attribute name='GroupUsernameAttribute' type='string' use='default' value='member'/>
+   <attribute name='LDAPURL' type='string' use='default' value='ldap://ldapserver:389'/>
+   <attribute name='LdapProvider' type='string' use='default' value='com.sun.jndi.ldap.LdapCtxFactory'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Principal' type='string' use='optional'/>
+   <attribute name='RealmClassName' type='string' use='optional'/>
+   <attribute name='SSLEnable' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='UserAuthentication' use='default' value='bind'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='bind'/>
+      <enumeration value='external'/>
+      <enumeration value='local'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='UserDN' type='string' use='optional'/>
+   <attribute name='UserNameAttribute' type='string' use='optional'/>
+   <attribute name='UserPasswordAttribute' type='string' use='default' value='userpassword'/>
+  </complexType>
+ </element>
+
+ <element name='Machine'>
+  <complexType>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='NodeManager' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+   <attribute name='Addresses' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='NodeManager'>
+  <complexType>
+   <attribute name='Certificate' type='string' use='default' value='config/demo.crt'/>
+   <attribute name='CertificatePassword' type='string' use='default' value='password'/>
+   <attribute name='CertificateType' type='string' use='default' value='RSA'/>
+   <attribute name='ListenAddress' type='string' use='default' value='localhost'/>
+   <attribute name='ListenPort' type='string' use='default' value='5555'/>
+   <attribute name='Logs' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='TrustedCertsFile' type='string' use='default' value='config/trusted.crt'/>
+  </complexType>
+ </element>
+
+ <element name='MailSession'>
+  <complexType>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='JNDIName' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Properties' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='MessagingBridge'>
+  <complexType>
+   <attribute name='AsyncDisabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='DurabilityDisabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ForwardingPolicy' use='default' value='Automatic'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Automatic'/>
+      <enumeration value='Manual'/>
+      <enumeration value='Scheduled'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MaximumIdleTimeMilliseconds' type='string' use='default' value='1800000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='QOSDegradationAllowed' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='QualityOfService' use='default' value='Exactly-once'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='Exactly-once'/>
+      <enumeration value='Atmost-once'/>
+      <enumeration value='Duplicate-okay'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ReconnectDelayIncrement' type='string' use='default' value='5000'/>
+   <attribute name='ReconnectDelayInitialMilliseconds' type='string' use='default' value='15000'/>
+   <attribute name='ReconnectDelayMaximumMilliseconds' type='string' use='default' value='50000'/>
+   <attribute name='ScheduleTime' type='string' use='optional'/>
+   <attribute name='Selector' type='string' use='optional'/>
+   <attribute name='SourceDestination' type='string' use='optional'/>
+   <attribute name='Started' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='TargetDestination' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='TransactionTimeoutSeconds' type='string' use='default' value='30'/>
+  </complexType>
+ </element>
+
+ <element name='NTRealm'>
+  <complexType>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PrimaryDomain' type='string' use='optional'/>
+   <attribute name='RealmClassName' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='PasswordPolicy'>
+  <complexType>
+   <attribute name='LockoutCacheSize' type='string' use='default' value='5'/>
+   <attribute name='LockoutDuration' type='string' use='default' value='30'/>
+   <attribute name='LockoutEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LockoutGCThreshold' type='string' use='default' value='400'/>
+   <attribute name='LockoutResetDuration' type='string' use='default' value='5'/>
+   <attribute name='LockoutThreshold' type='string' use='default' value='5'/>
+   <attribute name='MinimumPasswordLength' type='string' use='default' value='8'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='RDBMSRealm'>
+  <complexType>
+   <attribute name='DatabaseDriver' type='string' use='default' value='COM.cloudscape.core.JDBCDriver'/>
+   <attribute name='DatabasePassword' type='string' use='optional'/>
+   <attribute name='DatabaseURL' type='string' use='default' value='jdbc:cloudscape:demo;create=true;autocommit=false'/>
+   <attribute name='DatabaseUserName' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='RealmClassName' type='string' use='default' value='examples.security.rdbmsrealm.RDBMSRealm'/>
+   <attribute name='SchemaProperties' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='Realm'>
+  <complexType>
+   <attribute name='CachingRealm' type='string' use='optional'/>
+   <attribute name='FileRealm' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='ResultsBatchSize' type='string' use='default' value='200'/>
+  </complexType>
+ </element>
+
+ <element name='Server'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='SSL'/>
+    <element ref='?'/>
+    <element ref='ServerStart'/>
+    <element ref='?'/>
+    <element ref='Log'/>
+    <element ref='?'/>
+    <element ref='WebServer'/>
+    <element ref='?'/>
+    <element ref='ExecuteQueue'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='AdministrationPort' type='string' use='default' value='0'/>
+   <attribute name='Cluster' type='string' use='optional'/>
+   <attribute name='ClusterRuntime' type='string' use='optional'/>
+   <attribute name='ClusterWeight' type='string' use='default' value='100'/>
+   <attribute name='DefaultIIOPPassword' type='string' use='optional'/>
+   <attribute name='DefaultIIOPUser' type='string' use='optional'/>
+   <attribute name='DefaultProtocol' use='default' value='t3'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='t3'/>
+      <enumeration value='t3s'/>
+      <enumeration value='http'/>
+      <enumeration value='https'/>
+      <enumeration value='iiop'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DefaultSecureProtocol' use='default' value='t3s'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='t3s'/>
+      <enumeration value='https'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DefaultTGIOPPassword' type='string' use='default' value='guest'/>
+   <attribute name='DefaultTGIOPUser' type='string' use='default' value='guest'/>
+   <attribute name='DomainLogFilter' type='string' use='optional'/>
+   <attribute name='EnabledForDomainLog' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ExpectedToRun' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ExternalDNSName' type='string' use='optional'/>
+   <attribute name='ExtraRmicOptions' type='string' use='optional'/>
+   <attribute name='HelpPageURL' type='string' use='default' value='/docs/adminhelp/'/>
+   <attribute name='HttpdEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='IIOPEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='InstrumentStackTraceEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='InterfaceAddress' type='string' use='optional'/>
+   <attribute name='J2EE12OnlyModeEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='J2EE13WarningEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='JDBCLogFileName' type='string' use='optional'/>
+   <attribute name='JDBCLoggingEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='JMSDefaultConnectionFactoriesEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='JNDITransportableObjectFactoryList' type='string' use='optional'/>
+   <attribute name='JavaCompiler' type='string' use='default' value='javac'/>
+   <attribute name='JavaCompilerPostClassPath' type='string' use='optional'/>
+   <attribute name='JavaCompilerPreClassPath' type='string' use='optional'/>
+   <attribute name='ListenAddress' type='string' use='optional'/>
+   <attribute name='ListenDelaySecs' type='string' use='default' value='0'/>
+   <attribute name='ListenPort' type='string' use='default' value='7001'/>
+   <attribute name='LogRemoteExceptionsEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LoginTimeout' type='string' use='default' value='1000'/>
+   <attribute name='LoginTimeoutMillis' type='string' use='default' value='5000'/>
+   <attribute name='Machine' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='NativeIOEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PreferredSecondaryGroup' type='string' use='optional'/>
+   <attribute name='ReplicationGroup' type='string' use='optional'/>
+   <attribute name='ReverseDNSAllowed' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='RootDirectory' type='string' use='default' value='.'/>
+   <attribute name='StdoutDebugEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='StdoutEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='StdoutSeverityLevel' use='default' value='16'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='64'/>
+      <enumeration value='32'/>
+      <enumeration value='16'/>
+      <enumeration value='8'/>
+      <enumeration value='4'/>
+      <enumeration value='2'/>
+      <enumeration value='1'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='TGIOPEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ThreadPoolPercentSocketReaders' type='string' use='default' value='33'/>
+   <attribute name='TransactionLogFilePrefix' type='string' use='default' value='./'/>
+   <attribute name='TunnelingClientPingSecs' type='string' use='default' value='45'/>
+   <attribute name='TunnelingClientTimeoutSecs' type='string' use='default' value='40'/>
+   <attribute name='TunnelingEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ValidProtocols' type='string' use='optional'/>
+   <attribute name='VerboseEJBDeploymentEnabled' type='string' use='default' value='false'/>
+   <attribute name='WorkspaceShowUserKeysOnly' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='XMLEntityCache' type='string' use='optional'/>
+   <attribute name='XMLRegistry' type='string' use='optional'/>
+   <attribute name='ZACEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ZACPublishRoot' type='string' use='default' value='exports'/>
+  </complexType>
+ </element>
+
+ <element name='SSL'>
+  <complexType>
+   <attribute name='CertAuthenticator' type='string' use='optional'/>
+   <attribute name='CertificateCacheSize' type='string' use='default' value='3'/>
+   <attribute name='Ciphersuites' type='string' use='optional'/>
+   <attribute name='ClientCertificateEnforced' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Enabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ExportKeyLifespan' type='string' use='default' value='500'/>
+   <attribute name='HandlerEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='HostnameVerificationIgnored' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='HostnameVerifier' type='string' use='optional'/>
+   <attribute name='KeyEncrypted' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='ListenPort' type='string' use='default' value='7002'/>
+   <attribute name='LoginTimeoutMillis' type='string' use='default' value='25000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='ServerCertificateChainFileName' type='string' use='default' value='server-certchain.pem'/>
+   <attribute name='ServerCertificateFileName' type='string' use='default' value='server-cert.der'/>
+   <attribute name='ServerKeyFileName' type='string' use='default' value='server-key.der'/>
+   <attribute name='TrustedCAFileName' type='string' use='default' value='trusted-ca.pem'/>
+   <attribute name='UseJava' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='ServerStart'>
+  <complexType>
+   <attribute name='Arguments' type='string' use='optional'/>
+   <attribute name='BeaHome' type='string' use='optional'/>
+   <attribute name='ClassPath' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='RootDirectory' type='string' use='optional'/>
+   <attribute name='SecurityPolicyFile' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='WebServer'>
+  <complexType>
+   <attribute name='Charsets' type='string' use='optional'/>
+   <attribute name='ClusteringEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DefaultServerName' type='string' use='optional'/>
+   <attribute name='DefaultWebApp' type='string' use='optional'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='HttpsKeepAliveSecs' type='string' use='default' value='60'/>
+   <attribute name='KeepAliveEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='KeepAliveSecs' type='string' use='default' value='30'/>
+   <attribute name='LogFileBufferKBytes' type='string' use='default' value='8'/>
+   <attribute name='LogFileFlushSecs' type='string' use='default' value='60'/>
+   <attribute name='LogFileFormat' use='default' value='common'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='common'/>
+      <enumeration value='extended'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LogFileName' type='string' use='default' value='access.log'/>
+   <attribute name='LogRotationPeriodMins' type='string' use='default' value='1440'/>
+   <attribute name='LogRotationTimeBegin' type='string' use='optional'/>
+   <attribute name='LogRotationType' use='default' value='size'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='size'/>
+      <enumeration value='date'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LoggingEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MaxLogFileSizeKBytes' type='string' use='default' value='0'/>
+   <attribute name='MaxPostSize' type='string' use='default' value='-1'/>
+   <attribute name='MaxPostTimeSecs' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PostTimeoutSecs' type='string' use='default' value='30'/>
+   <attribute name='SendServerHeaderEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='URLResource' type='string' use='optional'/>
+   <attribute name='WAPEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='ExecuteQueue'>
+  <complexType>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='ThreadCount' type='string' use='default' value='15'/>
+  </complexType>
+ </element>
+
+ <element name='ShutdownClass'>
+  <complexType>
+   <attribute name='Arguments' type='string' use='optional'/>
+   <attribute name='ClassName' type='string' use='required'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='StartupClass'>
+  <complexType>
+   <attribute name='Arguments' type='string' use='optional'/>
+   <attribute name='ClassName' type='string' use='required'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='FailureIsFatal' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='Targets' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='UnixMachine'>
+  <complexType>
+   <sequence minOccurs='0' maxOccurs='unbounded'>
+    <element ref='NodeManager' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+   <attribute name='Addresses' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PostBindGID' type='string' use='default' value='nobody'/>
+   <attribute name='PostBindGIDEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='PostBindUID' type='string' use='default' value='nobody'/>
+   <attribute name='PostBindUIDEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='UnixRealm'>
+  <complexType>
+   <attribute name='AuthProgram' type='string' use='default' value='wlauth'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='RealmClassName' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='VirtualHost'>
+  <complexType>
+   <attribute name='Charsets' type='string' use='optional'/>
+   <attribute name='ClusteringEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DefaultServerName' type='string' use='optional'/>
+   <attribute name='DefaultWebApp' type='string' use='optional'/>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='HttpsKeepAliveSecs' type='string' use='default' value='60'/>
+   <attribute name='KeepAliveEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='KeepAliveSecs' type='string' use='default' value='30'/>
+   <attribute name='LogFileBufferKBytes' type='string' use='default' value='8'/>
+   <attribute name='LogFileFlushSecs' type='string' use='default' value='60'/>
+   <attribute name='LogFileFormat' use='default' value='common'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='common'/>
+      <enumeration value='extended'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LogFileName' type='string' use='default' value='access.log'/>
+   <attribute name='LogRotationPeriodMins' type='string' use='default' value='1440'/>
+   <attribute name='LogRotationTimeBegin' type='string' use='optional'/>
+   <attribute name='LogRotationType' use='default' value='size'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='size'/>
+      <enumeration value='date'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='LoggingEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='MaxLogFileSizeKBytes' type='string' use='default' value='0'/>
+   <attribute name='MaxPostSize' type='string' use='default' value='-1'/>
+   <attribute name='MaxPostTimeSecs' type='string' use='default' value='-1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PostTimeoutSecs' type='string' use='default' value='30'/>
+   <attribute name='SendServerHeaderEnabled' use='default' value='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='URLResource' type='string' use='optional'/>
+   <attribute name='VirtualHostNames' type='string' use='optional'/>
+   <attribute name='WAPEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='WLECConnectionPool'>
+  <complexType>
+   <attribute name='ApplicationPassword' type='string' use='optional'/>
+   <attribute name='CertificateAuthenticationEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='DeploymentOrder' type='string' use='default' value='1000'/>
+   <attribute name='FailoverAddresses' type='string' use='optional'/>
+   <attribute name='MaximumEncryptionLevel' type='string' use='default' value='0'/>
+   <attribute name='MaximumPoolSize' type='string' use='default' value='1'/>
+   <attribute name='MinimumEncryptionLevel' type='string' use='default' value='0'/>
+   <attribute name='MinimumPoolSize' type='string' use='default' value='1'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PrimaryAddresses' type='string' use='optional'/>
+   <attribute name='SecurityContextEnabled' use='default' value='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='Targets' type='string' use='optional'/>
+   <attribute name='UserName' type='string' use='optional'/>
+   <attribute name='UserPassword' type='string' use='optional'/>
+   <attribute name='UserRole' type='string' use='optional'/>
+   <attribute name='WLEDomain' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='XMLEntityCache'>
+  <complexType>
+   <attribute name='CacheDiskSize' type='string' use='default' value='5'/>
+   <attribute name='CacheLocation' type='string' use='default' value='xmlcache'/>
+   <attribute name='CacheMemorySize' type='string' use='default' value='500'/>
+   <attribute name='CacheTimeoutInterval' type='string' use='default' value='120'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='XMLEntitySpecRegistryEntry'>
+  <complexType>
+   <attribute name='CacheTimeoutInterval' type='string' use='default' value='-1'/>
+   <attribute name='EntityURI' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='PublicId' type='string' use='optional'/>
+   <attribute name='SystemId' type='string' use='optional'/>
+   <attribute name='WhenToCache' use='default' value='defer-to-registry-setting'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='cache-on-reference'/>
+      <enumeration value='cache-at-initialization'/>
+      <enumeration value='cache-never'/>
+      <enumeration value='defer-to-'/>
+      <enumeration value='registry-setting'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='XMLParserSelectRegistryEntry'>
+  <complexType>
+   <attribute name='DocumentBuilderFactory' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='ParserClassName' type='string' use='optional'/>
+   <attribute name='PublicId' type='string' use='optional'/>
+   <attribute name='RootElementTag' type='string' use='optional'/>
+   <attribute name='SAXParserFactory' type='string' use='optional'/>
+   <attribute name='SystemId' type='string' use='optional'/>
+   <attribute name='TransformerFactory' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='XMLRegistry'>
+  <complexType>
+   <choice minOccurs='0' maxOccurs='unbounded'>
+    <element ref='XMLParserSelectRegistryEntry'/>
+    <element ref='*'/>
+    <element ref='XMLRegistryEntry'/>
+    <element ref='*'/>
+    <element ref='XMLEntitySpecRegistryEntry'/>
+    <element ref='*'/>
+   </choice>
+   <attribute name='DocumentBuilderFactory' type='string' use='default' value='weblogic.apache.xerces.jaxp.DocumentBuilderFactoryImpl'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='SAXParserFactory' type='string' use='default' value='weblogic.apache.xerces.jaxp.SAXParserFactoryImpl'/>
+   <attribute name='TransformerFactory' type='string' use='default' value='weblogic.apache.xalan.processor.TransformerFactoryImpl'/>
+   <attribute name='WhenToCache' use='default' value='cache-on-reference'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='cache-on-reference'/>
+      <enumeration value='cache-at-initialization'/>
+      <enumeration value='cache-never'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='XMLRegistryEntry'>
+  <complexType>
+   <attribute name='DocumentBuilderFactory' type='string' use='optional'/>
+   <attribute name='EntityPath' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+   <attribute name='ParserClassName' type='string' use='optional'/>
+   <attribute name='PublicId' type='string' use='optional'/>
+   <attribute name='RootElementTag' type='string' use='optional'/>
+   <attribute name='SAXParserFactory' type='string' use='optional'/>
+   <attribute name='SystemId' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='XmlFileRepository'>
+  <complexType>
+   <attribute name='Directory' type='string' use='optional'/>
+   <attribute name='Domains' type='string' use='optional'/>
+   <attribute name='Name' type='string' use='required'/>
+   <attribute name='Notes' type='string' use='optional'/>
+  </complexType>
+ </element>
+</schema>

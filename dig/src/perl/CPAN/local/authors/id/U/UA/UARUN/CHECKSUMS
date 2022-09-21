@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Error-0.15.tar.gz' => {
+    'md5-ungz' => '332e1aa7529a698438a5fb370e05cdbe',
+    'md5' => '81b4847fb893f18a4e85186bca5f4380',
+    'size' => '8188'
+  }
+};

@@ -1,0 +1,1 @@
+perl -e 'while(! /urlhost="'$1'"/){$_=<>}; $_=<>; s/.*url=//;s/"//; print;' < /pool/conf/live/https-live-redirect/config/obj.conf

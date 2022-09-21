@@ -1,0 +1,103 @@
+#!/usr/bin/ksh
+#####################################################################
+# Deletes every single tar, tar.gz tgz files older than 21 days     # 
+#####################################################################
+# Created By : Cyril Abdi (BVIGI)                                   #
+# Date : 08/04/99                                                   #
+#####################################################################
+# Modified by :  Matteo Moriconi - 12/06/00                         #
+#####################################################################
+# Modified By: Will Sanders (Collective Technologies)               #   
+# Date : 12/06/00						                            #
+# Added: 							                                #
+#	1.  User check of file deletion.			                    #
+#	2.  Reports for age being used.				                    #
+#	3.  Moved the script to ksh.				                    #
+#	4.  File counter.                                               #
+#####################################################################
+
+if [ -z "$1" ]
+then
+	delay="+21" ;
+	echo "Age has been set to a default of 21 days or older."
+	echo ""
+else
+	delay="+$1" ;
+	echo "Age has been set to $1 day(s) or older."
+	echo ""
+fi
+
+echo "Looking for files ..."
+echo ""
+
+tarfiles=`find . -name '*.tar*' -mtime $delay`
+
+tgzfiles=`find . -name '*.tgz' -mtime $delay` 
+
+if [ -n "$tarfiles" -o -n "$tgzfiles" ]
+then
+    numb=0
+
+    echo "Files found are:" 
+    if [ -n "$tarfiles" ]
+    then
+	for i in $tarfiles
+	do
+	    echo "    $i" 
+	    numb=`expr $numb + 1`
+	done
+    fi
+
+    if [ -n "$tgzfiles" ]
+    then
+        for i in $tgzfiles
+        do
+            echo "    $i"
+            numb=`expr $numb + 1`
+        done
+    fi
+else
+    echo "No *.tar* files were found matching the given age."
+    exit 0
+fi 
+
+echo " "
+echo "Are you sure that you want to delete these files???"
+echo "Deleted files are irrecoverable."
+echo "Type yes for deletion or anything else to escape program."
+echo ""
+
+read answer
+
+echo ""
+
+if [ "$answer" != yes ]
+then
+    echo "Deletion cancelled."
+    exit 0
+fi
+
+echo "deleting files ..." ;
+echo ""
+
+if [ -n "$tarfiles" ]
+then
+    rm -Rf `find ./ -name '*.tar*' -mtime $delay` 
+    echo "*.tar* files have been removed."
+else
+    echo "No *.tar* files were removed."
+fi
+
+echo ""
+
+if [ -n "$tgzfiles" ]
+then
+    rm -Rf `find ./ -name '*.tgz' -mtime $delay`
+    echo "*.tgz files have been removed." 
+else
+    echo "No *.tgz files were removed."
+fi
+
+echo ""
+
+echo "The total number of files deleted were $numb and they were all $delay day(s) or older."

@@ -1,0 +1,70 @@
+#!/usr/bin/sh
+
+######################################
+# Join multiple tar file by S.Mackay #
+######################################
+
+FrobEcho=/bin/echo
+nofiles=0
+mycounter=1
+
+CheckFile()
+{       
+        file=$1
+
+        if [ ! -f $file -o ! -r $file ]
+        then
+                return 0
+        else
+                return 1
+        fi
+}
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 1 ~~~~~~~~~~~~~~~~~~~~~~"
+
+$FrobEcho "Enter project ID: \c" ; read myprojectID 
+
+until [ $nofiles -gt 0 ]
+do
+        $FrobEcho "Enter # of files: \c" ; read nofiles
+done
+
+echo "Starting to process, want $nofiles filenames.."
+
+rm -Rf ./tempdirjoin/
+mkdir tempdirjoin
+
+while [ $nofiles -ge 1 ]
+do
+        $FrobEcho "Enter filename (${mycounter}): \c" ; read file
+        if CheckFile $file
+        then
+                echo "Error! $file does not exist or cannot read!"
+                continue
+        else
+#                FILELIST="${FILELIST} $file"
+		cp ${file} ./tempdirjoin/ 
+		cd ./tempdirjoin/
+		tar -xmf ${file}
+		find . -perm -400 ! -perm -200 ! -perm -100 -exec chmod 775 {} \;
+		rm ${file}
+		cd ..
+        fi
+
+        nofiles=`expr $nofiles - 1`
+	mycounter=`expr $mycounter + 1`
+done
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 2 ~~~~~~~~~~~~~~~~~~~~~~"
+
+cd ./tempdirjoin
+tar -cf ${myprojectID}.tar ./
+mv ${myprojectID}.tar ..
+cd ..
+rm -Rf ./tempdirjoin/
+
+echo "The joined filename is called: "
+echo "${myprojectID}.tar" 
+
+# echo "${FILELIST}"
+echo "Finished" 

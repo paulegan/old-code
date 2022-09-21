@@ -1,0 +1,20 @@
+2002  Sarah Jane Murphy             34 High Street, Cork.                             12/07/63 F 4 12500.000000
+2005  John Anthony O'Sullivan       34 Dyke Parade, Mardyke, Cork.                    23/07/67 M 1 18568.000000
+2009  Partick O'Neill               18 Minor Way, Milstreet, Co. Cork.                17/03/65 M 3 17500.000000
+2011  Geraldine Gillian Hughes      'The Gables', Douglas Street, Cork.               18/11/70 F 2 10000.000000
+2014  Mary Helen O'Neill            18 Minor Way, Milstreet, Co. Cork.                29/12/67 F 3 21000.000000
+2020  Patricia Anne Hegarty         21 Frankfield Terrace, Douglas, Cork.             18/05/60 F 1 19768.000000
+2031  Christopher John Murray       238 Blarney Street, Sunday's Well, Cork.          01/01/70 M 1 11000.000000
+2032  Christine Jones               11 Brian Dillon Park, Dillon's Cross, Cork.       10/02/62 F 3 21248.000000
+2035  Stephen James Walsh           45 Patrick Street, Mallow, Co. Cork.              06/09/66 M 1 14560.000000
+2036  Ann Marie O'Riordan           8 Muskerry Villas, Western Road, Cork.            11/11/67 F 3 15500.000000
+2041  Eamonn Peter O'Riordan        11 Upper Janemount, Sunday's Well, Cork.          31/01/62 M 2 12500.000000
+2047  Jane Cahill                   16 Barrack View, Mayfield, Cork.                  11/08/61 F 3 17502.000000
+2050  John Michael Murphy           'St. Jude's', Pearse Road, Ballyphehane, Cork.    15/03/70 M 1 8500.000000
+2053  Joseph Patrick Mullins        2 Lotamore Avenue, Mayfield, Cork                 05/09/67 M 2 15204.000000
+2057  Sandra Mary Kearney           27 Silverheights Close, Mayfield, Cork.           25/12/64 F 1 28000.000000
+2059  James Joseph McCarthy         190A Main Street, Midleton, Co. Cork.             10/01/55 M 3 14560.000000
+2062  Mary Majella O'Brien          8 Woodland Villas, Dillon's Cross, Cork.          03/02/70 F 2 17208.000000
+2067  Theresa Pauline McDonnel      17 Mount Vernon, St. Lukes, Cork.                 15/04/68 F 1 14500.000000
+2077  John Gerard Casey             'Nirvana', Glenbrook Close, Glenbrook, Co. Cork.  08/12/65 M 2 16546.000000
+2080  Noelle Patricia Morrissey     22 Pope's Quay, Cork.                             30/11/69 F 3 14500.000000

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Position Details</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990417">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Displays the details of a position.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,description,apply,details">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function looksLikeCID(cid)
+  {
+   if (cid.length != 8) return false;
+
+   for (i=0; i<8; i++)
+     if (isNaN(cid.charAt(i)))
+       return false;
+
+   return true;
+  }// looksLikeCID
+
+  function validateCIDForm(form)
+  {
+   if (!looksLikeCID(form.cid.value)){
+     alert("The CID you have inputed does not seem to be valid!");
+     return false;
+   }
+
+   return true;
+  }// validateCIDForm
+
+  // -->
+ </SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+ <IMG SRC="images/descripthead.gif" ALT="Position Description" BORDER=0 WIDTH=256 HEIGHT=18>
+
+ <SERVER>
+  if (request.ref==null) redirect("main.html");
+
+  var jobs = new Jobs();
+  var job = jobs.detail(request.ref);
+
+ if (!job.REF) redirect("main.html");
+ </SERVER>
+
+ <P>
+  <FONT SIZE=5><B><SERVER>write(job.TITLE)</SERVER></B></FONT>
+  <BR>
+  <FONT SIZE=2>Job Reference <SERVER>write(job.REF)</SERVER></FONT>
+ </P>
+
+ <TABLE WIDTH=580 BORDER=3 CELLSPACING=1 CELLPADDING=4>
+
+  <TR>
+   <TD WIDTH="11%"><B><FONT SIZE="2">Location</FONT></B></TD>
+   <TD WIDTH="10%"><B><FONT SIZE="2">Dept.</FONT></B></TD>
+   <TD WIDTH="22%"><B><FONT SIZE="2">Function</FONT></B></TD>
+   <TD WIDTH="13%"><B><FONT SIZE="2">Relocation</FONT></B></TD>
+   <TD WIDTH="11%"><B><FONT SIZE="2">Grade</FONT></B></TD>
+   <TD WIDTH="12%"><B><FONT SIZE="2">Expire Date</FONT></B></TD>
+  </TR>
+
+  <TR>
+   <TD WIDTH="11%"><FONT SIZE="2"><SERVER>write(job.LOCATION+",&nbsp;"+job.COUNTRY)</SERVER></FONT></TD>
+   <TD WIDTH="10%"><FONT SIZE="2"><SERVER>write(job.DEPARTMENT)</SERVER></FONT></TD>
+   <TD WIDTH="22%"><FONT SIZE="2"><SERVER>write(job.FUNCTION)</SERVER></FONT></TD>
+   <TD WIDTH="13%"><FONT SIZE="2"><SERVER>write(job.RELOCATION)</SERVER></FONT></TD>
+   <TD WIDTH="11%"><FONT SIZE="2"><SERVER>write(job.GRADE)</SERVER></FONT></TD>
+   <TD WIDTH="12%"><FONT SIZE="2"><SERVER>write(job.EXPIRY_DATE.toLocaleString().replace(/ [0-9]+:.*$/,""))</SERVER></FONT></TD>
+  </TR>
+
+  <TR>
+   <TD COLSPAN="2" VALIGN="TOP"><B><FONT SIZE="2">Job Description</FONT></B></TD>
+   <TD COLSPAN="4" VALIGN="TOP"><SERVER>if (job.DESCRIPTION.match(/\n./)) write("<PRE>\n"); </SERVER><FONT FACE="Times"><SERVER>write(job.DESCRIPTION)</SERVER></FONT><SERVER>if (job.DESCRIPTION.match(/\n./)) write("</PRE>\n"); </SERVER></TD>
+  </TR>
+
+  <TR>
+   <TD COLSPAN="2" VALIGN="TOP"><B><FONT SIZE="2">Experience Required</FONT></B></TD>
+   <TD COLSPAN="4" VALIGN="TOP"><SERVER>if (job.EXPERIENCE.match(/\n./)) write("<PRE>\n"); </SERVER><FONT FACE="Times"><SERVER>write(job.EXPERIENCE)</SERVER></FONT><SERVER>if (job.EXPERIENCE.match(/\n./)) write("</PRE>\n"); </SERVER></TD>
+  </TR>
+
+  <TR>
+   <TD COLSPAN="6" VALIGN="TOP"><B>
+    To apply for the position, 
+    <FONT COLOR="#CF0006"><I>you must submit your resume on-line</I></FONT>
+    by entering your Commerce ID and clicking on the apply button.
+    If you are unsure of your Commerce ID please use this
+    <A HREF="javascript:null;" onClick="window.open('cidLookup.html','cidLookup','width=250,height=150,resizable=1,scrollbars=yes'); return false;">search facility</A>
+    or contact your local HR rep.  For specific questions about
+    the position, please contact the hiring manager listed below.
+    <CENTER>
+     <FORM METHOD="POST" ACTION="application.html" onSubmit="return validateCIDForm(this);">
+      <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+      <INPUT TYPE=HIDDEN NAME="jobTitle" VALUE=`job.TITLE`>
+      <INPUT TYPE=HIDDEN NAME="jobEmail" VALUE=`job.CONTACT_EMAIL`>
+      <SERVER> if (request.jobNext) { </SERVER>
+	<INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+	<INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+	<INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+	<INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+	<INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")`>
+      <SERVER> } </SERVER>
+      <INPUT TYPE=TEXT SIZE=8 NAME="cid">
+      <FONT SIZE=+1><INPUT TYPE="SUBMIT" VALUE="Apply"></FONT><BR>
+     </FORM>
+    </CENTER>
+   </B></TD>
+  </TR>
+
+  <TR>
+   <TD COLSPAN="2" VALIGN="TOP"><B><FONT SIZE="2">Contact</FONT></B></TD>
+   <TD COLSPAN="4" VALIGN="TOP">
+    Name: <SERVER>write(job.CONTACT_PERSON)</SERVER><BR>
+    Email: <A HREF=mailto:`job.CONTACT_EMAIL`><SERVER>write(job.CONTACT_EMAIL)</SERVER></A><BR>
+    Voice: <SERVER>write(job.CONTACT_TEL)</SERVER><BR>
+    Fax: <SERVER>write(job.CONTACT_FAX)</SERVER>
+   </TD>
+  </TR>
+
+ </TABLE>
+
+ <SERVER>
+  job.close();
+ </SERVER>
+
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function gotoPage(dest)
+  {
+   document.propsForm.action = dest;
+   document.propsForm.submit();
+   return false;
+  }
+
+  // -->
+ </SCRIPT>
+
+ <FORM NAME="propsForm" METHOD=POST ACTION="">
+  <INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")`>
+ </FORM>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 WIDTH=500><TR>
+  <TD ALIGN=LEFT>
+   <A HREF="main.html" onMouseOver="window.status='Go back to the search form.';return true;"><IMG SRC="images/returnsearch.gif" ALT="Search Form" BORDER=0 WIDTH="150" HEIGHT="15"></A>
+   <BR>
+   <SERVER> if (request.jobNext && request.jobNext!="undefined") { </SERVER>
+     <A HREF=`"results.html?jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape(request.resultStr?request.resultStr.replace(/"/g,"&quot;"):"")+"&refs="+request.refs` onClick="return gotoPage('results.html');" onMouseOver="window.status='Go back to the search results.';return true;"><IMG SRC="images/returnresult.gif" ALT="Results" BORDER=0 WIDTH=162 HEIGHT=15></A>
+   <SERVER> } </SERVER>
+  </TD>
+  <TD ALIGN=CENTER WIDTH=70%><P ALIGN=CENTER><FONT SIZE=2>
+   Copyright &copy; 1999 Motorola Internal Use Only
+   <BR>
+   For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+  </FONT></P></TD>
+ </TR></TABLE>
+
+</TD></TR></TABLE>
+
+</FORM>
+
+</CENTER>
+
+</BODY>
+
+</HTML>
+

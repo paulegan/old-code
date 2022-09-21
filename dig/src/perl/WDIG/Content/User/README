@@ -1,0 +1,28 @@
+WDIG::Content::User version 1.0
+===============================
+
+$Id$
+
+Class files for managing user access control to content
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+Mail::Sendmail 0.79
+Unix::PasswdFile 0.06
+XML::Simple 2.05
+WDIG::Content::URL_Map 1.0
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

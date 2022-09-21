@@ -1,0 +1,11 @@
+#!/usr/local/bin/tcsh -fb
+
+set lsHosts=( inter6 inter7 inter8 )
+set lsCmds=resourceHog
+set lsHWM=0.7
+
+while( 1 )
+ sleep 60;
+ cc resourceHog.c -o resourceHog
+ resourceHog
+end

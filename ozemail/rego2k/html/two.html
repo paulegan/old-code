@@ -1,0 +1,63 @@
+<HTML>
+
+<HEAD>
+ <TITLE>Page 2</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE BORDER="0">
+
+<TR>
+
+ <FORM NAME="backForm" METHOD="POST" ACTION="%BACK%" onSubmit="document.nextForm.action=this.action; document.nextForm.submit(); return (false);">
+ <TD VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <INPUT TYPE="SUBMIT" NAME="BACK" VALUE=" &lt; &lt; BACK ">
+ </TD>
+ </FORM>
+
+ <FORM NAME="nextForm" METHOD="POST" ACTION="%NEXT%">
+
+ <TD VALIGN="TOP">
+  <!-- Add your stuff here -->
+
+  <P>
+   Select one of the following <TMPL_VAR NAME=plan_info.count> plans:
+  </P>
+
+  <TABLE BORDER="1">
+
+   <TMPL_LOOP NAME=plan_info.list>
+     <TR>    
+       <TD>
+        <INPUT TYPE=RADIO NAME="plan" VALUE="%name%" %checked%>
+        <TMPL_VAR NAME=name>
+       </TD>       
+       <TD>
+        <TMPL_VAR NAME=descr>
+       </TD>
+     </TR>
+   </TMPL_LOOP>
+
+  </TABLE>
+
+  <BR CLEAR=ALL>
+
+  <!-- End here -->
+ </TD>
+
+ <TD VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <INPUT TYPE="SUBMIT" NAME="NEXT" VALUE=" NEXT &gt; &gt; ">
+ </TD>
+
+ </FORM>
+
+</TR>
+
+</TABLE>
+
+</BODY>
+
+</HTML>

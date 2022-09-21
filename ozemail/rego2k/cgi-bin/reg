@@ -1,0 +1,45 @@
+#!/usr/local/bin/perl
+
+# paul.egan@internal.ozemail.com.au	20000217
+
+use Flow;
+
+$testFlowTemplates = '../flow_html';
+
+sub stepThree
+{
+ ($flow,$me,$cgi) = @_;
+ ${${$flow}{$me}} = ${${$flow}{'four'}} if ($cgi->param('plan') eq "OzE200");
+}
+
+$testFlow = {
+  'one' => {
+    'template'   => 'one',
+    'prev'       => 0,
+    'branchFunc' => 0,
+    'next'       => 'two' 
+  },
+  'two' => {
+    'template'   => 'two',
+    'prev'       => 'one',
+    'branchFunc' => sub { ($flow,$me,$cgi) = @_; ${${$flow}{$me}}{'next'} = 'four' if ($cgi->param('address') =~ /sydney/i); },
+    'next'       => 'three' 
+  },
+  'three' => {
+    'template'   => 'three',
+    'prev'       => 'two',
+    'branchFunc' => \&stepThree,
+    'next'       => 'four' 
+  },
+  'four' => {
+    'template'   => 'four',
+    'prev'       => 'three',
+    'branchFunc' => 0,
+    'next'       => 0
+  }
+};
+
+my $flow = new Flow($testFlow, 'one', $testFlowTemplates);
+
+$flow->displayCurrentPage();
+

@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'Log-Dispatch-FileRotate-1.10.tar.gz' => {
+    'md5-ungz' => '0989491b39b2c5ea9621f22f5374227f',
+    'md5' => '67aa7d6f4db2f197e49df5192f45bf7d',
+    'size' => '11962'
+  },
+  'Log-Dispatch-FileRotate-1.05.tar.gz' => {
+    'md5-ungz' => 'f75aa97eceea6210d56db9ab193f5b1e',
+    'md5' => 'e47e388afb6814eb1ee307a31ae42536',
+    'size' => '10742'
+  }
+};

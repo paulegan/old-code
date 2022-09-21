@@ -1,0 +1,12 @@
+#!/www/php/php-current
+<?php
+
+  include("./tcts_includes.php");
+
+  if ($stage == "confirm")
+     confirmTransaction();
+  else if ($stage == "insert")
+     insertTransaction();
+  else printCreateForm($country);
+
+?>

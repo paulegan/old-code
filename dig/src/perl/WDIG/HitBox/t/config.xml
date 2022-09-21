@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ 
+<config>
+ 
+ <!--
+  url_map_file specifies the location of the URL map XML file.
+   -->
+ <url_map_file>t/url_map.xml</url_map_file>
+ 
+ <!--
+  hitbox_map_file specifies the location of the HitBox map XML file.
+   -->
+ <hitbox_map_file>t/hitbox_map.xml</hitbox_map_file>
+ 
+ <!--
+  tag_std specifies the location of the standard HitBox code template.
+   -->
+ <tag_std>t/tag.txt</tag_std>
+ 
+ <!--
+  tag_flash specifies the location of the flash HitBox code template.
+   -->
+ <tag_flash>t/tag.txt</tag_flash>
+ 
+ <!--
+  tag_begin should match the first line of the HitBox code.
+   -->
+ <tag_begin>&lt;!--\s+BEGIN WEBSIDESTORY CODE\s+[^\-]*--&gt;</tag_begin>
+ 
+ <!--
+  tag_end should match the last line of the HitBox code.
+   -->
+ <tag_end>&lt;!--\s+END WEBSIDESTORY CODE\s+--&gt;[\r\n]+</tag_end>
+ 
+ <!--
+  insert_point determines where the HitBox code is added within the HTML.
+   -->
+ <insert_point>(&lt;\/body&gt;\s*|&lt;\/html&gt;\s*)+$</insert_point>
+ 
+ <!--
+  The refresh_page_pattern pattern is compared to each files contents.
+  The file is not tagged if there's a match.
+   -->
+ <refresh_page_pattern>http-equiv.*refresh.*"[01];\s*url</refresh_page_pattern>
+ 
+ <!--
+  The flash_page_pattern pattern is compared to each files contents.  The
+  file is tagged with the flash version rather than the standard if there's
+  a match.
+   -->
+ <flash_page_pattern>&lt;embed\s[^&gt;]*type\s*=['"\s*]application\/x-shockwave-flash['"\s].*?&gt;</flash_page_pattern>
+ 
+ <!--
+  The ssi_include_pattern should match SSI includes and contain a sub expression
+  for the include location.
+   -->
+ <ssi_include_pattern>&lt;!--#include\s+(?:file|virtual)\s*=['"\s]*([^'"\s]+)['"\s].*?&gt;</ssi_include_pattern>
+ 
+ <!--
+  The jsp_include_pattern should match JSP includes and contain a sub expression
+  for the include location.
+   -->
+ <jsp_include_pattern>&lt;%@\s*include\s+file\s*=['"\s]*([^'"\s]+)['"\s].*?%&gt;</jsp_include_pattern>
+ 
+ <!--
+  This pattern should match a full frame tag and contain a sub expression
+  for the frame location.
+   -->
+ <frame_pattern>&lt;frame\s[^&gt;]*src\s*=['"\s]*([^'"\s]+)['"\s].*?&gt;</frame_pattern>
+ 
+ <!--
+  Frames with tags matching this will not be filtered.
+   -->
+ <content_frame_pattern>(src|name)\s*=["\s]*[^"\s]*(main|content|index)</content_frame_pattern>
+ 
+ <!--
+  ref_db_file specifies the location of the reference database - used to
+  track includes & framesets.
+   -->
+ <ref_db_file>t/ref.db</ref_db_file>
+ 
+ <!--
+  ref_db_timeout is the number of seconds for which records in the re DB are valid.
+   -->
+ <ref_db_timeout>86400</ref_db_timeout>
+ 
+ <!--
+  doc_root_base gives the location of the content base directory.
+   -->
+ <doc_root_base>t</doc_root_base>
+ 
+ <!--
+  The full path name of each file found under a specified directory will
+  be compared to this case insensitive RE.  All matches will be considered
+  for tagging.
+   -->
+ <file_match>\.(s?html?|jsp)$</file_match>
+ 
+ <!--
+  File paths matching any of these patterns will be ignored (regardless
+  of a positive file_match).
+   -->
+ <filter>
+  <pattern>\s</pattern>
+  <pattern>*/bak/*</pattern>
+ </filter>
+ 
+</config>

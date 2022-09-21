@@ -1,0 +1,19 @@
+*** main/main.c.orig	Sun Jan 21 15:40:34 2001
+--- main/main.c	Sun Jan 21 15:45:42 2001
+***************
+*** 261,267 ****
+  	if (PG(error_log) != NULL) {
+  #ifdef HAVE_SYSLOG_H
+  		if (!strcmp(PG(error_log), "syslog")) {
+! 			php_syslog(LOG_NOTICE, "%.500s", log_message);
+  			return;
+  		}
+  #endif
+--- 261,267 ----
+  	if (PG(error_log) != NULL) {
+  #ifdef HAVE_SYSLOG_H
+  		if (!strcmp(PG(error_log), "syslog")) {
+! 			php_syslog(LOG_LOCAL0|LOG_NOTICE, "%.500s", log_message);
+  			return;
+  		}
+  #endif

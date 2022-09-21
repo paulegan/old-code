@@ -1,0 +1,1 @@
+exec cat /var/adm/daemon | sed "s/^.*${HOST} //;s/\[[0-9]*\]//" | sort | uniq -c

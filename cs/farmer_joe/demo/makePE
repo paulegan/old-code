@@ -1,0 +1,9 @@
+#!/bin/tcsh -fb
+
+if ( $# != 2 ) then 
+  echo "Usage: $0 <class name> <process method name>"
+  exit
+endif
+
+sed -e "s/USER_CLASS/$1/g" -e "s/USER_PROCESS_METHOD/$2/g" peTemplate.cc > ${1}PE.cc
+echo "Output sent to ${1}PE.cc."

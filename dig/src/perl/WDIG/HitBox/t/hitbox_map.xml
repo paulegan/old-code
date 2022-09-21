@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hitbox_map PUBLIC "-//Disney Enterprises, Inc.//DTD HitBox Account Map 1.1//EN" "http://hitbox.disneyinternational.com/hitbox_map.dtd">
+ 
+<hitbox_map>
+ 
+ <unit country_code="IE" unit_code="NONE" brand_code="DIS">
+  <map><account>DM888888XXXX38EN3</account><category>/</category></map>
+  <map><account>DM000000XXXX38EN3</account><category>/IE</category></map>
+  <map><account>DM444444XXXX38EN3</account><category>/EMEA/IE</category></map>
+ </unit>
+ 
+ <unit country_code="IE" unit_code="BVI" brand_code="DIS">
+  <map><account>DM888888XXXX38EN3</account><category>/BVI</category></map>
+  <map><account>DM000000XXXX38EN3</account><category>/IE/BVI</category></map>
+  <map><account>DM444444XXXX38EN3</account><category>/EMEA/IE/BVI</category></map>
+ </unit>
+ 
+ <unit country_code="IE" unit_code="NONE" brand_code="LUMPY">
+  <map><account>DM333333XXXX38EN3</account><category>/</category></map>
+  <map><account>DM888888XXXX38EN3</account><category>/LUMPY</category></map>
+  <map><account>DM000000XXXX38EN3</account><category>/IE/LUMPY</category></map>
+  <map><account>DM444444XXXX38EN3</account><category>/EMEA/IE/LUMPY</category></map>
+ </unit>
+
+</hitbox_map>

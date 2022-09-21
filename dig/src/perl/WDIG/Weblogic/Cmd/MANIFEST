@@ -1,0 +1,8 @@
+Makefile.PL
+MANIFEST
+README
+Cmd.pm
+t/Cmd.t
+t/config/tdomain/config.xml
+t/config/tdomain/SerializedSystemIni.dat
+t/config/tdomain/fileRealm.properties

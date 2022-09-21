@@ -1,0 +1,13 @@
+
+This is the source location for all WDIG perl development.
+
+The "WDIG" dir contains the source for WDIG modules & scripts.
+
+Use the "createStub" script to start a new project.  
+
+The "make_all" script makes all the WDIG stuff in one go.
+e.g. "./make_all PREFIX=/share install"
+
+"CPAN" contains a local version of CPAN, used for installing
+perl stuff - particularly WDIG modules.  See "CPAN/README".
+

@@ -1,0 +1,13 @@
+
+Here's an example DTS template using INI parameters.  The
+file contains just one package with a "copy objects" task.
+To open, right click on DTS in EM, select All Tasks and
+Open Template.  The idea is that a developer edits the
+copy object task and selects the tables to be copied.  They
+will have to enter the connection details for their local
+database to do so.  These connection parameters will be
+overwritten by the values in the INI file when the package
+is executed.  One feature thats a bit annoying is that the
+location of the INI file is hard-coded in the package
+(currently set to C:\dts_props.ini).
+

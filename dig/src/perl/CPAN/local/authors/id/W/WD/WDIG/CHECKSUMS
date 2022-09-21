@@ -1,0 +1,78 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'WDIG-Weblogic-Config-1.0.tar.gz' => {
+    'md5-ungz' => 'f982dfc65cfa26317dcd5ad9be54a62e',
+    'md5' => 'd8d78eb8640c00eae44780a1095dc800',
+    'size' => '16354'
+  },
+  'WDIG-DB-1.0.tar.gz' => {
+    'md5-ungz' => '3fe5966805f7c864d94ac16f4728b364',
+    'md5' => 'db9a6241f7018841c038f5a776b879b9',
+    'size' => '5332'
+  },
+  'WDIG-File-Slurp-1.0.tar.gz' => {
+    'md5-ungz' => 'c08a46353dd30c1d9206c9bb6676913f',
+    'md5' => 'a8d9f8ce8eb3f8fca93651bae7d92f58',
+    'size' => '1554'
+  },
+  'WDIG-Pluto-1.0.tar.gz' => {
+    'md5-ungz' => '1694be6c7d0e852f307854719ecf8bd9',
+    'md5' => '9e564f0ecb9bb60193c7309d7a9303be',
+    'size' => '3560'
+  },
+  'WDIG-Content-URL_Map-1.0.tar.gz' => {
+    'md5-ungz' => 'f6b30827b375db84ca806bf29f855f26',
+    'md5' => '2b79ac19ef355fe9a302131b05aae463',
+    'size' => '4244'
+  },
+  'WDIG-Content-Drop-1.0.tar.gz' => {
+    'md5-ungz' => 'f8b3e777cc3d92c63df0f654c709baa0',
+    'md5' => '1339324e1cb20fa4bf009ddf41b5afb2',
+    'size' => '5574'
+  },
+  'WDIG-Run-1.0.tar.gz' => {
+    'md5-ungz' => '08a2a57f802d62fa189edb3c0dadbe6b',
+    'md5' => '01694ad7f6b7b9e423ee8d6bac1594a0',
+    'size' => '6071'
+  },
+  'WDIG-Weblogic-Application-1.0.tar.gz' => {
+    'md5-ungz' => '651fa8edef7defc7da0b3d3c4b675549',
+    'md5' => '99e0f709c472a54470a05f0f22450393',
+    'size' => '14808'
+  },
+  'WDIG-File-Cmd-1.0.tar.gz' => {
+    'md5-ungz' => '8f08e9a5dd9a4a33e4150408033ccc8f',
+    'md5' => '747d7437658e83b8c6c0fde73df34041',
+    'size' => '4423'
+  },
+  'WDIG-Weblogic-Cmd-1.0.tar.gz' => {
+    'md5-ungz' => '4b485197573bfcee3fd261b82e85fa5c',
+    'md5' => 'f0d5a5c4ab86e8f26b23dd12739b3cbc',
+    'size' => '5032'
+  },
+  'WDIG-Weblogic-Server-1.0.tar.gz' => {
+    'md5-ungz' => '9f28e403504120756ab6b4b2d307984c',
+    'md5' => 'ea33b32fd3b737c8aea094177e9f7c02',
+    'size' => '11198'
+  },
+  'WDIG-Content-Cmd-1.0.tar.gz' => {
+    'md5-ungz' => '044b2f673a6c378cedba86197ac01736',
+    'md5' => '0e2f0cef9f3f36697408667a3d1d8af0',
+    'size' => '10881'
+  },
+  'WDIG-HitBox-1.0.tar.gz' => {
+    'md5-ungz' => '93dc3e3d7195c595b41da460c345699c',
+    'md5' => '4550bc148dd62f21768a8c9c4236a391',
+    'size' => '11648'
+  },
+  'Bundle-WDIG-1.0.tar.gz' => {
+    'md5-ungz' => '2481976b4c2136eed0a51c81e44e384c',
+    'md5' => 'a14e45f17bc6b9a433c3c718f4619081',
+    'size' => '1527'
+  },
+  'WDIG-Content-User-1.0.tar.gz' => {
+    'md5-ungz' => '9f355148f26f1c16e32fe43c3f1f7b9a',
+    'md5' => '08f8d72b682adb122229768fd9390c5c',
+    'size' => '4182'
+  }
+};

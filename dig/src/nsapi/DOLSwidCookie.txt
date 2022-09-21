@@ -1,0 +1,62 @@
+Instructions for installing the SWID Cookie filter/logger
+======================================================================
+
+Shared Library
+------------------------------
+
+	The shared library for this component should go into a directory
+called shlib in the Netscape Enterprise Server home directory.  For
+instance if the NES home is in /opt/suitespot, then we need have the
+shared library go into the following directory:
+
+/opt/suitespot/shlib/DOLSwidCookie.so
+
+
+
+obj.conf Changes
+------------------------------
+
+The following changes need to be made in the obj.conf:
+
+1. Add an entry for the Init loader for the routine.  This should go
+near the top of the file:
+
+Init fn="load-modules" shlib="/opt/suitespot/shlib/DOLSwidCookie.so" \
+	funcs="DOLSwidCookie-init,DOLSwidCookie-service,DOLSwidCookie-log"
+
+Init fn="DOLSwidCookie-init" server-name="SERVERNAME" server-ip="127.0.0.1" \
+	debug=1 debug-log-name="/opt/suitespot/https-SERVERNAME/logs/swid_cookie_debug.log" \
+	cookie-name="SWID" cookie-expires="10" cookie-domain=".go.com" \
+	log-name="/opt/suitespot/https-SERVERNAME/logs/swid_cookie.log"
+
+Note that this has to be a single line.
+
+The server-name parameter should be set to the name that needs to
+appear as the servername in the swid log file.  The server-ip
+parameter needs to be set to the ip address of the server.  The debug
+parameter can be set to 0.  Note that if debugging is on, there will
+be a lot of log entries generated.  The cookie name can stay the same.
+The cookie-expires parameter is the number of seconds for which the
+cookie will be valid.  This needs to be set to a value resembling the
+same behaviour in the current Interse cookie stuff.
+
+Both the debug-log-name and log-name parameters need to be edited to
+reflect the final deployment log directory on the server.
+
+
+2. Add the following entry as the very first Service entry in the
+default Object section:
+
+Service fn="DOLSwidCookie-service" method="(GET|HEAD)" type="text/html"
+
+
+3. Add the following entry as the very first AddLeg entry in the
+default Object section:
+
+AddLog fn="DOLSwidCookie-log"
+
+
+Stop and Start
+------------------------------
+
+Stop and Start.

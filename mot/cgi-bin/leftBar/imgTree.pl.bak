@@ -1,0 +1,72 @@
+
+# Author	: maria@hr.emea.mot.com 	
+# DevDate	: 19980916
+# TestedWith	:
+# TestDate	: 
+# ReviewedBy	: 
+# ReviewDate	: 
+# ProdDate	:
+# History	: 
+# ApprovedBy	:
+# Description	: Defines all configurables for the left bar generator.  In particular the image tree.
+# Notes		: The tree must be updated for each new section in the site!
+# Keywords	:
+
+$workingDir		= "/u04/www/programs/cgi-bin/leftBar";
+$leftBarPat		= contentsOfFile("$workingDir/leftBar.pat");
+
+$greySuffix		= "_G";
+$highlightSuffix	= "_W";
+$preloadImgPat		= "    #IMAGE##NR# = preloadImage(\"/images/bar/#IMAGE##NR#.gif\");\n    #IMAGE##HL# = preloadImage(\"/images/bar/#IMAGE##HL#.gif\");\n";
+$linkPat		= " <A HREF=\"#URI#\" TARGET=\"_top\" onMouseOver=\"if (browserSupportsJSImages) document['#IMAGE#'].src=#IMAGE##HL#.src\" onMouseOut=\"if (browserSupportsJSImages) document['#IMAGE#'].src=#IMAGE##NR#.src\"><IMG SRC=\"/images/bar/#IMAGE##NR#.gif\" NAME=\"#IMAGE#\" ALT=\"#IMAGE#\" BORDER=0 HEIGHT=20 WIDTH=130></A><BR>\n";
+
+%imageTree = (
+  root		=> [ '',		'/',							'siteMap home renewal HRIS MU EAP compAndBen IOS IDE TWIN org DW news' ],
+  siteMap	=> [ 'root',		'/siteMap.shtml',					'' ],
+  home		=> [ 'root',		'/index.shtml',						'' ],
+  HRIS		=> [ 'root',		'/hris/',						'newsletter oracleHR support y2k publicNotice misc webTeam private' ],
+  newsletter	=> [ 'HRIS',		'/hris/newsletter/', 					'' ],
+  oracleHR	=> [ 'HRIS',		'/hris/oracleHR/',					'' ],
+  support	=> [ 'HRIS',		'/hris/support/',  					'' ],
+  y2k		=> [ 'HRIS',		'/hris/y2000/',						'' ],
+  publicNotice	=> [ 'HRIS',		'/hris/publicNotice/bin/',				'' ],
+  misc		=> [ 'HRIS',		'/hris/misc/',  					'' ],
+  webTeam	=> [ 'HRIS',		'/hris/webTeam/',					'' ],
+  private	=> [ 'HRIS',		'/hris/private/',					'discussion tasklist oracletar' ],
+  discussion	=> [ 'private',		'/hris/private/discussion/','' ],
+  tasklist	=> [ 'private',		'/hris/private/actionList/bin/',			'' ],
+  oracletar	=> [ 'private',		'/hris/private/oracleTar/',	'' ],
+  MU		=> [ 'root',		'/mu/',							'' ],
+  EAP		=> [ 'root',		'/eap/',						'' ],
+  compAndBen	=> [ 'root',		'/compAndBen/',						'' ],
+  IOS		=> [ 'root',		'/ios/',						'IOSsearch admin' ],
+  IOSsearch	=> [ 'IOS',		'/ios/en/searchForm.html',				'' ],
+  admin		=> [ 'IOS',		'/ios/admin/main.html',					'' ],
+  IDE		=> [ 'root',		'/ide/',						'ideForm ideFaq idemrs' ],
+  ideForm	=> [ 'IDE',		'/ide/form/',						'' ],
+  ideFaq	=> [ 'IDE',		'/ide/faq/',						'' ],
+  idemrs	=> [ 'IDE',		'/idemrs/',						'' ],
+  TWIN		=> [ 'root',		'/twin/',						'' ],
+  org		=> [ 'root',		'/org/',						'directory' ],
+  directory	=> [ 'org',		'/org/directory/',					'' ],
+  news		=> [ 'root',		'/news/',						'stock epbl' ],
+  stock		=> [ 'news',		'/news/stock/',						'' ],
+  epbl		=> [ 'news',		'/news/epbl/',						'' ],
+  DW		=> [ 'root',		'/dataWarehouse/',					'DW_Brio DW_Load DW_RepReq DW_Owner DW_Docu dagger' ],
+  DW_Load	=> [ 'DW',		'/dataWarehouse/HelpDataLoadReport.shtml',		'' ],
+  DW_Brio    	=> [ 'DW',		'/dataWarehouse/',					'' ],
+  DW_RepReq	=> [ 'DW',		'/dataWarehouse/',					'' ],
+  DW_Owner	=> [ 'DW',		'/dataWarehouse/',					'' ],
+  DW_Docu	=> [ 'DW',		'/dataWarehouse/',					'' ],
+  dagger	=> [ 'DW',		'/dataWarehouse/dagger/',				'daggerFaq download commentBox' ],
+  daggerFaq	=> [ 'dagger',		'/dataWarehouse/dagger/faq.shtml',			'' ],
+  download	=> [ 'dagger',		'/dataWarehouse/dagger/download/',			'' ],
+  commentBox	=> [ 'dagger',		'/dataWarehouse/dagger/commentBox/',			'' ],
+  renewal	=> [ 'root',		'/renewal/',						'redeployment skillsInventory metrics suggestionBox' ],
+  redeployment	=> [ 'renewal',		'/hrRedeployment/',					'' ],
+  skillsInventory=>[ 'renewal',		'/skillsInventory/',					'' ],
+  metrics	=> [ 'renewal',		'/renewal/metrics/',					'' ],
+  suggestionBox	=> [ 'renewal',		'/renewal/suggestion/',					'' ]
+);
+
+1;

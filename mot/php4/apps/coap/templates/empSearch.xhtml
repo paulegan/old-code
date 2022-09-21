@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Employee Search</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Form for looking up a CID or core ID from a name using TWIN data." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="coap.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/31
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/02/01 16:22:54  eganp
+  - History:	       Copy of SSJS html files with start on change to template form.
+  - History:	       Also converted to xhtml
+  - History:
+  -
+  -->
+
+<body>
+
+<form method="post" action="{PHP_SELF}">
+  Name:
+  <input type="text" size="14" name="name" value="{name}" />
+  <input type="hidden" name="_op" value="search" />
+  <input type="submit" value="Search" />
+</form>
+
+{empIdent.writeList}
+
+</body>
+
+</html>

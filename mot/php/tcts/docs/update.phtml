@@ -1,0 +1,24 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+
+  if ($option == "close" || $option == "reject" ||  $option == "delete" || $option == "modify" || $option=="reopen")
+  {
+    if ($stage == "search")
+    {	 
+      $status = HRIS_APP_TCTS_OPEN;
+      if ($option == "reopen") $status = HRIS_APP_TCTS_CLOSED;
+
+      if ((ereg("^[0-9]+$",$end)) && ereg("^[0-9]+$",$start))
+             printSearchResults($transID,$adminCID,$empCID,$center,$type,$day,$mth,$year,$option,$status,$start,$end);      
+      else {
+             printSearchResults($transID,$adminCID,$empCID,$center,$type,$day,$mth,$year,$option,$status,0,HRIS_APP_TCTS_SEARCHRESULTS);
+	   }
+    }
+    else {
+           printUpdateForm($option,$country);
+	 }
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

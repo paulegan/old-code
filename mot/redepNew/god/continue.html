@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Admin Search Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19981108">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System admin search form.">
+ <META NAME="Keywords"          CONTENT="redeployment,search,admin">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+ 
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+<FORM NAME="sort" METHOD=POST>
+ <TABLE BORDER=0 WIDTH=100%><TR>
+ <TD ALIGN=LEFT VALIGN=MIDDLE>
+  Select the checkbox to allow the user &nbsp;&nbsp;&nbsp;<BR>
+  to apply for any number of positions.
+ </TD>
+ <TD ALIGN=RIGHT VALIGN=MIDDLE>
+   <SELECT NAME="sortColumn" onChange="sort.submit();">
+    <OPTION VALUE="cid" `(request.sortColumn=="cid"?"SELECTED":"")`>Sort by CID
+    <OPTION VALUE="name" `(request.sortColumn=="name"?"SELECTED":"")`>Sort by Name
+    <OPTION VALUE="count" `(request.sortColumn=="count"?"SELECTED":"")`>Sort by Count
+    <OPTION VALUE="NVL(CAN_CONTINUE,'N')" `(request.sortColumn=="NVL(CAN_CONTINUE,'N')"?"SELECTED":"")`>Sort by Restriction
+   </SELECT>
+   <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Sort"></NOSCRIPT>
+ </TD>
+ </TR></TABLE>
+</FORM>
+
+<FORM METHOD=POST ACTION="confirmContinue.html">
+
+<TABLE BORDER=1 WIDTH=100% CELLSPACING=0 CELLPADDING=1>
+
+<TR BGCOLOR=#C0C0C0><TH>CID</TH><TH>Name</TH><TH>Count</TH><TH>Can continue?</TH></TR>
+
+
+<SERVER>
+ var appl = new Application();
+ var list = appl.continueList(request.sortColumn);
+
+ while (list.next()){
+   write(" <TR><TD><A HREF=\"applicants.html?cid="+list.CID+"\">"+list.CID+"</A></TD>");
+   write(" <TD><FONT SIZE=-1>"+list.NAME+"</FONT></TD>");
+   write(" <TD>"+list.COUNT+"</TD>");
+   write(" <TD><INPUT TYPE=CHECKBOX NAME=\"unrestrict-"+list.CID+"\" ");
+   write(((list.CAN_CONTINUE=="Y")?" CHECKED":"")+">");
+   write("<INPUT TYPE=HIDDEN NAME=\"restrictionFor-"+list.CID+"\" VALUE=\"");
+   write(((list.CAN_CONTINUE=="Y")?"on":"off")+"\"></FONT></TD></TR>\n");
+ }
+ list.close();
+</SERVER>
+
+<TR><TD COLSPAN=4 ALIGN=RIGHT>
+ <INPUT TYPE=IMAGE SRC="images/btn_submit.gif" ALT="Submit Form" BORDER=0 WIDTH=120 HEIGHT=32 onMouseOver="window.status='Submit Form';return true;">
+</TD></TR>
+
+</TABLE>
+
+</FORM>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR>
+
+</TABLE>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

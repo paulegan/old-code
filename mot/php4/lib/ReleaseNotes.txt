@@ -1,0 +1,52 @@
+
+PACKAGE:    	Framework Library v1.1
+FILE:	    	$Source$
+DESCRIPTION:	Instructions for installing HRIS PHP framework library
+CREATED:    	2001/02/06
+CREATED BY: 	Paul Egan
+LAST EDITED:	$Date$
+EDITED BY:  	$Author$
+ID:	    	$Id$
+
+--------------------------------------------------------------------------------
+
+RELEASE NOTES HISTORY:
+
+$Log$
+Revision 1.2  2001/02/07 17:10:49  eganp
+A few changes made to pageTemplate
+
+Revision 1.1  2001/02/07 17:07:29  eganp
+Initial release of framework library
+
+
+
+--------------------------------------------------------------------------------
+
+PREREQUISITES:
+
+PHP4 (assumed to be installed to /www/php4)
+PHP base library v7.2c (/www/php4/lib/phplib)
+Framework templates v1.1
+
+--------------------------------------------------------------------------------
+
+INSTALLATION STEPS:
+
+Export files from CVS repository to lib directory -
+cvs export -r fw_lib_1_1_0_0 -d /www/php4/lib php4/apps/lib
+Ensure that files are readable by the web server user
+
+Edit db.php and ensure that WWW_SID is set correctly.
+Edit pageTemplate.php and change template paths to correct directories
+Edit user.php and change authentication cookie setting as required;
+  ensure that LDAP parameters are correct
+  
+
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+
+Framework library operation can only be verified in conjunction with a
+dependant application.
+

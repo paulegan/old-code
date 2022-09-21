@@ -1,0 +1,118 @@
+#!/bin/ksh
+
+#
+# Script to give total size of various types of files.
+# Quickly hacked by Will Sanders, Collective Technologies
+#
+
+files=0
+
+if [ "$1" != gifjpg -a "$1" != java -a "$1" != flash -a "$1" != shockwave -a "$1" != multimedia -a "$1" != downloads -a "$1" != all ]
+then
+    echo "Usage: $0 { gifjpg | java | flash | shockwave | multimedia | downloads | all } { lt100k | 100kto1MB | gt1MB } { dir name or blank for current dir }"
+    exit 1
+fi
+
+if [ "$2" != lt100k -a "$2" != 100kto1MB -a "$2" != gt1MB ]
+then
+    echo "Usage: $0 { gifjpg | java | flash | shockwave | multimedia | downloads | all } { lt100k | 100kto1MB | gt1MB } { dir name or blank for current dir }"
+    exit 1
+fi
+
+echo "Verifying...."
+
+if [ -z "$3" ]
+then
+    dir="."
+else
+    if [ -d "$3" ]
+    then
+        dir="$3"
+    else
+	echo "$3 is not a valid directory.  Please select a valid directory."
+	exit 1
+    fi
+fi
+
+echo "Finding files.  Please wait, this could take a while...."
+
+case "$1" in
+'gifjpg')
+    find $dir -name '*.gif' -print -ls -o -name '*.jpg' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'java')
+    find $dir -name '*.class' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'flash')
+    find $dir -name '*.swf' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'shockwave')
+   find $dir -name '*.dcr' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'multimedia')
+    find $dir -name '*.mp3' -print -ls -o -name '*.au' -print -ls -o -name '*.mov' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'downloads')
+    find $dir -name '*.exe' -print -ls -o -name '*.zip' -print -ls -o -name '*.sea' -print -ls -o -name '*.sit' -print -ls -o -name '*.pdf' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+'all')
+    find $dir -name '*.exe' -print -ls -o -name '*.zip' -print -ls -o -name '*.sea' -print -ls -o -name '*.sit' -print -ls -o -name '*.pdf' -print -ls -o -name '*.mp3' -print -ls -o -name '*.au' -print -ls -o -name '*.mov' -print -ls -o -name '*.dcr' -print -ls -o -name '*.swf' -print -ls -o -name '*.class' -print -ls -o -name '*.gif' -print -ls -o -name '*.jpg' -print -ls > /tmp/fileusage.tmp
+    ;;
+
+esac
+
+echo "Calculating size.  Be patient, patience is a virtue....."
+
+if [ -f "/tmp/fileusage.tmp" ]
+then
+    size=`cat /tmp/fileusage.tmp | awk '{print $7}'`
+else
+    size=0
+fi
+
+case "$2" in
+'lt100k')
+    fsize=0
+    for i in $size 
+    do
+    	if [ "$i" -lt 100000 ]
+    	then
+	    fsize=`expr $fsize + $i`
+    	fi
+    done
+    ;;
+
+'100kto1MB')
+    fsize=0
+    for i in $size  
+    do            
+        if [ "$i" -ge 100000 -a "$i" -le 1000000 ]
+        then                 
+            fsize=`expr $fsize + $i`
+        fi           
+    done             
+    ;;
+
+'gt1MB')
+    fsize=0
+    for i in $size  
+    do            
+        if [ "$i" -gt 1000000 ]
+        then                 
+            fsize=`expr $fsize + $i`
+        fi           
+    done             
+    ;;
+
+esac
+
+echo "Total size for $1 files sized $2 in directory $3 is $fsize bytes"
+
+
+rm /tmp/fileusage.tmp

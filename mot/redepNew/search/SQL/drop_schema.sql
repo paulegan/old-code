@@ -1,0 +1,14 @@
+DROP SNAPSHOT oasis_regions;
+DROP SNAPSHOT oasis_countries;
+DROP SNAPSHOT oasis_locations;
+DROP SNAPSHOT oasis_sectors;
+DROP SNAPSHOT oasis_secondary_orgs;
+DROP SNAPSHOT oasis_tertiary_orgs;
+DROP SNAPSHOT oasis_departments;
+DROP SNAPSHOT oasis_job_grades;
+DROP SNAPSHOT oasis_eeo;
+DROP SNAPSHOT oasis_job_families;
+DROP SNAPSHOT oasis_sub_job_families;
+DROP SNAPSHOT oasis_jobs;
+DROP SNAPSHOT oasis_relocations;
+DROP SNAPSHOT oasis_reqs;

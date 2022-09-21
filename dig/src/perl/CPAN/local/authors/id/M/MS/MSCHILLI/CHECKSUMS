@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'Log-Log4perl-0.35.tar.gz' => {
+    'md5-ungz' => '7af31ead573f5d95062299951099e8f9',
+    'md5' => 'e4766844ba617a6aee38c1cd6fdbbfb9',
+    'size' => '155657'
+  },
+  'Log-Log4perl-0.31.tar.gz' => {
+    'md5-ungz' => '6ea6bc468a92db18bbac4f2df7329e62',
+    'md5' => 'de2bda8f5146d8e353a6b2a1a77a5762',
+    'size' => '152950'
+  }
+};

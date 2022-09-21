@@ -1,0 +1,29 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+  
+  /* main method */
+  
+  if ($transID != "")
+  {
+    $tt = new TransactionTable; 
+    if ($tt->isValidTransID($transID))
+    {
+      if ($stage == "close")
+      {
+         $cid = hris_emailID2CID(GetEnv('REMOTE_USER'));
+	 if (!hris_isCID($cid))
+	    hris_printError("The closed by value ($cid) is not a valid CID");
+	 else {      
+                if ($tt->close($transID,$cid))
+	  	   printSuccess($transID,"closed.pat");
+		else hris_printError("The close function did not complete successfully");
+	      }
+      }
+      else printDetailsForm($transID,"close","close.pat");
+    }
+    else hris_printError("Invalid transaction ID : $transID");
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

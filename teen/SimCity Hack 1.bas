@@ -1,0 +1,41 @@
+REM SIMCITY FUNDS CHECKER              
+REM LUMPY - 27,JUNE,1994
+
+DEFLNG A-Z
+ON ERROR GOTO PERR
+
+TYPE LUMPYTYPE
+ Y AS STRING * 1
+END TYPE
+DIM LUMP AS LUMPYTYPE
+
+OPEN COMMAND$ FOR RANDOM AS #1 LEN = 1
+ IF LOF(1) <> 27248 THEN PRINT "Name specified is not a SimCity file.": ERROR 52
+ GET #1, 3110, LUMP: LET A = ASC(LUMP.Y)
+ GET #1, 3111, LUMP: LET B = ASC(LUMP.Y)
+ GET #1, 3112, LUMP: LET C = ASC(LUMP.Y)
+PRINT "Funds at present in "; COMMAND$; " : $";
+PRINT (A * 65536) + (B * 256) + C
+
+INPUT "What do you want to change it to? $ ", MONEY$
+ IF MONEY$ = "" THEN END
+ LET MONEY$ = RIGHT$(MONEY$, 8)
+ LET M = VAL(MONEY$): IF M > 16000000 THEN M = 16000000
+ LET A = M \ 65536
+ LET B = (M - (A * 65536)) \ 256
+ LET C = M - (A * 65536) - (B * 256)
+
+LET LUMP.Y = CHR$(A): PUT #1, 3110, LUMP
+LET LUMP.Y = CHR$(B): PUT #1, 3111, LUMP
+LET LUMP.Y = CHR$(C): PUT #1, 3112, LUMP
+PRINT : PRINT "Funds in "; COMMAND$; " changed to : $";
+PRINT (A * 65536) + (B * 256) + C
+
+CLOSE #1
+END
+
+PERR:
+ IF ERR = 52 THEN PRINT "    USAGE:   FUNDS cityname.ext": END
+ PRINT "ERROR TYPE"; ERR; "OCCURED"
+END
+

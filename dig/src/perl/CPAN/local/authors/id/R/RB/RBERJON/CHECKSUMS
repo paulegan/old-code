@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'XML-SAX-Expat-0.35.tar.gz' => {
+    'md5-ungz' => '67a2bf88ed3cf85fed79649e4f0a64fe',
+    'md5' => '6ad69129f1f26bc2b7ac6fcc3f8308b8',
+    'size' => '4529'
+  },
+  'XML-NamespaceSupport-1.08.tar.gz' => {
+    'md5-ungz' => 'ee8bee92b8b8b9e9115335abc077a475',
+    'md5' => '81bd5ae772906d0579c10061ed735dc8',
+    'size' => '7643'
+  }
+};

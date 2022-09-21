@@ -1,0 +1,48 @@
+*** Rsync.pm.orig	Mon Jul 14 01:25:50 2003
+--- Rsync.pm	Mon Jul 14 03:03:21 2003
+***************
+*** 14,22 ****
+  package File::Rsync;
+  require 5.004; # it might work with older versions of 5 but not tested
+  
+! use FileHandle;
+  use IPC::Open3 qw(open3);
+  use IO::Select;
+  use POSIX ":sys_wait_h";
+  use Carp 'carp';
+  use File::Rsync::Config;
+--- 14,24 ----
+  package File::Rsync;
+  require 5.004; # it might work with older versions of 5 but not tested
+  
+! use File::Spec::Functions qw(devnull);
+  use IPC::Open3 qw(open3);
++ use IO::Handle;
+  use IO::Select;
++ use IO::File;
+  use POSIX ":sys_wait_h";
+  use Carp 'carp';
+  use File::Rsync::Config;
+***************
+*** 448,456 ****
+        }
+     }
+     print STDERR "exec: @cmd\n" if $merged->{'debug'};
+!    my $out=FileHandle->new; my $err=FileHandle->new;
+     $err->autoflush(1);
+!    my $pid=eval{ open3 \*STDIN,$out,$err,@cmd };
+     $self->{lastcmd} = \@cmd;
+     if ($@) {
+        $self->{'realstatus'}=0;
+--- 450,460 ----
+        }
+     }
+     print STDERR "exec: @cmd\n" if $merged->{'debug'};
+!    my $out=IO::Handle->new;
+!    my $err=IO::Handle->new;
+!    my $in=IO::File->new(devnull(),'+<') or die;
+     $err->autoflush(1);
+!    my $pid=eval{ open3 $in,$out,$err,@cmd };
+     $self->{lastcmd} = \@cmd;
+     if ($@) {
+        $self->{'realstatus'}=0;

@@ -1,0 +1,19 @@
+*** Expat.pm.orig	2003-07-01 22:03:29.000000000 +0100
+--- Expat.pm	2003-07-01 22:03:59.000000000 +0100
+***************
+*** 195,201 ****
+      my %saxattr;
+      map {
+          my ($ns,$prefix,$lname) = $nsh->process_attribute_name($_);
+!         $saxattr{'{' . $ns. '}' . $lname} = {
+                                      Name         => $_,
+                                      LocalName    => $lname || '',
+                                      Prefix       => $prefix || '',
+--- 195,201 ----
+      my %saxattr;
+      map {
+          my ($ns,$prefix,$lname) = $nsh->process_attribute_name($_);
+!         $saxattr{'{' . ($ns || '') . '}' . $lname} = {
+                                      Name         => $_,
+                                      LocalName    => $lname || '',
+                                      Prefix       => $prefix || '',

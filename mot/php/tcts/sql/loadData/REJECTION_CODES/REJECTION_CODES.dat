@@ -1,0 +1,32 @@
+IC|Incomplete|GBR
+IL|Illegible|GBR
+IA|Inaccurate|GBR
+F|Fax error|GBR
+JC|Job code does not exist and requires Rewards approval|GBR
+O|Other|GBR
+QO|Query Out|GBR
+RH|Refer to HRIS|GBR
+IC|Incomplete|DEU
+IL|Illegible|DEU
+IA|Inaccurate|DEU
+F|Fax error|DEU
+JC|Job code does not exist and requires Rewards approval|DEU
+O|Other|DEU
+QO|Query Out|DEU
+RH|Refer to HRIS|DEU
+IC|Incomplete|FRA
+IL|Illegible|FRA
+IA|Inaccurate|FRA
+F|Fax error|FRA
+JC|Job code does not exist and requires Rewards approval|FRA
+O|Other|FRA
+QO|Query Out|FRA
+RH|Refer to HRIS|FRA
+IC|Incomplete|ISR
+IL|Illegible|ISR
+IA|Inaccurate|ISR
+F|Fax error|ISR
+JC|Job code does not exist and requires Rewards approval|ISR
+O|Other|ISR
+QO|Query Out|ISR
+RH|Refer to HRIS|ISR

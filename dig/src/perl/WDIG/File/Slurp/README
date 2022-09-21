@@ -1,0 +1,24 @@
+WDIG::File::Slurp version 1.0
+=============================
+
+$Id$
+
+Functions for reading and writing files directly from variables.
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+None.
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.

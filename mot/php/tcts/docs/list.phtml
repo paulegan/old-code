@@ -1,0 +1,25 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+  
+  /* main method */
+  
+  $tt = new TransactionTable;
+  if ($tt->isValidTransID($transID))
+     printDetailsForm($transID,"list","list.pat");
+  else {
+         if ( ($status != HRIS_APP_TCTS_OPEN) && ($status != HRIS_APP_TCTS_CLOSED) && ($status != HRIS_APP_TCTS_REJECTED) && ($status != HRIS_APP_TCTS_DELETED)) 
+            $status = HRIS_APP_TCTS_OPEN;
+          
+	 $adminCID = "";
+	 if (!isSuperuser(GetEnv('REMOTE_USER')))
+	    $adminCID = hris_emailID2CID(GetEnv('REMOTE_USER'));
+         else if ("jpinck01" == GetEnv('REMOTE_USER'))  // HACK!!
+                 $adminCID = "21400303";
+	    	 
+	 if (isset($start) && isset($end))
+	    printSearchResults("",$adminCID,"",$country,"","","","","list",$status,$start,$end,"adminTransList.pat","listButton.pat","noListResults.pat");
+	 else printSearchResults("",$adminCID,"",$country,"","","","","list",$status,0,HRIS_APP_TCTS_SEARCHRESULTS,"adminTransList.pat","listButton.pat","noListResults.pat");
+       }
+  else hris_printError("Invalid status");
+?>

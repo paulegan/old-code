@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Application</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System application view.">
+ <META NAME="Keywords"          CONTENT="redeployment,application,view">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+<P>
+ <FONT SIZE=+1 COLOR=#333366 FACE="Helvetica,Arial"><B>Application for the position <SERVER>write(request.ref);</SERVER></B></FONT>
+</P> 
+
+<SERVER>
+ if ((request.ref==null) || (request.cid==null))
+   redirect("main.html");
+
+ var appl = new Application(request.cid,request.ref);
+ var resume = appl.getResume();
+</SERVER>
+
+<P>
+ <B>Name:</B>
+ <UL><SERVER>write(resume.NAME);</SERVER></UL>
+</P>
+
+<SERVER> if (resume.POSITION) { </SERVER><P>
+ <B>Current position:</B>
+ <UL><SERVER>write(resume.POSITION);</SERVER></UL>
+</P><SERVER> } </SERVER>
+
+<SERVER> if (resume.MONTHS_IN_POS) { </SERVER><P>
+ <B>Number of months in current position:</B>
+ <UL><SERVER>write(resume.MONTHS_IN_POS);</SERVER></UL>
+</P><SERVER> } </SERVER>
+
+<SERVER> if (resume.GRADE) { </SERVER><P>
+ <B>Current grade:</B>
+ <UL><SERVER>write(resume.GRADE);</SERVER></UL>
+</P><SERVER> } </SERVER>
+
+<SERVER> if (resume.MANAGER) { </SERVER><P>
+ <B>Most recent manager:</B>
+ <UL><SERVER>write(resume.MANAGER);</SERVER></UL>
+</P><SERVER> } </SERVER>
+
+<SERVER> if (resume.BAD_BOY) { </SERVER><P>
+ <B>Currently on a PIP or incident report:</B>
+ <UL><SERVER>write((resume.BAD_BOY=="Y")?"Yes":"No");</SERVER></UL>
+</P><SERVER> } </SERVER>
+
+<P>
+ <B>Education and qualifications:</B>
+ <UL><PRE><FONT FACE="Times"><SERVER>write(resume.EDUCATION);</SERVER></FONT></PRE></UL>
+</P>
+
+<P>
+ <B>Career history:</B>
+ <UL><PRE><FONT FACE="Times"><SERVER>write(resume.CAREER);</SERVER></FONT></PRE></UL>
+</P>
+
+<P>
+ <B>Supporting text:</B>
+ <UL><PRE><FONT FACE="Times"><SERVER>write(resume.ADDITIONAL_TEXT);</SERVER></FONT></PRE></UL>
+</P>
+<P>
+ <B>Contact:</B>
+ <UL><TABLE BORDER=0 WIDTH=80%>
+  <TR>
+   <TD VALIGN=MIDDLE WIDTH=50% ROWSPAN=3><PRE><FONT FACE="Times"><SERVER>write(resume.ADDRESS)</SERVER></FONT></PRE></TD>
+   <TD VALIGN=MIDDLE WIDTH=50%>Work Phone No: <SERVER>write(resume.WORK_TEL)</SERVER></TD>
+  </TR>
+  <TR>
+   <TD VALIGN=MIDDLE WIDTH=50%>Home Phone No: <SERVER>write(resume.HOME_TEL)</SERVER></TD>
+  </TR>
+  <SERVER> if (resume.EMAIL) { </SERVER><TR>
+   <TD VALIGN=MIDDLE WIDTH=50%>Email: <A HREF=mailto:`resume.EMAIL`><SERVER>write(resume.EMAIL)</SERVER></A></TD>
+  </TR><SERVER> } </SERVER>
+ </TABLE></UL>
+</P>
+
+
+<FORM METHOD=POST ACTION="confirmAppl.html">
+
+<INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+<INPUT TYPE=HIDDEN NAME="cid" VALUE=`request.cid`>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=3 BGCOLOR="#CCCCCC">
+
+ <TR>
+   <TD ALIGN=RIGHT><B>Offer Status:</B></TD>
+   <TD ALIGN=LEFT><SERVER>var offerSL = new SelectList("offer_status"); offerSL.write(resume.OFFER_STATUS); </SERVER></TD>
+   <TD ALIGN=CENTER ROWSPAN=3>
+    <INPUT TYPE=IMAGE SRC="images/btn_update.gif" ALT="Update Application" BORDER=0 WIDTH=120 HEIGHT=32 onMouseOver="window.status='Update Vacancy';return true;">
+   </TD>
+ </TR>
+
+ <TR>
+   <TD ALIGN=RIGHT><B>Interview Status:</B><BR></TD>
+   <TD ALIGN=LEFT><SERVER>var interviewSL = new SelectList("interview_status"); interviewSL.write(resume.INTERVIEW_STATUS); </SERVER></TD>
+ </TR>
+
+ <TR>
+   <TD ALIGN=RIGHT><B>Manager Review:</B><BR></TD>
+   <TD ALIGN=LEFT><SERVER>var reviewSL = new SelectList("manager_review"); reviewSL.write(resume.MANAGER_REVIEW); </SERVER></TD>
+ </TR>
+
+</TABLE>
+
+</FORM>
+
+<SERVER>
+ resume.close();
+</SERVER>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR></TABLE>
+
+
+</BODY>
+
+</HTML>

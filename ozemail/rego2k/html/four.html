@@ -1,0 +1,27 @@
+<HTML>
+
+<HEAD>
+ <TITLE>Page 4</TITLE>
+</HEAD>
+
+<BODY>
+
+<TMPL_IF registration.success>
+
+ <P>
+  Congradulations you've registered for
+  <TMPL_VAR NAME=registration.plan>.
+ </P>
+
+<TMPL_ELSE>
+
+ <P>
+  Ooops something went wrong - <BR>
+  <TMPL_VAR NAME=registration.error>.
+ </P>
+
+</TMPL_IF>
+
+</BODY>
+
+</HTML>

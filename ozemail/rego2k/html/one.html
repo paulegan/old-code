@@ -1,0 +1,57 @@
+<HTML>
+
+<HEAD>
+ <TITLE>Page 1</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE BORDER="0">
+
+<TR>
+
+ <FORM NAME="backForm" METHOD="POST" ACTION="%BACK%" onSubmit="document.nextForm.action=this.action; document.nextForm.submit(); return (false);">
+ <TD WIDTH=30 VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <!-- <INPUT TYPE="SUBMIT" NAME="BACK" VALUE=" &lt; &lt; BACK "> -->
+ </TD>
+ </FORM>
+
+ <FORM NAME="nextForm" METHOD="POST" ACTION="%NEXT%">
+
+ <TD VALIGN="TOP">
+  <!-- Add your stuff here -->
+
+  <P>
+   This is the first page of the flow.
+  </P>
+
+  <P>
+   Enter your name:
+   <INPUT TYPE="TEXT" NAME="name" SIZE="30" VALUE="%name%">
+  </P>
+
+  <P>
+   Address:
+   <INPUT TYPE="TEXT" NAME="address" SIZE="30" VALUE="%address%">
+  </P>
+
+  <BR CLEAR=ALL>
+
+  <!-- End here -->
+ </TD>
+
+ <TD VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <INPUT TYPE="SUBMIT" NAME="NEXT" VALUE=" NEXT &gt; &gt; ">
+ </TD>
+
+ </FORM>
+
+</TR>
+
+</TABLE>
+
+</BODY>
+
+</HTML>

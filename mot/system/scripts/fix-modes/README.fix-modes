@@ -1,0 +1,109 @@
+Fix-modes is a script that tries to make the filesystem modes more
+secure.  It does this by removing group and world write permissions of
+all files/devices/directories listed in /var/sadm/install/contents, with
+the exception of those listed in exceptions.h.
+
+This new version also changes ownership of most files to root and
+removes all write permission from non-root owned executables.
+
+The purpose of the updated contents file is to make patch installation
+continue to work (installpatch checks file modes against
+/var/sadm/install/contents)
+
+The script has been tested under Solaris 2.2-7 and will purposely fail
+on other releases.  You can then just "chance" it and update the fix-modes
+script, or check the output of "secure-modes" for any anomalies.
+
+It saves a history of what it did in /var/sadm/install/contents.mods.
+
+This file is used to undo the changes with "fix-modes -u"
+
+During execution it makes a contents.new and contents.mods.new file
+which contain the new versions of contents/contents.mods.
+
+It also creates a contents.diff file which contains all changes
+made to the system till that moment.  It is removed on successful
+completion.  The contents.diff file is used to rollback an incomplete
+secure-modes run so the system agrees again with /var/sadm/install/contents.
+
+Changes are first committed to contents.diff; this file as periodically
+written to disk at which point the actual changes in file permissions
+are committed.  (So the contents.diff file is committed to disk before
+the actual changes are)
+
+Here are the arguments fix-modes expects:
+
+      -D      limit changes to directories
+      -s      Don't chmod go-r set-uid executables
+      -m      Don't chmod go-w files/directories
+      -o      Don't chown most everything to root.
+      -u      undo changes
+      -r      rollback (get system back to a consistent state after
+	      an aborted fix-modes run)
+      -d      debug mode
+      -v      verbose mode
+      -f      force changes, even if the contents file and the file's
+              current mode don't match.  This can't be undone.
+              Undo will restore the file to /var/sadm/install/contents modes
+              The force option will *not* update information about
+              files that do not exist, nor will it attempt to change
+              files on other than ufs/nfs filesystems.
+      -q      quiet mode, more q's, less output
+      -S      Limit changes to Sun packages.
+      -a      Modify all packages.
+      -c      force consistency between .mods and the supplied options,
+	      (i.e., when you specify "-D" and "-c" , the program will
+	      "unfix" all non-directories)
+
+
+      -R dir  Run as if chrooted to <dir>.
+
+Error messages generated.
+
+	ERROR: Can't find cached id <x>
+	WARNING: Can't find cached id <x>
+
+	The standard Solaris user or group id <x> is not present in
+	the system.   Secure-modes doesn't care about user ids too much, it
+	knows their standard values; but it does care about removed
+	group ids.  An ERROR is fatal; the uid/gid in question isn't
+	encoded in secure-modes; a WARNING will means that secure-modes will
+	use the default for Solaris (like 72 for lp and such)
+
+	WARNING: unexpected id <x> for <y>(<z>)
+
+	When caching the uid/gid "<y>", secure-modes found that your
+	systems uses a value <x> different from the default <z>.
+	This is not a fatal error as you might have done this on purpose.
+	However, this may cause many unwanted changes in the OS.
+
+	WARNING: Ignoring old info for <x>
+
+	Typically seen after installing patches; secure-modes already adjusted
+	the permissions for file <x> once before but it needs to
+	re-adjust again.  Each patch installation will set the permissions
+	to the system defaults.
+
+	Various WARNING messages; these typically mean an entry is found
+	that secure-modes doesn't know what to do with; it's ignored.
+
+	<path> reset to original mode
+
+	This means that secure-modes has dropped the .mods file entry
+	for a specific file.  This happens when bugs get fixed in fix-modes
+	or when it's later called with options that limit the changes.
+
+	ABORT: rollback needed but -r not specified.
+
+	When a previous run of secure-modes is interrupted, a rollback
+	(.diff) file is left over; before proceeding this file must
+	be "rolled back".  secure-modes complains about this fact.
+	Invoke secure-modes with the -r option and then reinvoke.
+
+	Other ABORT messages:
+
+	A fatal error condition was observed, like filesystem full,
+	write failed, etc.
+
+
+Casper Dik (Casper.Dik@Holland.Sun.COM)

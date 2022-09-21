@@ -1,0 +1,42 @@
+
+main()
+{
+ while (1){
+   read(command);
+   checkCommand(command);
+   execute(command);
+ }
+}
+
+checkCommand(commandRead)
+{
+ if ( !value(lsOn) || value(lsCmds)==NULL ) return;
+
+ for (each command in lsCmds)
+   if (	match(command,commandRead) &&
+	currentLoad()>value(lsHWM) &&
+	(target=bestHost())!=NULL ) )
+     commandRead = value(lsRExec) + target + commandRead;
+}
+
+bestHost()
+{
+ bestHost.name = NULL;
+ bestHost.load = value(lsLWM);
+
+ while ( nextHost=getHostInfo() )
+   if ( nextHost.load<bestHost.load ||
+	( nextHost.load==bestHost.load &&
+	nextHost.numUsers<bestHost.numUsers ) )
+     bestHost = nextHost;
+
+ return bestHost.name;
+}
+
+lsOn	Turns on & off load sharing
+lsHWM	Specifies the treshold to determine is the local host is over-loaded.
+lsLWM	The Low Water Mark - Any remote host selected must have a load lower than this.
+lsRExec	The command to use for remote executing a process.
+lsCmds	The list of commands that are suitable for migration.
+lsDebug Turns on & off debug output.
+

@@ -1,0 +1,95 @@
+#!/usr/bin/sh
+
+######################################
+# Push content live                  #
+######################################
+
+DEV="63.75.117.198"
+STAGE="63.75.117.199"
+LIVEPATH=`pwd`
+DEVPATH=`pwd | sed 's/\/pool\/live/\/pool\/dev/'`
+STAGINGPATH=`pwd | sed 's/\/pool\/live/\/pool\/staging/'`
+loginID=`whoami`
+myusername=`logname`
+
+clear
+echo "This Script has been created by Steve Mackay 1/1/01"
+# echo "It will take multiple tar files from DEV and join them into 1 file"
+# echo "It will then push it live."
+echo "NOTE: The old stevescp script has now been deleted."
+echo ""
+echo "You are $myusername and are loged in as $loginID." 
+echo "Your path is $LIVEPATH"
+echo ""
+
+if [ "$loginID" != disweb ]
+then
+	clear
+	echo ""
+        echo "You must be disweb to use this script."
+	echo ""
+	exit 1; 
+fi
+
+if [ "$myusername" = smackay ]
+then
+	echo "~~~~~~~~~~~~~~~~ STARTING PHASE 1 ~~~~~~~~~~~~~~~~~~~~~~"
+
+	echo "Is there more than 1 ticket (y/n): " ; read answer
+	if [ "$answer" = yes -o "$answer" = y  -o "$answer" = Y  -o "$answer" = YES  -o "$answer" = Yes ]
+	then
+		echo "Connecting to staging"
+		ssh ${myusername}@${STAGE} cd ${DEVPATH} \; sjoin
+	fi
+	echo ""
+
+	echo "Enter FILENAME (1/2)"; read myfilename
+	echo ""
+
+	echo "Enter accesscode (2/2)"; read stagingcode
+	echo ""
+	echo "~~~~~~~~~~~~~~~~ STARTING PHASE 2 ~~~~~~~~~~~~~~~~~~~~~~"
+
+	echo "Copying file to live..."
+	scp ${myusername}@${STAGE}:${DEVPATH}/${myfilename} ./
+
+	echo "Starting margaux on live."
+	margaux ${myfilename} live ${stagingcode}
+
+	echo ""
+	echo "Have a nice day Finished" 
+
+	exit 0;
+fi
+
+if [ "$myusername" != smackay ]
+then
+sleep 2
+
+        echo "~~~~~~~~~~~~~~~~ STARTING PHASE 1 ~~~~~~~~~~~~~~~~~~~~~~"
+        echo ""
+
+        echo "Enter FILENAME (1/2)"; read myfilename
+        echo ""
+
+        echo "Enter accesscode (2/2)"; read stagingcode
+        echo ""
+        echo "~~~~~~~~~~~~~~~~ STARTING PHASE 2 ~~~~~~~~~~~~~~~~~~~~~~"
+
+        echo "Copying file to live..."
+        scp ${myusername}@${STAGE}:${DEVPATH}/${myfilename} ./
+
+        echo "Starting margaux on live."
+        find . -perm u+r,g+r,o+r -exec chmod 775 {} \;
+	margaux ${myfilename} live ${stagingcode}
+
+        echo ""
+        echo "Have a nice day Finished"
+
+        exit 0;
+
+fi
+
+/pool/local/bin/stevelog $myusername $LIVEPATH $myfilename $stagingcode
+
+exit 1;

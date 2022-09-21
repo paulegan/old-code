@@ -1,0 +1,175 @@
+
+Some notes on the WDIG Perl modules & scripts
+
+
+WDIG::Bundle
+------------
+
+This module doesn't do anything but is a CPAN Bundle that lists all
+WDIG modules and their dependencies.  It can be used to install
+everything, e.g. 
+perl -I/share/src/perl -MCPAN -e 'install Bundle::WDIG'
+
+
+WDIG::File
+----------
+
+WDIG::File::Slurp needs little explaination.  It exports two
+functions, one for reading in a file in one go and the other for
+writing out to a file.
+
+WDIG::File::Cmd exports 4 functions md, cp, mv & rm which work pretty
+much as the unix commands of the same name do.  They each take
+name=>value options which are equivalent to the -r's and -p's of
+their command line cousins.
+
+
+WDIG::Run
+---------
+
+The Run module exports one function, run_cmd(), and does exactly what
+it says on the tin.  This module started off as a watchdog
+specifically for weblogic but kept expanding out to become a generic
+tool for executing commands.  Where you might have been tempted to
+use IPC::Open3, WDIG::Run wraps up all the pipe handling into one
+easy to use function and throws in some goodies for free.  All the
+options are explained in the man page but I will mention that there
+are two distinct modes of operation for this function.  Normal mode
+works like a standard open3 call where a command is forked & exec'd,
+input written to it and the output collected.  Background mode first
+forks a watchdog process which in turn forks & execs the command;
+after reaching a certain point (e.g. "Server Started" with weblogic)
+the watchdog detaches from the caller and the function returns,
+leaving the watchdog to log the output of the command.  This module
+is used all over the place.
+
+
+WDIG::Weblogic
+--------------
+
+The Weblogic branch of the module hierarchy is not surprisingly to do
+with the management of weblogic servers.
+
+At the core is WDIG::Weblogic::Cmd which is a straight-forward 
+wrapper around the weblogic java commands like weblogic.Admin. This
+module doesn't know anything about how servers are configured.
+
+That job is left to WDIG::Weblogic::Config.  This module implements
+an OO style interface to a domain configuration (the config.xml
+file).  The module is completely generic with know magic knowledge of
+WDIG style configuration.  There's one sub-class of Config -
+WDIG::Weblogic::Config::Runtime.  This has the same interface as
+Config but will return data direct from a running server rather from
+the dead config file.  This is mainly important for encrypted JDBC
+passwords.  There's also WDIG::Weblogic::Config::Default  which
+combines a standard config.xml with an XML Schema document and a bit
+of XSLT to give you all the weblogic default attribute values but
+that's more of a toy than anything usefull.
+
+Built on top of Config & Cmd are WDIG::Weblogic::Application and
+WDIG::Weblogic::Server.  They take the data from Config combined with
+some WDIG specific config to get Cmd to do the right thing.  These
+two modules tend to make extensive use of Log::Log4perl and Error.
+
+WDIG::Weblogic::Server is the workhorse of the Weblogic branch. A
+Server object basically represents a real weblogic server.  Most of
+the commands to the weblogic script are implemented here as methods
+to the Server object.  There's a fair bit of WDIG knowledge in this
+module - like looking for properties & java.options files for server
+settings etc.  Most of the methods will check if the server is local
+or remote to where the script is running; if its remote then perl is
+started up on the remote machine with ssh and this copy is fed code
+to instantiate another Server object with the same state and execute
+the requested method.  If you end up trying to debug a problem with
+the weblogic script then the Server module is the place to start.
+
+WDIG::Weblogic::Application is basically just an extrapolation of
+Server class.  While both classes have most of the same methods,
+those of Application are usually implemented by calling the 
+correspnding method for each server defined for the application. One
+of the important exceptions to this is the source_dir() method which
+is used to determine to source of the application content. As the
+highest level WDIG::Weblogic module, this is also the home of the
+weblogic script.  The script itself is little more than a command
+line interface to Application, translating the text command to the
+correct method call.
+
+
+WDIG::Content
+-------------
+
+The Content branch is supposed to gather together all modules related
+to content but that definition is a little hazy!
+
+WDIG::Content::URL_Map is the beginnings of a generic interface to
+map content to arbitrary parameters.  It is also the authoritative
+source of host or doc root mappings.  Should it live up to its full
+potential it could be used as a source for hitbox, adTagger, akamai
+and even the iplanet config files.  For the moment its main use is as
+the plutoShell site_map equivalent for squirt.
+
+WDIG::Content::Drop is an OO representation of a content drop -
+essentially a source, destination and file list.  There's the usual
+getter/setter method which validate their input plus method for
+easily translating the internal data to and from XML.  A sub-class
+for drops destined for the advanced platform.  This is determined 
+from URL_Map and adds extra methods for distinguishing between 
+different file types, e.g. db files & docs.
+
+WDIG::Content::User is designed to be used for managing htpasswd and
+ftppasswd users.  In conjunction with WDIG::Content::User::DB, these
+are derived from plutoShell's UserDB.pm.
+
+WDIG::Content::Cmd and it's sub-classes are a framework for 
+implementing commands related to the management of content.  These
+essentially form a more flexible and scalable container for
+plutoShell functionality.  The Cmd class works as a factory object
+returning an instance of the requested command.  The most important
+of these, and the only one in active use, is
+WDIG::Content::Cmd::push_drop.  push_drop is the equivalent of the
+plutoShell push command but combines that with the processing of
+advanced platform content and database scripts and the functionality
+of contentQMngr.  The push_drop implementation is where all the WDIG
+modules come together.  There two scripts included in this package.
+The first, squirt, provides a simple command line interface to the
+Cmd factory.  squirt_rpc_server is similar but publishes the commands
+through XML RPC but is not in use.
+
+
+WDIG::Pluto
+-----------
+
+The WDIG::Pluto hierarchy is for modules relating to interfaces to
+Pluto.  Currently WDIG::Pluto::RpcClient is the only module
+implemented.  RpcClient is an OO style interface to RPC::XML::Client
+and mainly exists for its create_user_alert() method which combines a
+few other RPC calls to create an alert with the right project & drops
+IDs and names.
+
+
+WDIG::DB
+--------
+
+The place for all things database related just has the one module of
+interest, WDIG::DB::SqlInterpreter.  This follows the standard
+factory pattern with multiple implementations behind the scenes.  The
+module provides a simple new()->exec()->output() interface for the
+execution of sql scripts.  The two implementations are isql over ssh
+and weblogic utils.Schema and the choice between them is largely
+dependant on configuration options.
+
+
+WDIG::HitBox
+------------
+
+This is a recent addition and is mainly just modulification of the
+original hitbox script.  Due to time constraints, there was little
+attempt to make the modules more generic than was required by the
+hitbox script. WDIG::HitBox::URL_Map and WDIG::HitBox::Param_Map
+provide very simple interfaces to url_map.xml & hitbox_map.xml files,
+each a class with only the one method.  WDIG::HitBox::URL_Map should
+not be consfused with WDIG::Content::URL_Map.  Content::URL_Map
+should be extended to meet the requirements of hitbox but for the
+moment the two modules co-exist.  The hitbox script itself now makes
+its home within this package.
+

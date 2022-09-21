@@ -1,0 +1,14 @@
+{
+ char  *str    = NULL;
+ str = pblock_pblock2str(rq->srvhdrs,NULL);
+ pblock_nvinsert("rq_srvhdrs", str, rq->srvhdrs);
+ str = pblock_pblock2str(rq->vars,NULL);
+ pblock_nvinsert("rq_vars", str, rq->srvhdrs);
+ str = pblock_pblock2str(rq->headers,NULL);
+ pblock_nvinsert("rq_headers", str, rq->srvhdrs);
+ str = pblock_pblock2str(rq->reqpb,NULL);
+ pblock_nvinsert("rq_reqpb", str, rq->srvhdrs);
+ str = pblock_pblock2str(pb,NULL);
+ pblock_nvinsert("pb", str, rq->srvhdrs);
+ FREE(str);
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- $Id$ -->
+
+<config>
+
+ <site_map_file>/share/local/lib/plutoShell/site_map.xml</site_map_file>
+
+ <user_file>/share/local/lib/htpasswd.pluto</user_file>
+
+ <projects_file>/share/local/lib/htprojects.pluto</projects_file>
+
+ <log_file>/share/local/var/intladm01/plutoShell.log</log_file>
+
+ <tar_cmd>/usr/local/bin/tar</tar_cmd>
+
+ <buffer_cmd>/local/bin/bfr</buffer_cmd>
+
+ <ssh>
+  <path>/usr/local/bin/ssh</path>
+  <key>/home/disweb/.ssh/plutoShell</key>
+  <user>disweb</user>
+  <options>-T -a -x</options>
+  <cmd>perl -Tw /share/local/bin/plutoShell</cmd>
+ </ssh>
+
+ <content_queue>
+  <queue_file>/share/local/var/content.queue</queue_file>
+  <lock_file>/share/local/var/content.queue.lock</lock_file>
+  <max_queue_tries>5</max_queue_tries>
+ </content_queue>
+
+</config>

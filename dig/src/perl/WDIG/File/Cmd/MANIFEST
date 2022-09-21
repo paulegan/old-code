@@ -1,0 +1,8 @@
+Makefile.PL
+MANIFEST
+README
+Cmd.pm
+t/cp.t
+t/md.t
+t/mv.t
+t/rm.t

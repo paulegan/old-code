@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Transaction Details</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Transaction details. " />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/10
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.3  2001/02/05 16:16:35  eganp
+  - History:	       Added new field - open_date
+  - History:
+  - History:	       Revision 1.2  2001/01/24 19:42:41  eganp
+  - History:	       Updated header with correct header image & css locations
+  - History:	       Added help menu option with helper script
+  - History:	       Added copyright footer
+  - History:	       Changed links & action to use PHP_SELF
+  - History:	
+  - History:	       Revision 1.1.1.1  2001/01/19 11:41:06  eganp
+  - History:	       Initial import of TCTS3.
+  - History:	
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/en_UK/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">Transaction Details</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/details.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'view')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+    
+ <!-- MESSAGE reopen_success -
+ <p class="error">
+  Transaction re-opened.
+ </p>
+    - MESSAGE reopen_success -->
+    
+ <!-- MESSAGE integrate_success -
+ <p class="error">
+  Transaction integrated. (Now open).
+ </p>
+    - MESSAGE integrate_success -->
+    
+ <!-- MESSAGE reject_success -
+ <p class="error">
+  Transaction rejected.
+ </p>
+    - MESSAGE reject_success -->
+    
+ <!-- MESSAGE close_success -
+ <p class="error">
+  Transaction closed.
+ </p>
+    - MESSAGE close_success -->
+
+<table class="form" width="650" border="0" cellpadding="6" cellspacing="0"><tr><td>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="0">
+
+ <tr>
+  <td><span class="label">Transaction ID:</span> {trans_id}</td>
+  <td><span class="label">Batch ID:</span> <a href="{PHP_SELF}?_op=view&amp;_stage=results&amp;batch_id={batch_id}">{batch_id}</a></td>
+ </tr><tr>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+ </tr><tr>
+  <td><span class="label">Employee:</span> {employee_name} <a href="{PHP_SELF}?_op=view&amp;_stage=results&amp;employee={employee}">{employee}</a></td>
+  <td><span class="label">Created:</span> {trans_date}</td>
+ </tr><tr>
+  <td><span class="label">Type:</span> {type}</td>
+  <td><span class="label">Approved:</span> {approved_date}</td>
+ </tr><tr>
+  <td><span class="label">Status:</span> {status_name}</td>
+  <td><span class="label">Effective:</span> {effective_date}</td>
+ </tr><tr>
+  <td><span class="label">Center:</span> {center}</td>
+  <td><span class="label">Opened:</span> {open_date}</td>
+ </tr><tr>
+  <td>&nbsp;</td>
+  <td><span class="label">Closed:</span> {close_date}</td>
+ </tr><tr>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+ </tr><tr>
+  <td><span class="label">Submitted By:</span><br />&nbsp;{submitted_by_name} {submitted_by} {submitted_via}</td>
+  <td><span class="label">Reject Reason:</span><br />&nbsp;{reject_reason}</td>
+ </tr><tr>
+  <td><span class="label">Last Processed By:</span><br />&nbsp;{last_proc_by_name} {last_proc_by}</td>
+  <td><span class="label">Re-opened From:</span> <a href="{PHP_SELF}?_op=view&amp;_stage=details&amp;trans_id={prev_id}">{prev_id}</a></td>
+ </tr>
+
+</table>
+
+</td></tr></table>
+
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0"><tr><td>
+
+ <!-- BEGIN reject_form -->
+ <form method="post" action="{PHP_SELF}" onsubmit="this.reject_reason.value=document.rejectReasonForm.reject_reason.options[document.rejectReasonForm.reject_reason.selectedIndex].value; return (true);">
+  <input type="hidden" name="_op" value="reject" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="trans_id" value="{trans_id}" />
+  <input type="hidden" name="reject_reason" value="" />
+  <input type="submit" value=" Reject " />
+ </form>
+ <!-- END reject_form -->
+
+</td><td>
+
+ <!-- BEGIN close_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="close" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="trans_id" value="{trans_id}" />
+  <input type="submit" value=" Close " />
+ </form>
+ <!-- END close_form -->
+
+</td><td>
+
+ <!-- BEGIN reopen_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="reopen" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="trans_id" value="{trans_id}" />
+  <input type="submit" value=" Reopen " />
+ </form>
+ <!-- END reopen_form -->
+
+</td><td>
+
+ <!-- BEGIN integrate_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="integrate" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="trans_id" value="{trans_id}" />
+  <input type="submit" value=" Integrate " />
+ </form>
+ <!-- END integrate_form -->
+
+</td><td>
+
+ <!-- BEGIN delete_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="delete" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="trans_id" value="{trans_id}" />
+  <input type="submit" value=" Delete " />
+ </form>
+ <!-- END delete_form -->
+
+</td><td>
+
+ <form method="get" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="view" />
+  <input type="submit" value="Search Again" />
+ </form>
+
+</td></tr><tr><td colspan="6">
+
+<!-- BEGIN reject_reason_form -->
+<form name="rejectReasonForm">
+ Reject reason: 
+ <small><select name="reject_reason" style="width:15em">
+  <!-- BEGIN reject_reason_options -->
+  <option value="{reject_reason_value}" {reject_reason_selected}>{reject_reason_name}</option>
+  <!-- END reject_reason_options -->
+ </select></small>
+</form>
+<!-- END reject_reason_form -->
+
+</td></tr></table>
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+</body>
+
+</html>
+

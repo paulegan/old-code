@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Résultats De Recherche</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="fr_FR" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Résultats pour la recherche de transaction." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+ <style type="text/css">
+   p.result { font-size: smaller }
+   p.resultHead { color: #FFFFFF; font-size: smaller }
+   tr.resultHead td { background: #333366 }
+   tr.odd  td { background: #CCCCFF }
+   tr.even td { background: #FFFFCC }
+ </style> 
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/26
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/01/26 18:19:37  eganp
+  - History:	       Added temporary French translation
+  - History:
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/fr_FR/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">&nbsp;Résultats De Recherche</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/results.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'view')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+    
+ <!-- MESSAGE integrate batch_success -
+ <p class="error">
+  Le lot a été avec succès intégré. Toutes les transactions en {batch_id}
+  sont maintenant ouvertes
+ </p>
+    - MESSAGE integrate batch_success -->
+
+ <!-- MESSAGE reject batch_success -
+ <p class="error">
+  Lot {batch_id}, avec succès rejetés.
+ </p>
+    - MESSAGE reject batch_success -->
+
+ <!-- MESSAGE max_reached -
+ <p class="error">
+  Votre recherche a été limitée au maximum de {total} résultats.
+ </p>
+    - MESSAGE max_reached -->
+
+<p>
+ Résultats {start} à {end} de {total_egg}.  Cliquetez une transaction pour l'ouvrir.
+</p>
+
+<table class="results" width="650" border="0" cellspacing="1" cellpadding="2">
+
+<thead>
+ <tr class="resultHead">
+   <td><p class="resultHead">Transaction</p></td>
+   <td><p class="resultHead">Lot</p></td>
+   <td><p class="resultHead">Employé</p></td>
+   <td><p class="resultHead">Soumis Près</p></td>
+   <td><p class="resultHead">Type de Transaction</p></td>
+   <td><p class="resultHead">Mode</p></td>
+ </tr>
+</thead>
+
+<tbody>
+ <!-- BEGIN result_row -->
+ <tr class="{row_class}">
+   <td><p class="result"><a href="{PHP_SELF}?_op=view&amp;_stage=details&amp;trans_id={trans_id}">{trans_id}</a></p></td>
+   <td><p class="result">{batch_id}</p></td>
+   <td><p class="result">{employee}</p></td>
+   <td><p class="result">{submitted_by}</p></td>
+   <td><p class="result">{type}</p></td>
+   <td><p class="result">{status}</p></td>
+ </tr>
+ <!-- END result_row -->
+</tbody>
+
+</table>
+
+<br />
+
+<table border="0" cellpadding="0" cellspacing="0"><tr><td>
+
+ <!-- BEGIN prev_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="view" />
+  <input type="hidden" name="_stage" value="results" />
+  <input type="hidden" name="searchClause" value="{searchClause}" />
+  <input type="hidden" name="start" value="{prev}" />
+  <input type="hidden" name="total" value="{total}" />
+  <input type="submit" value=" &lt;&lt;&lt; Précédent " />
+ </form>
+ <!-- END prev_form -->
+
+</td><td>
+
+ <!-- BEGIN reject_form -->
+ <form method="post" action="{PHP_SELF}" onsubmit="this.reject_reason.value=document.rejectReasonForm.reject_reason.options[document.rejectReasonForm.reject_reason.selectedIndex].value; return (true);">
+  <input type="hidden" name="_op" value="reject batch" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="batch_id" value="{pending_batch}" />
+  <input type="hidden" name="reject_reason" value="" />
+  <input type="submit" value="Rejette le Lot" />
+ </form>
+ <!-- END reject_form -->
+
+</td><td>
+
+ <!-- BEGIN integrate_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="integrate batch" />
+  <input type="hidden" name="_stage" value="commit" />
+  <input type="hidden" name="batch_id" value="{pending_batch}" />
+  <input type="submit" value="Ouvrez le Lot" />
+ </form>
+ <!-- END integrate_form -->
+
+</td><td>
+
+ <form method="get" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="view" />
+  <input type="submit" value="Recherche Encore" />
+ </form>
+
+</td><td>
+
+ <!-- BEGIN next_form -->
+ <form method="post" action="{PHP_SELF}">
+  <input type="hidden" name="_op" value="view" />
+  <input type="hidden" name="_stage" value="results" />
+  <input type="hidden" name="searchClause" value="{searchClause}" />
+  <input type="hidden" name="start" value="{next}" />
+  <input type="hidden" name="total" value="{total}" />
+  <input type="submit" value=" Prochaine &gt;&gt;&gt; " />
+ </form>
+ <!-- END next_form -->
+
+</td></tr><tr><td colspan="5">
+
+<!-- BEGIN reject_reason_form -->
+<form name="rejectReasonForm">
+ Raison rejette: 
+ <small><select name="reject_reason" style="width:15em">
+  <!-- BEGIN reject_reason_options -->
+  <option value="{reject_reason_value}" {reject_reason_selected}>{reject_reason_name}</option>
+  <!-- END reject_reason_options -->
+ </select></small>
+</form>
+<!-- END reject_reason_form -->
+
+</td></tr></table>
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+</body>
+
+</html>

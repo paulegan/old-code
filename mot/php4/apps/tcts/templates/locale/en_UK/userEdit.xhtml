@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>User Manager</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Form for managing application users. " />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+ <style type="text/css">
+   tr.matrixHead td { background: #333366 }
+   tr.matrixBody td { background: #CCCCFF }
+ </style> 
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/15
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.2  2001/01/24 19:42:41  eganp
+  - History:	       Updated header with correct header image & css locations
+  - History:	       Added help menu option with helper script
+  - History:	       Added copyright footer
+  - History:	       Changed links & action to use PHP_SELF
+  - History:
+  - History:	       Revision 1.1.1.1  2001/01/19 11:41:06  eganp
+  - History:	       Initial import of TCTS3.
+  - History:	
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/en_UK/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">User Manager</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/userEdit.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'manage users')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+    
+ <!-- MESSAGE commit_success -
+ <p class="error">
+  The user's permissions have been commited.
+ </p>
+    - MESSAGE commit_success -->
+
+ <!-- MESSAGE add_success -
+ <p class="error">
+  New users have been added.
+ </p>
+    - MESSAGE add_success -->
+
+<form method="post" name="userForm" action="{PHP_SELF}">
+
+<input type="hidden" name="_op" value="manage users" />
+<input type="hidden" name="_stage" value="commit" />
+
+<table class="form" width="650" border="0" cellpadding="6" cellspacing="0"><tr>
+
+<td width="100">
+
+Select user:
+<br />
+<small>
+<select name="user" size="20" onchange="updateMatrix(this.form);"> 
+ <!-- BEGIN user_options -->
+ <option value="{user_id}" {user_selected}>{user_name}</option>
+ <!-- END user_options -->
+</select>
+</small>
+
+</td><td valign="top">
+
+ <table border="0" cellpadding="1" cellspacing="2">
+ <thead>
+  <tr class="matrixHead">
+   <td>&nbsp;</td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_create.gif" alt="Create" width="11" height="39" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_view.gif" alt="View" width="10" height="28" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_update.gif" alt="Update" width="13" height="41" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_delete.gif" alt="Delete" width="10" height="36" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_submitBatch.gif" alt="Submit Batch" width="11" height="76" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_manageLists.gif" alt="Manage User" width="13" height="75" /></td>
+   <td align="center" valign="bottom"><img src="images/en_UK/permHead_manageUsers.gif" alt="Manage User" width="13" height="83" /></td>
+  </tr>
+ </thead>
+ <tbody>
+  <!-- BEGIN perm_matrix -->
+  <tr class="matrixBody">
+   <td align="right">{center_name}</td>
+   <td><input type="checkbox" name="{center}:create" /></td>
+   <td><input type="checkbox" name="{center}:view" /></td>
+   <td><input type="checkbox" name="{center}:update" /></td>
+   <td><input type="checkbox" name="{center}:delete" /></td>
+   <td><input type="checkbox" name="{center}:submit batch" /></td>
+   <td><input type="checkbox" name="{center}:manage lists" /></td>
+   <td><input type="checkbox" name="{center}:manage users" /></td>
+  </tr>
+  <!-- END perm_matrix -->
+ </tbody>
+ </table>   
+
+<br />
+ 
+<input type="submit" value=" Commit  Changes " />
+<br />
+<input type="button" value="   Delete User   " onclick="clearAll(this.form); this.form.submit(); return (false);" />
+<br /><br />
+<input type="button" value="  Add New Users  " onclick="document.location='{PHP_SELF}?_op=manage+users&amp;_stage=add'" />
+
+</td>
+
+</tr></table>
+    
+</form>
+
+<script type="text/javascript">
+<!--
+
+ var perm = [];
+ 
+ <!-- BEGIN js_perms -->
+ perm['{user_id}'] = [ '{user_perms}' ];
+ <!-- END js_perms -->
+ 
+ var allCB = [
+   <!-- BEGIN all_perms -->
+   '{center}:create',
+   '{center}:view',
+   '{center}:update',
+   '{center}:delete',
+   '{center}:submit batch',
+   '{center}:manage lists',
+   '{center}:manage users',
+   <!-- END all_perms -->
+   ''
+ ];
+ 
+ function clearAll(form)
+ {
+  for (var e=0; allCB[e]; e++)
+    form[allCB[e]].checked = false;
+ }
+ 
+ function updateMatrix(form)
+ {
+  clearAll(form);
+  uid = form.user.options[form.user.selectedIndex].value;
+  if (uid)
+    for (var e=0; perm[uid][e]; e++)
+      form[perm[uid][e]].checked = true;
+ }
+ 
+ updateMatrix(document.userForm);
+ 
+//-->
+</script> 
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+
+ 
+</body>
+
+</html>

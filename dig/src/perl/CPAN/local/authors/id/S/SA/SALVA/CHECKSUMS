@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'Config-Properties-0.51.tar.gz' => {
+    'md5-ungz' => 'd51db5df272e33fd30400758b8b95f39',
+    'md5' => '0361581ec71f88e9b8fcbcd69f94413a',
+    'size' => '7558'
+  },
+  'Config-Properties-0.47.tar.gz' => {
+    'md5-ungz' => '08decddabff6cdb15dd10afc4f2c8af5',
+    'md5' => '17747ac5b9633b7a6b5458ad603b9f19',
+    'size' => '7152'
+  }
+};

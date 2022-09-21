@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Search</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990417">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="This page forms the location tab of the advanced Redeployment System search form.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,IOS,search,advanced,location">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+<SCRIPT LANGUAGE="JavaScript">
+ <!--
+
+ function gotoTab(tab)
+ {
+  document.tabForm.action = "advanced."+tab+".html";
+  document.tabForm.submit();
+  return false;
+ }
+
+ function descendTo(dest)
+ {
+  document.tabForm.action = "advanced.1.html";
+  document.tabForm.curLoc.value = dest;
+  document.tabForm.locLevel.value = document.tabForm.nextLevel.value;
+  document.tabForm.submit();
+  return false;
+ }
+
+ // -->
+</SCRIPT>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+
+ <TR><TD>
+
+ <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0><TR>
+  <TD>
+   <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+    <TR>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabLeftCurve.gif" WIDTH=2 HEIGHT=2></TD>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabRightCurve.gif" WIDTH=2 HEIGHT=2></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC VALIGN=CENTER NOWRAP>&nbsp;<FONT FACE="Arial,Helvetica" COLOR=#000000>Location</FONT>&nbsp;</TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD COLSPAN=3 BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=3></TD>
+     <TD BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+   </TABLE>
+  </TD>
+  <TD>
+   <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+    <TR>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabLeftCurve.gif" WIDTH=2 HEIGHT=2></TD>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabRightCurve.gif" WIDTH=2 HEIGHT=2></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC VALIGN=CENTER NOWRAP>&nbsp;<A HREF="advanced.2.html" onClick="return gotoTab(2);"><FONT FACE="Arial,Helvetica" COLOR=#000000>Function</FONT></A>&nbsp;</TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD COLSPAN=5 BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+   </TABLE>
+  </TD>
+  <TD>
+   <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+    <TR>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabLeftCurve.gif" WIDTH=2 HEIGHT=2></TD>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD COLSPAN=2 ROWSPAN=2 BGCOLOR=#CCCCCC VALIGN=TOP><IMG SRC="images/tabRightCurve.gif" WIDTH=2 HEIGHT=2></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#CCCCCC VALIGN=CENTER NOWRAP>&nbsp;<A HREF="advanced.4.html" onClick="return gotoTab(4);"><FONT FACE="Arial,Helvetica" COLOR=#000000>Other</FONT></A>&nbsp;</TD>
+     <TD BGCOLOR=#CCCCCC><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+     <TD BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+    <TR>
+     <TD COLSPAN=5 BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+    </TR>
+   </TABLE>
+  </TD>
+  <TD WIDTH=100%>
+   &nbsp;
+  </TD>
+ </TR></TABLE>
+
+ </TD></TR><TR><TD>
+
+ <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+  <TR>
+   <TD BGCOLOR=#EDEDED><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+   <TD WIDTH=400 BGCOLOR=#CCCCCC ALIGN=CENTER VALIGN=MIDDLE>
+
+
+ <BR><BR><BR CLEAR=ALL>
+
+ <P>
+  Select an area to restrict your search further.
+ </P>
+
+  <SERVER>
+   var loc;
+   var locLevel;
+   var nextLevel;
+
+   if (request.locLevel)
+     locLevel = request.locLevel;
+   else
+     locLevel = "region";
+
+   if (request.curLoc && request.curLoc!=""){
+     loc = request.curLoc.split("|");
+     write("<P><B>"+loc[1]+"</B></P>\n");
+   }
+
+   if (request.locLevel=="0"){
+     write("Can't go any further down!\n");
+   }else{
+     if (locLevel=="region")
+       nextLevel = "country";
+     else if (locLevel=="country")
+       nextLevel = "location";
+     else if (locLevel=="location")
+       nextLevel = "0";
+
+     var locationAM = new AreaMap(locLevel);
+     locationAM.write("advanced.1.html?locLevel="+nextLevel+"&curLoc=",request.curLoc,false);
+   }
+  </SERVER>
+
+ <BR CLEAR=ALL>
+
+ <FORM NAME="tabForm" METHOD=POST ACTION="results.html">
+
+
+ <SERVER>
+   write("<INPUT TYPE=HIDDEN NAME=\"curLoc\" VALUE=\""+(request.curLoc?request.curLoc:"")+"\">\n");
+   write("<INPUT TYPE=HIDDEN NAME=\"locLevel\" VALUE=\""+locLevel+"\">\n");
+   write("<INPUT TYPE=HIDDEN NAME=\"nextLevel\" VALUE=\""+nextLevel+"\">\n");
+   if (request.curLoc)
+     write("<INPUT TYPE=HIDDEN NAME=\""+loc[0]+"\" VALUE=\""+loc[1]+"\">\n");
+
+   var props = ['timeOfPosting','keywords','logicOp','jobsPerPage','orgLevel','area','sector','secondary_org','tertiary_org'];
+   while ((p=props.pop())!=null)
+     if (request[p])
+       write("<INPUT TYPE=HIDDEN NAME=\""+p+"\" VALUE=\""+request[p]+"\">\n");
+
+   var functionMS = new MultiSelect("function"); functionMS.dumpSelection();
+   var gradeMS = new MultiSelect("grade"); gradeMS.dumpSelection();
+ </SERVER>
+     
+ <TABLE BORDER=0 WIDTH=100% CELLSPACING=0 CELLPADDING=10><TR><TD ALIGN=RIGHT>
+   <!-- <INPUT TYPE=IMAGE NAME="searchBtn" ALIGN=RIGHT SRC="images/button_search.gif" ALT="Search" BORDER=0 WIDTH=86 HEIGHT=40> -->
+   <INPUT TYPE="SUBMIT" VALUE=" Search ">
+ </TD></TR></TABLE>
+
+ </FORM>
+
+
+   </TD>
+   <TD BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD>
+  </TR>
+  <TR><TD COLSPAN=3 BGCOLOR=#666666><IMG SRC="images/space.gif" WIDTH=1 HEIGHT=1></TD></TR>
+ </TABLE>
+
+ </TD></TR>
+
+</TABLE>
+
+
+</TABLE></TR></TD>
+
+<BR CLEAR=ALL>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Internal Use Only
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+
+</CENTER>
+
+</BODY>
+
+</HTML>

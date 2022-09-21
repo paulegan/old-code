@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'RPC-XML-0.53.tar.gz' => {
+    'md5-ungz' => 'f4bf7ed87896ae6e9d0debb9b1313be0',
+    'md5' => 'aca56b9abe71f52acf7e046f407f0b42',
+    'size' => '111557'
+  }
+};

@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+#####################################################################
+# Deletes files older than 21 days sitting of FTP servers           # 
+#####################################################################
+# Created By : Cyril Abdi (BVIGI)                                   #
+# Date : 08/04/99                                                   #
+#####################################################################
+# Modified by :  Matteo Moriconi - 12/06/00                         #
+#####################################################################
+
+path="/pool/upload/"
+myDate="`date +%H%M_%d%m%y`" ;
+myLogFileName="FtpCleaning_Logs_$myDate.log" ;
+delay="+31" ;
+
+echo "################################################\n" > $myLogFileName ;
+echo " Log file generated @ $myDate\n" >> $myLogFileName ;
+echo "################################################\n\n" >> $myLogFileName ;
+for j in `ls $path`
+do
+	subpath="/pool/upload/$j";
+	echo $subpath
+	files="`find $subpath -mtime $delay`" ;
+	if test  "$files" 
+	then
+        for i in $files
+        do
+                ls -l "$i" >> $myLogFileName ;
+                #rm -Rf $i ;
+        done
+	fi
+done
+echo "\n################################################\n\n" >> $myLogFileName ;

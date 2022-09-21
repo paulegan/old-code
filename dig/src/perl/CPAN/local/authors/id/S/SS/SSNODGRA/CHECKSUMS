@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'Unix-ConfigFile-0.06.tar.gz' => {
+    'md5-ungz' => 'f22c2dbf97d3931f751b76305c0a9acc',
+    'md5' => 'f1dc33ce9658305ad839a3728aa1887e',
+    'size' => '18821'
+  }
+};

@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'Compress-Zlib-1.22.tar.gz' => {
+    'md5-ungz' => '554d06641f2cb91c0965654a1d9a2817',
+    'md5' => '5ec5fcc19a854c80fc706417807fb6db',
+    'size' => '36781'
+  },
+  'DB_File-1.806.tar.gz' => {
+    'md5-ungz' => '982eb804ce1421bbce8671e8136ba998',
+    'md5' => '306033319ec016cbec2ff4f3238f3566',
+    'size' => '80078'
+  }
+};

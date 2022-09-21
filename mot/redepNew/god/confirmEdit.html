@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Position Edit Confirmation</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980828">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System edit confirmation.">
+ <META NAME="Keywords"          CONTENT="redeployment,vacancy,edit">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   // Get Cookie Value function
+   function getCookieVal(offset)
+   {
+    var endstr = document.cookie.indexOf (";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+   }// getCookieVal
+
+   // Get Cookie function
+   function getCookie(name)
+   {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+       var j = i + alen;
+       if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+       i = document.cookie.indexOf(" ", i) + 1;
+       if (i == 0) break;
+    }
+    return null;
+   }// getCookie
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+
+<SERVER>
+ var jobs = new Jobs();
+ var req = jobs.augmentRequest(request);
+
+ if (!jobs.update(req))
+   error("Unable to update position. - "+jobs.errorMessage);
+
+ mailPositionNotification(req.contactEmail,(req.hiringManager?(req.hiringManager+"@email.mot.com"):null));
+</SERVER>
+
+
+<P>
+ The position <SERVER>write(req.ref);</SERVER> has been edited.
+</P>
+
+<P><SERVER>
+ var now = new Date();
+ var todaysDate = new Date(now.getYear(),now.getMonth(),now.getDate());
+ var numDaysToStart = Math.ceil((req.advertiseDate.getTime()-todaysDate.getTime())/(project.mSecsInADay));
+ var postDays = Math.ceil((req.expiryDate.getTime()-req.advertiseDate.getTime())/(project.mSecsInADay));
+
+ if ( req.expiryDate.getTime() < todaysDate.getTime() ){
+   write("This vacancy will not be advertised because the expiry date is in the past!");
+ }else{
+   write("It will be advertised "+(numDaysToStart<1?"immediately":"in "+numDaysToStart+" days time"));
+   write(" and will continue for "+(numDaysToStart<1?postDays+numDaysToStart:postDays)+" days.");
+ }
+</SERVER></P>
+
+<P><SERVER>
+ if (req.hiringManager)
+   write(req.hiringManagerName+" ("+req.hiringManagerCID+") has been assigned as the hiring manager for this position.\n");
+</SERVER></P>
+
+
+<P>
+ <A HREF=`"/search/details.html?ref="+req.ref`>View vacancy details</A>
+</P>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR></TABLE>
+
+
+</BODY>
+
+</HTML>

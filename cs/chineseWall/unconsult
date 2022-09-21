@@ -1,0 +1,31 @@
+#!/usr/bin/suidperl
+
+# unconsult(<organization>)
+
+unshift(@INC,".");
+require 'syscall.ph';
+
+$ENV{'PATH'} = '/bin:/usr/bin:/usr/ucb';
+
+if ( $#ARGV != 0 ){
+  die "Usage: $0 <organization>\n"
+}
+$requestedOrg = $ARGV[0];      
+$consultant = getlogin;     
+$groupFile = "/etc/group";		# usual locn. for UNIX group file
+$conflictFile = "/etc/conflict";	# specifies the conflict of interest reln.
+
+#Remove user from group. 
+`rm -f /tmp/group > /dev/null`;
+`mv $groupFile /tmp/group`;
+open(OLDGRP,  "/tmp/group") || die "Something is wrong. No group file.\n";
+open(NEWGRP, ">$groupFile");
+ while(<OLDGRP>){
+   s/,*$consultant// if (/^$requestedOrg:/) ;
+   print NEWGRP;
+ }
+close(OLDGRP);
+close(NEWGRP);
+`rm -f /tmp/group > /dev/null`;
+
+print "User $consultant can no longer access $requestedOrg datasets\n";

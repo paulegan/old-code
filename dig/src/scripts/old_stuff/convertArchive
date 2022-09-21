@@ -1,0 +1,49 @@
+#!/bin/ksh
+
+# convertArchive - converts tar files to zips & visa-versa
+
+# paul.egan@disney.com		20010604
+
+tempDir="/tmp/convertArchive.dir.$$"
+tempFile="/tmp/convertArchive.file.$$"
+usage="Usage: $0 [-c] source [dest]"
+
+while getopts qc opt; do
+  case $opt in
+    c) compress=1;;
+    q) quiet=1;;
+    ?) echo $usage
+       exit 2;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ -z "$1" ]; then echo $usage; exit 2; fi
+if [ ! -f "$1" ]; then echo "$1 not found."; exit 2; fi
+
+source=$1; dest=$2
+type=`file $source`; type=${type##*:}
+
+if [[ "$type" = *compressed* ]]; then
+  gunzip -c $source > $tempFile
+  source=$tempFile
+  type=`file $source`; type=${type##*:}
+fi
+
+mkdir $tempDir
+
+if [[ "$type" = *[Tt][Aa][Rr]* ]]; then
+  [ ! -z "$dest"  ] || dest=${1%%.*}.zip
+  [ ! -z "$quiet" ] || echo "Converting $1 to $dest"
+  cat $source | ( cd $tempDir; tar -xf -; zip -rq9 - . ) > $dest
+elif [[ "$type" = *[Zz][Ii][Pp]* ]]; then
+  [ ! -z "$dest"  ] || dest=${1%%.*}.tar
+  [ ! -z "$quiet" ] || echo "Converting $1 to $dest"
+  unzip -qd $tempDir $source; ( cd $tempDir; tar -cf - . ) > $dest
+else
+  echo "Unknown file type: $type"
+fi
+
+if [ ! -z "$compress" ]; then gzip $dest; fi
+
+rm -fr $tempDir $tempFile

@@ -1,0 +1,6 @@
+LOAD DATA INFILE grade.dat
+REPLACE INTO TABLE grade
+FIELDS TERMINATED BY "|"
+(
+  name	CHAR
+)

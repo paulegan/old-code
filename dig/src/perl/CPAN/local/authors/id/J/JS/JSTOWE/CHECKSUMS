@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'TermReadKey-2.21.tar.gz' => {
+    'md5-ungz' => 'd45920c0088a6168ca22113eddc9c306',
+    'md5' => '888aabb723b8c21e35c55e979655f08e',
+    'size' => '34878'
+  }
+};

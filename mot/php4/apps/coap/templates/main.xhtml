@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>COAP SDS</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Application for maintaining COAP data to be fed to the data mart." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="coap.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/31
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/02/01 16:22:54  eganp
+  - History:	       Copy of SSJS html files with start on change to template form.
+  - History:	       Also converted to xhtml
+  - History:
+  -
+  -->
+
+<body>
+
+<!--
+ if (!request.auth_user) error("App must be protected!");
+
+ var userAccess = new UserAccess(request.auth_user);
+ var tabList = userAccess.allowedTabs();
+ var tabForm = new TabForm(tabList);
+
+ if ( !tabList || tabList.length<1 )
+   error("You do not have access to this system.");
+ if ( !request.tab || !userAccess.allowsAccessTo(request.tab) )
+   request.tab = tabList[0].name;
+
+ tabForm.write(request.tab);
+-->
+
+<table border="0">
+ <tr>
+  <td align="center"><a href="help.xhtml" onclick="window.open('help.xhtml','coap_help','width=350,height=550,resizable=1,scrollbars=yes'); return false;"><img src="images/help.gif" alt="Help" border="0" width="32" height="32" /></a></td>
+  <td align="center"><a href="images/quickGuide.gif" onclick="window.open('images/quickGuide.gif','coap_qg','width=970,height=510,resizable=1,scrollbars=yes'); return false;"><img src="images/qgIcon.gif" alt="Quick Guide" border="0" width="32" height="32" /></a></td>
+ </tr>
+ <tr>
+  <td align="center"><a href="help.xhtml" onclick="window.open('help.xhtml','coap_help','width=350,height=550,resizable=1,scrollbars=yes'); return false;">Help</a></td>
+  <td align="center"><a href="images/quickGuide.gif" onclick="window.open('images/quickGuide.gif','coap_qg','width=970,height=510,resizable=1,scrollbars=yes'); return false;">Quick Guide</a></td>
+ </tr>
+</table>
+
+<p class="copyright">
+ Copyright &#169; 2001 Motorola Confidential Proprietary
+</p>
+
+</body>
+
+</html>

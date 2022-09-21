@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Module-Build-0.18.tar.gz' => {
+    'md5-ungz' => '1f5464c29163978852fe358acc2b2688',
+    'md5' => 'c56febbf6abf8591bbf0bc8315b91370',
+    'size' => '60816'
+  },
+  'ExtUtils-ParseXS-2.02.tar.gz' => {
+    'md5-ungz' => '0d98a494efecede38e7072f228a66051',
+    'md5' => 'f9f2b373789e91d673ed85654df3ea2b',
+    'size' => '22037'
+  }
+};

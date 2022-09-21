@@ -1,0 +1,117 @@
+#!/usr/local/bin/perl -cwT
+
+# consult(<organization>)
+#
+# Support for Chinese Wall policies in UNIX.
+#
+# Author: Simon Foley & Paul Egan
+# 
+# Implement a Chinese Wall based policy, per specification in
+# /etc/conflict.  This script must be suid root! 
+# See "Implementing Chinese Walls in BSD UNIX(ABSTRACT)" at 
+# http://odyssey.ucc.ie/www/user-dirs/simon/chinaunix96.ps.z
+#
+# Version: 1 <notes>
+#        *  must add support for Clark-Wilson applications.
+#        *  should implement organizations as equivalence classes 
+#           over the conflict  relation.
+
+#
+# Last revision July 8, 1996 by Paul Egan
+#
+
+unshift(@INC,".");
+require 'syscall.ph';
+
+$ENV{'PATH'} = '/bin:/usr/bin:/usr/ucb';
+
+if ( $#ARGV != 0 ){
+  die "Usage: $0 <organization>\n"
+}
+$requestedOrg = $ARGV[0];      
+$consultant = getlogin;     
+$groupFile = "/etc/group";		# usual locn. for UNIX group file
+$conflictFile = "/etc/conflict";	# specifies the conflict of interest reln.
+$thisHost = `hostname`;
+$NISserver = `ypwhich`;
+
+if ( $thisHost ne $NISserver ){		# Must be run on the NIS server.
+  exec("rsh $NISserver $0 $1");		# ( *** untested! *** )
+}
+
+# determine the orgs that are in conflict with requested org
+open(CONFLICTS,"$conflictFile") || die "ERROR: $conflictFile - $!";
+flock(CONFLICTS,2);
+ while (<CONFLICTS>){
+   last if /^$requestedOrg/;
+ }
+ if ($_ eq ""){
+   die "Organization $requestedOrg not defined in policy\n";
+ }
+ @conflictingOrgs = split(/[\s:,]/);
+shift(@conflictingOrgs);
+
+
+
+#determine the orgs that this consultant works for.
+setgrent;
+do{
+  ($name,$passwd,$gid,$members) = getgrent;
+  if ( index($members,"$consultant",0) != -1 ){		# If member of this group
+    die " Already consulting for $requestedOrg! \n" if ( $name eq $requestedOrg );
+    push(@consultantsOrgs,$name);
+  }
+}while( defined($name) );
+endgrent;
+
+
+
+#Test if there is conflict of interest. 
+foreach $conflictingOrg (@conflictingOrgs){
+  foreach $consultantsOrg (@consultantsOrgs){
+    if ($conflictingOrg eq $consultantsOrg){
+      die "Failure: conflict of interest. \n--You are already consulting for $consultantsOrg which is in competition with organization $requestedOrg\n";
+    }
+  }
+}
+
+
+
+#Add user to this group. 
+`rm -f /tmp/group > /dev/null`;
+`mv $groupFile /tmp/group`;
+open(OLDGRP,  "/tmp/group") || die "Something is wrong. No group file.\n";
+open(NEWGRP, ">$groupFile");
+ while(<OLDGRP>){
+   s/$/,$consultant/ if (/^$requestedOrg:/ && !/$consultant/) ;
+   s/:,/:/;
+   print NEWGRP;
+ }
+close(OLDGRP);
+close(NEWGRP);
+`rm -f /tmp/group > /dev/null`;
+
+
+
+#make call to setgroups. ( Effectively useless! )
+#setgrent;
+#do{
+#  ($name,$passwd,$gid,$members) = getgrent;
+#  push(@gids,$gid) if ( index($members,"$consultant",0) != -1 );
+#}while( defined($gid) );
+#endgrent;
+#$nGroups=@gids;
+#$gidSet = pack("I$nGroups",@gids);
+#if ( syscall(&SYS_setgroups, $nGroups, $gidSet) != 0 ) { die " setgroups $! \n" };
+
+
+
+#Update NIS database		( *** untested! *** )
+chdir("/var/yp");
+`make`;
+
+flock(CONFLICTS,8); 
+close(CONFLICTS);
+
+print "User $consultant may now access $requestedOrg datasets\n";
+

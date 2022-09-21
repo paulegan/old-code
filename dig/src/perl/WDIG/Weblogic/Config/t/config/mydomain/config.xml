@@ -1,0 +1,102 @@
+<!--If your domain is active, please do not edit the config.xml file. Any changes made to that file while the domain is active will not have any effect on the domain's configuration and are likely to be lost. If your domain is inactive, you may edit this file with an XML editor. If you do so, please refer to the BEA Weblogic Server Configuration Reference documentation available from http://e-docs.bea.com/wls/docs61/config_xml/index.html.  In general, we recommend that changes to your configuration file be made through the Administration Console.-->
+
+<Domain Name="mydomain">
+ <Server
+  Name="myserver"
+  NativeIOEnabled="true"
+  ListenPort="7001"
+  TransactionLogFilePrefix="config/mydomain/logs/">
+  <SSL
+   Name="myserver"
+   ListenPort="7002"
+   Enabled="true"
+   ServerCertificateFileName="config/mydomain/democert.pem"
+   ServerKeyFileName="config/mydomain/demokey.pem"
+   ServerCertificateChainFileName="config/mydomain/ca.pem"
+ />
+    <WebServer
+      DefaultWebApp="DefaultWebApp"
+      LogFileName="./config/mydomain/logs/access.log"
+      LoggingEnabled="true"
+      Name="myserver"
+    />
+  <Log
+   FileName="config/mydomain/logs/weblogic.log"
+  />
+  </Server>
+
+  <Application
+    Deployed="true"
+    Name="DefaultWebApp"
+    Path="./config/mydomain/applications"
+  >
+    <WebAppComponent
+      Name="DefaultWebApp"
+      Targets="myserver"
+      URI="DefaultWebApp"
+    />
+  </Application>
+
+  <Application
+    Name="certificate"
+    Path="./config/mydomain/applications/certificate.war">
+    <WebAppComponent
+      Name="certificate"
+      Targets="myserver"
+      URI="certificate.war"
+    />
+  </Application>
+
+ <Security
+  Name="mydomain"
+  GuestDisabled="false"
+ />
+
+ <Log
+  FileName="config/mydomain/logs/wl-domain.log"
+ />
+
+<CustomRealm
+Name="defaultLDAPRealmForNetscapeDirectoryServer"
+RealmClassName="weblogic.security.ldaprealmv2.LDAPRealm"
+Password="*secret*"
+ConfigurationData="server.host=ldapserver.example.com;server.principal=uid=admin, ou=Administrators, ou=TopologyManagement, o=NetscapeRoot;user.dn=ou=people, o=beasys.com;user.filter=(&amp;(uid=%u)(objectclass=person));group.dn=ou=groups, o=beasys.com;group.filter=(&amp;(cn=%g)(objectclass=groupofuniquenames));membership.filter=(&amp;(uniquemember=%M)(objectclass=groupofuniquenames));"
+Notes="This is provided as an example. Before enabling this Realm, you must edit the configuration parameters as appropriate for your environment."
+ />
+
+ <CustomRealm
+Name="defaultLDAPRealmForMicrosoftSiteServer"
+RealmClassName="weblogic.security.ldaprealmv2.LDAPRealm"
+Password="*secret*"
+ConfigurationData="server.host=ldapserver.example.com;server.principal=cn=Administrator, ou=Members, o=ExampleMembershipDir;user.dn=ou=Members, o=ExampleMembershipDir;user.filter=(&amp;(cn=%u)(objectclass=member));group.dn=ou=Groups, o=ExampleMembershipDir;group.filter=(&amp;(cn=%g)(objectclass=mgroup));membership.scope.depth=1;microsoft.membership.scope=sub;membership.filter=(|(&amp;(memberobject=%M)(objectclass=memberof))(&amp;(groupobject=%M)(objectclass=groupmemberof)));"
+Notes="This is provided as an example. Before enabling this Realm, you must edit the configuration parameters as appropriate for your environment."
+ />
+
+<CustomRealm
+Name="defaultLDAPRealmForNovellDirectoryServices"
+RealmClassName="weblogic.security.ldaprealmv2.LDAPRealm"
+Password="*secret*"
+ConfigurationData="server.host=ldapserver.example.com;server.ssl=true;server.principal=cn=admin, o=example.com;user.dn=ou=people, o=example.com;user.filter=(&amp;(cn=%u)(objectclass=person));group.dn=ou=groups, o=example.com;group.filter=(&amp;(cn=%g)(objectclass=groupofuniquenames));membership.filter=(&amp;(member=%M)(objectclass=groupofuniquenames));"
+Notes="This is provided as an example. Before enabling this Realm, you must edit the configuration parameters as appropriate for your environment."
+ />
+
+<CustomRealm
+Name="defaultLDAPRealmForOpenLDAPDirectoryServices"
+RealmClassName="weblogic.security.ldaprealmv2.LDAPRealm"
+Password="*secret*"
+ConfigurationData="server.host=ldapserver.example.com;server.principal=cn=Manager, dc=example, dc=com;user.dn=ou=people, dc=example, dc=com;user.filter=(&amp;(uid=%u)(objectclass=person));group.dn=ou=groups, dc=example, c=com;group.filter=(&amp;(cn=%g)(objectclass=groupofuniquenames));membership.filter=(&amp;(uniquemember=%M)(objectclass=groupofuniquenames));"
+Notes="This is provided as an example. Before enabling this Realm, you must edit the configuration parameters as appropriate for your environment."
+ />
+
+</Domain>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+WDIG::Weblogic::Server version 1.0
+==================================
+
+$Id$
+
+OO interface for the management of a Weblogic server
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make TEST_VERBOSE=1 test
+   make install
+
+DEPENDENCIES
+
+Error 0.15
+XML::Simple 2.05,
+Config::Properties 0.47
+LWP::UserAgent 2.0
+WDIG::File::Slurp 1.0
+WDIG::File::Cmd 1.0
+WDIG::Run 1.0
+WDIG::Weblogic::Config 1.0
+WDIG::Weblogic::Application 1.0
+WDIG::Weblogic::Cmd 1.0
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

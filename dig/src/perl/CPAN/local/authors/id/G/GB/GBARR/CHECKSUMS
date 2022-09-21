@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'libnet-1.16.tar.gz' => {
+    'md5-ungz' => '910a244644ec38971e01a6d959b9fbb6',
+    'md5' => '79dbf57a7bcc0cef70209f714dd2cb4c',
+    'size' => '70437'
+  },
+  'Bundle-libnet-1.00.tar.gz' => {
+    'md5-ungz' => '24426b4c9a8bb4decff785d166e1dab9',
+    'md5' => 'fa42ec0b6d9f7183ad502f2484e980da',
+    'size' => '820'
+  }
+};

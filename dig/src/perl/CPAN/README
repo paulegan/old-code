@@ -1,0 +1,42 @@
+
+This is a local copy of CPAN with the packages necessary 
+to install WDIG stuff.
+
+The "local" directory contains the package archives and
+indexes in much the same structure as on a CPAN mirror.
+
+The file "modules/02packages.details.txt.gz" contains the
+index of packages with version numbers and archive file
+locations.
+
+To use this CPAN copy ensure that $CPAN::Config->{urllist}
+points to the "local" dir.  One way to do this is to use
+the "cpan_shell" script in this directory which will start
+CPAN with the "Config.pm" also provided.
+
+The WDIG packages are stored in authors/id/W/WD/WDIG.
+
+To install all WDIG packages, use the bundle:
+perl -I /share/src/perl -MCPAN -e "install Bundle::WDIG"
+
+If you update a package you must also update the CHECKSUMS
+file by using the "update_checksums" script.
+
+If you add a new package (or create one with a new version)
+then you must update the package index with the 
+"make_package_list" script.
+
+If you want to update a package from the real CPAN, try
+something like this:
+./cpan_shell
+cpan> o conf urllist = http://funet.fi/pub/CPAN
+cpan> reload index
+cpan> get my::new::package
+cpan> exit
+./restore_package_list
+./make_package_list local/authors | gzip -c \
+   > local/modules/02packages.details.txt.gz
+
+XML::Parser 2.31 and XML::SAX::Expat 0.35 are not as on CPAN 
+but patched.  The patches are in the "modules" dir.
+

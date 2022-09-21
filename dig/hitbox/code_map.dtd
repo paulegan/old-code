@@ -1,0 +1,7 @@
+<?xml encoding="ISO-8859-1"?>
+<!-- $Id: code_map.dtd,v 1.1 2001/11/08 20:09:43 pegan Exp $ -->
+<!ELEMENT code_map (map+) >
+<!ELEMENT map (code,text) >
+<!ATTLIST map type CDATA #REQUIRED >
+<!ELEMENT code (#PCDATA) >
+<!ELEMENT text (#PCDATA) >

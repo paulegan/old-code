@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<html>
+
+<head>
+ <title>HitBox Summary</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Refresh" content="$REFRESH" />
+ <meta name="Author" content="paul.egan@dig.com" />
+ <meta name="DocDate" content="20010823" />
+ <style type="text/css">
+   body {
+     font-family: Helvetica;
+   }
+   td {
+     font-size: x-small;
+     border-style: solid;
+     border-width: thin;
+     border-color: black;
+     padding: 3px;
+     vertical-align: text-top;
+   }
+   thead td {
+     font-weight: bold;
+     background-color: #CCCCCC;
+   }
+ </style>
+</head>
+
+<body>
+
+<table>
+ <thead>
+  <tr><td>Time</td><td>Host</td><td>Account</td><td>Category</td><td>Name</td><td>Browser</td><td>Referrer</td></tr>
+ </thead>
+ <tbody>

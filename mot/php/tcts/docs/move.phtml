@@ -1,0 +1,34 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+  
+  $bt = new BatchTable;
+  
+  if ($batchID != "")
+  {
+     if (!$bt->isValidBatchID($batchID)) 
+        hris_printError("The batch id ($batchID) is invalid");
+     else {
+            if ($stage == "move")
+	    {
+	      $bt->move($batchID);
+	      printSuccess($batchID,"moved.pat");
+	    }
+            else if ($stage == "reject")
+                 { 
+                   $rc = new RejectionCodes;
+                   if (!$rc->isValidCode($reason,$country))
+                   {
+                     hris_printError("$reason is not a valid rejection code");
+                   }
+                   else {
+                          $bt->reject($batchID,hris_emailID2CID(GetEnv('REMOTE_USER')),$reason);
+		 	  printSuccess($batchID,"batchRejected.pat");
+			}
+                 }
+   	    else $bt->printBatchDetails($batchID);
+	    
+          }
+  }
+  else hris_printOutput(hris_includeFile("$patDir/move.pat"));
+?>

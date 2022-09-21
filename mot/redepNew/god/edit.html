@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Position Edit Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980828">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System edit form.">
+ <META NAME="Keywords"          CONTENT="redeployment,position,job,edit">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   // Get Cookie Value function
+   function getCookieVal(offset)
+   {
+    var endstr = document.cookie.indexOf (";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+   }// getCookieVal
+
+   // Get Cookie function
+   function getCookie(name)
+   {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+       var j = i + alen;
+       if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+       i = document.cookie.indexOf(" ", i) + 1;
+       if (i == 0) break;
+    }
+    return null;
+   }// getCookie
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+<SERVER>
+ var jobs = new Jobs();
+
+ if (request.ref==null) redirect("editList.html");
+
+ job = jobs.detail(request.ref);
+
+ if (!job.REF)
+   error("Position "+request.ref+" not found!");
+
+ jobs.writeClientCheck();
+</SERVER>
+
+<P ALIGN=LEFT><FONT FACE="Arial,Helvetica"><B>
+ Editing <SERVER>write(job.REF);</SERVER>, owned by <SERVER>write(job.AUTHOR);</SERVER>.
+</B></FONT></P>
+
+<FORM METHOD=POST ACTION="confirmEdit.html" onSubmit="return validatePositionForm(this);">
+
+<INPUT TYPE=HIDDEN NAME="ref" VALUE=`job.REF`>
+
+<CENTER>
+<TABLE BORDER=0 WIDTH=90%>
+ <TR>
+  <TD ALIGN=CENTER COLSPAN=2>
+   <B>Title:</B><BR><INPUT TYPE=TEXT SIZE=40 NAME="title" VALUE=`job.TITLE`>
+  </TD>
+ </TR>
+ <TR><TD COLSPAN=2>&nbsp;</TD></TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Location:</B><BR>
+   <SERVER>var locationSL = new SelectList("location"); locationSL.write(job.LOCATION);</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Department:</B><BR>
+   <INPUT TYPE=TEXT SIZE=7 NAME="department" VALUE=`job.DEPARTMENT`>
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Relocation:</B><BR>
+   <SERVER>var relocationSL = new SelectList("relocation"); relocationSL.write(job.RELOCATION);</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Function:</B><BR>
+   <SERVER>var functionSL = new SelectList("function"); functionSL.write(job.FUNCTION);</SERVER>
+  </TD>
+ </TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Sector:</B><BR>
+   <INPUT TYPE=TEXT SIZE=12 NAME="sector" VALUE=`((job.SECTOR==null)?"":job.SECTOR)`>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Grade:</B><BR>
+   <SERVER>var gradeSL = new SelectList("grade"); gradeSL.write(job.GRADE);</SERVER>
+  </TD>
+ </TR>
+ <TR><TD COLSPAN=2>&nbsp;</TD></TR>
+ <TR>
+  <TD ALIGN=LEFT WIDTH=50%>
+   <B>Advertise Date:</B><BR>
+   <SERVER>var startDL = new DateLists("start"); startDL.write(job.ADVERTISE_DATE);</SERVER>
+  </TD>
+  <TD ALIGN=RIGHT>
+   <B>Expiry Date:</B><BR>
+   <SERVER>var expiryDL = new DateLists("expiry"); expiryDL.write(job.EXPIRY_DATE);</SERVER>
+  </TD>
+ </TR>
+</TABLE>
+</CENTER>
+
+<BR><BR>
+
+<P>
+ <B>Number of positions available:</B>
+ <UL>
+  <INPUT TYPE=TEXT SIZE=4 NAME="numOfPositions" VALUE=`job.NUM_POSITIONS`>
+ </UL>
+</P>
+
+<P>
+ <B>Job Description:</B>
+ <UL>
+  <FONT SIZE=-1><TEXTAREA NAME="description" ROWS=15 COLS=60 WRAP=HARD><SERVER>write(job.DESCRIPTION);</SERVER></TEXTAREA></FONT>
+ </UL>
+</P>
+
+<P>
+ <B>Experience Required:</B>
+ <UL>
+  <FONT SIZE=-1><TEXTAREA NAME="experience" ROWS=15 COLS=60 WRAP=HARD><SERVER>write(job.EXPERIENCE);</SERVER></TEXTAREA></FONT>
+ </UL>
+</P>
+
+<B>Contact Person:</B>
+<UL><TABLE BORDER=0 WIDTH=90%>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50%>
+   Name:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactPerson" VALUE=`job.CONTACT_PERSON`>
+  </TD>
+  <TD VALIGN=TOP WIDTH=50%>
+   Email:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactEmail" VALUE=`job.CONTACT_EMAIL`>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50% ROWSPAN=2>
+   Address:<BR>
+   <TEXTAREA NAME="contactAddress" ROWS=5 COLS=22 WRAP=HARD><SERVER>write(job.CONTACT_ADDRESS);</SERVER></TEXTAREA>
+  </TD>
+  <TD VALIGN=TOP WIDTH=50%>
+   Telephone:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactTel" VALUE=`job.CONTACT_TEL`>
+  </TD>
+ </TR>
+ <TR>
+  <TD VALIGN=TOP WIDTH=50%>
+   Fax:<BR>
+   <INPUT TYPE=TEXT SIZE=22 NAME="contactFax" VALUE=`job.CONTACT_FAX`>
+  </TD>
+ </TR>
+</TABLE></UL>
+
+<TABLE BORDER=0 WIDTH=90%>
+ <TR>
+  <TD VALIGN=TOP WIDTH=60%>
+   <B>Hiring Manager email ID:</B> <I>optional</I><BR>
+   <UL>
+    <INPUT TYPE=TEXT SIZE=8 NAME="hiringManager" VALUE=`((job.HIRING_MANAGER==null)?"":job.HIRING_MANAGER)`>
+    <FONT SIZE=-1><A HREF="javascript:null;" onClick="window.open('emailLookup.html?form=0&field=hiringManager','emailLookup','width=250,height=150,resizable=1,scrollbars=yes'); return false;">Lookup</A></FONT>
+   </UL>
+  </TD>
+  <TD VALIGN=TOP WIDTH=40%>
+   <B>Owner:</B><BR>
+   <UL>
+    <INPUT TYPE=TEXT SIZE=8 NAME="author" VALUE=`((job.AUTHOR==null)?"":job.AUTHOR)`>
+   </UL>
+  </TD>
+ </TR>
+</TABLE>
+
+<BR><BR CLEAR=ALL>
+
+<CENTER>
+ <INPUT TYPE=IMAGE SRC="images/btn_edit.gif" ALT="Update Position" BORDER=0 WIDTH=120 HEIGHT=32 onMouseOver="window.status='Update Vacancy';return true;">
+</CENTER>
+
+</FORM>
+
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR></TABLE>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

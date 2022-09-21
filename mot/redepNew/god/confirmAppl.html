@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Application Update Confirmation</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System application update confirmation.">
+ <META NAME="Keywords"          CONTENT="redeployment,application,update">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+ 
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+ <P><SERVER>
+  var appl = new Application(request.cid,request.ref);
+
+  if (!appl.update()){
+    write("Unable to update application.");
+  }else{
+    write("The application has been updated.");
+  }
+ </SERVER></P>
+
+ <P ALIGN=CENTER><FONT SIZE=2>
+  Copyright &copy; 1999 Motorola Confidential Proprietary
+  <BR>
+  For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+ </FONT></P>
+
+</TD></TR></TABLE>
+
+
+</BODY>
+
+</HTML>

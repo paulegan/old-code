@@ -1,0 +1,75 @@
+POST /rpc HTTP/1.0
+Host: intlappsdev
+Content-Length: 204
+Content-Type: text/xml
+
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>pluto.getLastDrop</methodName>
+  <params>
+    <param>
+      <value>
+        <int>2208</int>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>droppedDate</name>
+            <value>
+              <dateTime.iso8601>20030827T00:00:00</dateTime.iso8601>
+            </value>
+          </member>
+          <member>
+            <name>status</name>
+            <value>Dropped</value>
+          </member>
+          <member>
+            <name>deploymentType</name>
+            <value>Manual</value>
+          </member>
+          <member>
+            <name>projectId</name>
+            <value>
+              <int>2208</int>
+            </value>
+          </member>
+          <member>
+            <name>dropName</name>
+            <value/>
+          </member>
+          <member>
+            <name>archived</name>
+            <value>false</value>
+          </member>
+          <member>
+            <name>version</name>
+            <value>
+              <int>21</int>
+            </value>
+          </member>
+          <member>
+            <name>droppedBy</name>
+            <value>pegan</value>
+          </member>
+          <member>
+            <name>description</name>
+            <value/>
+          </member>
+          <member>
+            <name>projectName</name>
+            <value>cont_adv_2</value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>

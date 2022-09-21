@@ -1,0 +1,26 @@
+WDIG::Weblogic::Cmd version 1.0
+===============================
+
+$Id$
+
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+File::ReadBackwards 0.99
+WDIG::File::Slurp 1.0
+WDIG::Run 1.0
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

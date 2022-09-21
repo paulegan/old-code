@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'File-Rsync-0.30.tar.gz' => {
+    'md5-ungz' => '2c94c41ef16c4fe5169fa81dfad66ddb',
+    'md5' => '6293ab57f089fc0066db8b5affdb8b99',
+    'size' => '15637'
+  }
+};

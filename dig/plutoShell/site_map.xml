@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE site_map [
+  <!ELEMENT site_map (map+) >
+  <!ELEMENT map (remote,local) >
+  <!ELEMENT remote (#PCDATA) >
+  <!ELEMENT local (#PCDATA) >
+]>
+
+<!-- $Id$ -->
+
+<site_map>
+
+ <map><remote>http://www.achterbahn-designer.de</remote><local>file://intladm01/share/content/live/de/achterbahn/docs</local></map>
+ <map><remote>http://www.bionytt.com</remote><local>file://intladm01/share/content/live/se/biony</local></map>
+ <map><remote>http://www.buenavistalatino.com</remote><local>file://intladm01/share/content/live/br/buena</local></map>
+ <map><remote>http://www.d100.jp</remote><local>file://intladm01/share/content/live/jp/d100</local></map>
+ <map><remote>http://www.disney.be</remote><local>file://intladm01/share/content/live/be/docs</local></map>
+ <map><remote>http://www.disney.ca</remote><local>file://intladm01/share/content/live/ca/docs</local></map>
+ <map><remote>http://www.disney.ch</remote><local>file://intladm01/share/content/live/ch/docs</local></map>
+ <map><remote>http://www.disney.co.jp</remote><local>file://intladm01/share/content/live/jp/docs</local></map>
+ <map><remote>http://www.disney.com.hk</remote><local>file://intladm01/share/content/live/hk/docs</local></map>
+ <map><remote>http://www.disney.co.nz</remote><local>file://intladm01/share/content/live/nz/docs</local></map>
+ <map><remote>http://www.disney.co.uk</remote><local>file://intladm01/share/content/live/uk/docs</local></map>
+ <map><remote>http://www.disney.com.au</remote><local>file://intladm01/share/content/live/au/docs</local></map>
+ <map><remote>http://www.disney.com.br</remote><local>file://intladm01/share/content/live/br/docs</local></map>
+ <map><remote>http://www.disney.com.cn</remote><local>file://intladm01/share/content/live/cn/docs</local></map>
+ <map><remote>http://www.disney.com.sg</remote><local>file://intladm01/share/content/live/sg/docs</local></map>
+ <map><remote>http://www.disney.com.tw</remote><local>file://intladm01/share/content/live/tw/docs</local></map>
+ <map><remote>http://www.disney.de</remote><local>file://intladm01/share/content/live/de/docs</local></map>
+ <map><remote>http://www.disney.dk</remote><local>file://intladm01/share/content/live/dk/docs</local></map>
+ <map><remote>http://www.disney.es</remote><local>file://intladm01/share/content/live/es/docs</local></map>
+ <map><remote>http://www.disney.fi</remote><local>file://intladm01/share/content/live/fi/docs</local></map>
+ <map><remote>http://www.disney.ie</remote><local>file://intladm01/share/content/live/ie/docs</local></map>
+ <map><remote>http://www.disney.fr</remote><local>file://intladm01/share/content/live/fr/docs</local></map>
+ <map><remote>http://www.disney.it</remote><local>file://intladm01/share/content/live/it/docs</local></map>
+ <map><remote>http://www.disney.nl</remote><local>file://intladm01/share/content/live/nl/docs</local></map>
+ <map><remote>http://www.disney.no</remote><local>file://intladm01/share/content/live/no/docs</local></map>
+ <map><remote>http://www.disney.pt</remote><local>file://intladm01/share/content/live/pt/docs</local></map>
+ <map><remote>http://www.disney.se</remote><local>file://intladm01/share/content/live/se/docs</local></map>
+ <map><remote>http://www.disneychannel-asia.com</remote><local>file://intladm01/share/content/live/intl/asiatdc</local></map>
+ <map><remote>http://www.disneyinternational.com</remote><local>file://intladm01/share/content/live/intl/deu</local></map>
+ <map><remote>http://www.disneylandparis.com</remote><local>file://intladm01/share/content/live/intl/dlp</local></map>
+ <map><remote>http://www.disneylatino.com</remote><local>file://intladm01/share/content/live/intl/dislatinom</local></map>
+ <map><remote>http://www.disneyme.com</remote><local>file://intladm01/share/content/live/intl/dme</local></map>
+ <map><remote>http://www.dlpbusiness.com</remote><local>file://intladm01/share/content/live/intl/dlpbuz</local></map>
+ <map><remote>http://www.espanol.disney.com</remote><local>file://intladm01/share/content/live/intl/espanol</local></map>
+ <map><remote>http://www.eurodisney.com</remote><local>file://intladm01/share/content/live/intl/eurod</local></map>
+ <map><remote>http://www.filmes.net</remote><local>file://intladm01/share/content/live/br/filmes</local></map>
+ <map><remote>http://www.korea.disney.com</remote><local>file://intladm01/share/content/live/kr/docs</local></map>
+ <map><remote>http://www.disney.co.kr</remote><local>file://intladm01/share/content/live/kr/docs</local></map>
+ <map><remote>http://www.bvimovies.com</remote><local>file://intladm01/share/content/live/intl/bvi</local></map>
+ <map><remote>http://www.fkidstv.com</remote><local>file://intladm01/share/content/live/intl/fkids</local></map>
+ <map><remote>http://www.fkids.com.br</remote><local>file://intladm01/share/content/live/br/fkids</local></map>
+ <map><remote>http://disneystore.disney.co.uk</remote><local>file://intladm01/share/content/apps/live/uk_store/content</local></map>
+ <map><remote>http://app.videos.disney.fr</remote><local>file://intladm01/share/content/apps/live/bvhefr/content</local></map>
+
+ <map><remote>http://staging.achterbahn-designer.de</remote><local>file://intladm01/share/content/staging/de/achterbahn/docs</local></map>
+ <map><remote>http://staging.bionytt.com</remote><local>file://intladm01/share/content/staging/se/biony</local></map>
+ <map><remote>http://staging.buenavistalatino.com</remote><local>file://intladm01/share/content/staging/br/buena</local></map>
+ <map><remote>http://staging.d100.jp</remote><local>file://intladm01/share/content/staging/jp/d100</local></map>
+ <map><remote>http://staging.disney.be</remote><local>file://intladm01/share/content/staging/be/docs</local></map>
+ <map><remote>http://staging.disney.ca</remote><local>file://intladm01/share/content/staging/ca/docs</local></map>
+ <map><remote>http://staging.disney.ch</remote><local>file://intladm01/share/content/staging/ch/docs</local></map>
+ <map><remote>http://staging.disney.co.jp</remote><local>file://intladm01/share/content/staging/jp/docs</local></map>
+ <map><remote>http://staging.disney.com.hk</remote><local>file://intladm01/share/content/staging/hk/docs</local></map>
+ <map><remote>http://staging.disney.co.nz</remote><local>file://intladm01/share/content/staging/nz/docs</local></map>
+ <map><remote>http://staging.disney.co.uk</remote><local>file://intladm01/share/content/staging/uk/docs</local></map>
+ <map><remote>http://staging.disney.com.au</remote><local>file://intladm01/share/content/staging/au/docs</local></map>
+ <map><remote>http://staging.disney.com.br</remote><local>file://intladm01/share/content/staging/br/docs</local></map>
+ <map><remote>http://staging.disney.com.cn</remote><local>file://intladm01/share/content/staging/cn/docs</local></map>
+ <map><remote>http://staging.disney.com.sg</remote><local>file://intladm01/share/content/staging/sg/docs</local></map>
+ <map><remote>http://staging.disney.com.tw</remote><local>file://intladm01/share/content/staging/tw/docs</local></map>
+ <map><remote>http://staging.disney.de</remote><local>file://intladm01/share/content/staging/de/docs</local></map>
+ <map><remote>http://staging.disney.dk</remote><local>file://intladm01/share/content/staging/dk/docs</local></map>
+ <map><remote>http://staging.disney.es</remote><local>file://intladm01/share/content/staging/es/docs</local></map>
+ <map><remote>http://staging.disney.fi</remote><local>file://intladm01/share/content/staging/fi/docs</local></map>
+ <map><remote>http://staging.disney.fr</remote><local>file://intladm01/share/content/staging/fr/docs</local></map>
+ <map><remote>http://staging.disney.ie</remote><local>file://intladm01/share/content/staging/ie/docs</local></map>
+ <map><remote>http://staging.disney.it</remote><local>file://intladm01/share/content/staging/it/docs</local></map>
+ <map><remote>http://staging.disney.nl</remote><local>file://intladm01/share/content/staging/nl/docs</local></map>
+ <map><remote>http://staging.disney.no</remote><local>file://intladm01/share/content/staging/no/docs</local></map>
+ <map><remote>http://staging.disney.pt</remote><local>file://intladm01/share/content/staging/pt/docs</local></map>
+ <map><remote>http://staging.disney.se</remote><local>file://intladm01/share/content/staging/se/docs</local></map>
+ <map><remote>http://staging.disneychannel-asia.com</remote><local>file://intladm01/share/content/staging/intl/asiatdc</local></map>
+ <map><remote>http://staging.disneyinternational.com</remote><local>file://intladm01/share/content/staging/intl/deu</local></map>
+ <map><remote>http://staging.disneylandparis.com</remote><local>file://intladm01/share/content/staging/intl/dlp</local></map>
+ <map><remote>http://staging.disneylatino.com</remote><local>file://intladm01/share/content/staging/intl/dislatinom</local></map>
+ <map><remote>http://staging.disneyme.com</remote><local>file://intladm01/share/content/staging/intl/dme</local></map>
+ <map><remote>http://staging.dlpbusiness.com</remote><local>file://intladm01/share/content/staging/intl/dlpbuz</local></map>
+ <map><remote>http://staging.espanol.disney.com</remote><local>file://intladm01/share/content/staging/intl/espanol</local></map>
+ <map><remote>http://staging.eurodisney.com</remote><local>file://intladm01/share/content/staging/intl/eurod</local></map>
+ <map><remote>http://staging.filmes.net</remote><local>file://intladm01/share/content/staging/br/filmes</local></map>
+ <map><remote>http://staging.korea.disney.com</remote><local>file://intladm01/share/content/staging/kr/docs</local></map>
+ <map><remote>http://staging.disney.co.kr</remote><local>file://intladm01/share/content/staging/kr/docs</local></map>
+ <map><remote>http://staging.bvimovies.com</remote><local>file://intladm01/share/content/staging/intl/bvi</local></map>
+ <map><remote>http://staging.fkidstv.com</remote><local>file://intladm01/share/content/staging/intl/fkids</local></map>
+ <map><remote>http://staging.fkids.com.br</remote><local>file://intladm01/share/content/staging/br/fkids</local></map>
+
+ <map><remote>http://dev.achterbahn-designer.de</remote><local>file://intladm01/share/content/dev/de/achterbahn/docs</local></map>
+ <map><remote>http://dev.bionytt.com</remote><local>file://intladm01/share/content/dev/se/biony</local></map>
+ <map><remote>http://dev.buenavistalatino.com</remote><local>file://intladm01/share/content/dev/br/buena</local></map>
+ <map><remote>http://dev.d100.jp</remote><local>file://intladm01/share/content/dev/jp/d100</local></map>
+ <map><remote>http://dev.disney.be</remote><local>file://intladm01/share/content/dev/be/docs</local></map>
+ <map><remote>http://dev.disney.ca</remote><local>file://intladm01/share/content/dev/ca/docs</local></map>
+ <map><remote>http://dev.disney.ch</remote><local>file://intladm01/share/content/dev/ch/docs</local></map>
+ <map><remote>http://dev.disney.co.jp</remote><local>file://intladm01/share/content/dev/jp/docs</local></map>
+ <map><remote>http://dev.disney.com.hk</remote><local>file://intladm01/share/content/dev/hk/docs</local></map>
+ <map><remote>http://dev.disney.co.nz</remote><local>file://intladm01/share/content/dev/nz/docs</local></map>
+ <map><remote>http://dev.disney.co.uk</remote><local>file://intladm01/share/content/dev/uk/docs</local></map>
+ <map><remote>http://dev.disney.com.au</remote><local>file://intladm01/share/content/dev/au/docs</local></map>
+ <map><remote>http://dev.disney.com.br</remote><local>file://intladm01/share/content/dev/br/docs</local></map>
+ <map><remote>http://dev.disney.com.cn</remote><local>file://intladm01/share/content/dev/cn/docs</local></map>
+ <map><remote>http://dev.disney.com.sg</remote><local>file://intladm01/share/content/dev/sg/docs</local></map>
+ <map><remote>http://dev.disney.com.tw</remote><local>file://intladm01/share/content/dev/tw/docs</local></map>
+ <map><remote>http://dev.disney.de</remote><local>file://intladm01/share/content/dev/de/docs</local></map>
+ <map><remote>http://dev.disney.dk</remote><local>file://intladm01/share/content/dev/dk/docs</local></map>
+ <map><remote>http://dev.disney.es</remote><local>file://intladm01/share/content/dev/es/docs</local></map>
+ <map><remote>http://dev.disney.fi</remote><local>file://intladm01/share/content/dev/fi/docs</local></map>
+ <map><remote>http://dev.disney.fr</remote><local>file://intladm01/share/content/dev/fr/docs</local></map>
+ <map><remote>http://dev.disney.ie</remote><local>file://intladm01/share/content/dev/ie/docs</local></map>
+ <map><remote>http://dev.disney.it</remote><local>file://intladm01/share/content/dev/it/docs</local></map>
+ <map><remote>http://dev.disney.nl</remote><local>file://intladm01/share/content/dev/nl/docs</local></map>
+ <map><remote>http://dev.disney.no</remote><local>file://intladm01/share/content/dev/no/docs</local></map>
+ <map><remote>http://dev.disney.pt</remote><local>file://intladm01/share/content/dev/pt/docs</local></map>
+ <map><remote>http://dev.disney.se</remote><local>file://intladm01/share/content/dev/se/docs</local></map>
+ <map><remote>http://dev.disneychannel-asia.com</remote><local>file://intladm01/share/content/dev/intl/asiatdc</local></map>
+ <map><remote>http://dev.disneyinternational.com</remote><local>file://intladm01/share/content/dev/intl/deu</local></map>
+ <map><remote>http://dev.disneylandparis.com</remote><local>file://intladm01/share/content/dev/intl/dlp</local></map>
+ <map><remote>http://dev.disneylatino.com</remote><local>file://intladm01/share/content/dev/intl/dislatinom</local></map>
+ <map><remote>http://dev.disneyme.com</remote><local>file://intladm01/share/content/dev/intl/dme</local></map>
+ <map><remote>http://dev.dlpbusiness.com</remote><local>file://intladm01/share/content/dev/intl/dlpbuz</local></map>
+ <map><remote>http://dev.espanol.disney.com</remote><local>file://intladm01/share/content/dev/intl/espanol</local></map>
+ <map><remote>http://dev.eurodisney.com</remote><local>file://intladm01/share/content/dev/intl/eurod</local></map>
+ <map><remote>http://dev.filmes.net</remote><local>file://intladm01/share/content/dev/br/filmes</local></map>
+ <map><remote>http://dev.korea.disney.com</remote><local>file://intladm01/share/content/dev/kr/docs</local></map>
+ <map><remote>http://dev.disney.co.kr</remote><local>file://intladm01/share/content/dev/kr/docs</local></map>
+ <map><remote>http://dev.bvimovies.com</remote><local>file://intladm01/share/content/dev/intl/bvi</local></map>
+ <map><remote>http://dev.fkidstv.com</remote><local>file://intladm01/share/content/dev/intl/fkids</local></map>
+ <map><remote>http://dev.fkids.com.br</remote><local>file://intladm01/share/content/dev/br/fkids</local></map>
+
+ <map><remote>ftp://dev.achterbahn-designer.de</remote><local>file://intlftp01/pool/docs/achterbahn-designer.de</local></map>
+ <map><remote>ftp://dev.bionytt.com</remote><local>file://intlftp01/pool/docs/bionytt.com</local></map>
+ <map><remote>ftp://dev.buenavistalatino.com</remote><local>file://intlftp01/pool/docs/buenavistalatino.com</local></map>
+ <map><remote>ftp://dev.d100.jp</remote><local>file://intlftp01/pool/docs/d100.jp</local></map>
+ <map><remote>ftp://dev.disney.be</remote><local>file://intlftp01/pool/docs/disney.be</local></map>
+ <map><remote>ftp://dev.disney.ca</remote><local>file://intlftp01/pool/docs/disney.ca</local></map>
+ <map><remote>ftp://dev.disney.ch</remote><local>file://intlftp01/pool/docs/disney.ch</local></map>
+ <map><remote>ftp://dev.disney.co.jp</remote><local>file://intlftp01/pool/docs/disney.co.jp</local></map>
+ <map><remote>ftp://dev.disney.com.hk</remote><local>file://intlftp01/pool/docs/disney.com.hk</local></map>
+ <map><remote>ftp://dev.disney.co.nz</remote><local>file://intlftp01/pool/docs/disney.co.nz</local></map>
+ <map><remote>ftp://dev.disney.co.uk</remote><local>file://intlftp01/pool/docs/disney.co.uk</local></map>
+ <map><remote>ftp://dev.disney.com.au</remote><local>file://intlftp01/pool/docs/disney.com.au</local></map>
+ <map><remote>ftp://dev.disney.com.br</remote><local>file://intlftp01/pool/docs/disney.com.br</local></map>
+ <map><remote>ftp://dev.disney.com.cn</remote><local>file://intlftp01/pool/docs/disney.com.cn</local></map>
+ <map><remote>ftp://dev.disney.com.sg</remote><local>file://intlftp01/pool/docs/disney.com.sg</local></map>
+ <map><remote>ftp://dev.disney.com.tw</remote><local>file://intlftp01/pool/docs/disney.com.tw</local></map>
+ <map><remote>ftp://dev.disney.de</remote><local>file://intlftp01/pool/docs/disney.de</local></map>
+ <map><remote>ftp://dev.disney.dk</remote><local>file://intlftp01/pool/docs/disney.dk</local></map>
+ <map><remote>ftp://dev.disney.es</remote><local>file://intlftp01/pool/docs/disney.es</local></map>
+ <map><remote>ftp://dev.disney.fi</remote><local>file://intlftp01/pool/docs/disney.fi</local></map>
+ <map><remote>ftp://dev.disney.fr</remote><local>file://intlftp01/pool/docs/disney.fr</local></map>
+ <map><remote>ftp://dev.disney.ie</remote><local>file://intlftp01/pool/docs/disney.ie</local></map>
+ <map><remote>ftp://dev.disney.it</remote><local>file://intlftp01/pool/docs/disney.it</local></map>
+ <map><remote>ftp://dev.disney.nl</remote><local>file://intlftp01/pool/docs/disney.nl</local></map>
+ <map><remote>ftp://dev.disney.no</remote><local>file://intlftp01/pool/docs/disney.no</local></map>
+ <map><remote>ftp://dev.disney.pt</remote><local>file://intlftp01/pool/docs/disney.pt</local></map>
+ <map><remote>ftp://dev.disney.se</remote><local>file://intlftp01/pool/docs/disney.se</local></map>
+ <map><remote>ftp://dev.disneychannel-asia.com</remote><local>file://intlftp01/pool/docs/disneychannel-asia.com</local></map>
+ <map><remote>ftp://dev.disneyinternational.com</remote><local>file://intlftp01/pool/docs/disneyinternational.com</local></map>
+ <map><remote>ftp://dev.disneylandparis.com</remote><local>file://intlftp01/pool/docs/disneylandparis.com</local></map>
+ <map><remote>ftp://dev.disneylatino.com</remote><local>file://intlftp01/pool/docs/disneylatino.com</local></map>
+ <map><remote>ftp://dev.disneyme.com</remote><local>file://intlftp01/pool/docs/disneyme.com</local></map>
+ <map><remote>ftp://dev.dlpbusiness.com</remote><local>file://intlftp01/pool/docs/dlpbusiness.com</local></map>
+ <map><remote>ftp://dev.espanol.disney.com</remote><local>file://intlftp01/pool/docs/espanol.disney.com</local></map>
+ <map><remote>ftp://dev.eurodisney.com</remote><local>file://intlftp01/pool/docs/eurodisney.com</local></map>
+ <map><remote>ftp://dev.filmes.net</remote><local>file://intlftp01/pool/docs/filmes.net</local></map>
+ <map><remote>ftp://dev.korea.disney.com</remote><local>file://intlftp01/pool/docs/korea.disney.com</local></map>
+ <map><remote>ftp://dev.disney.co.kr</remote><local>file://intlftp01/pool/docs/korea.disney.com</local></map>
+ <map><remote>ftp://dev.bvimovies.com</remote><local>file://intlftp01/pool/docs/bvimovies.com</local></map>
+ <map><remote>ftp://dev.fkidstv.com</remote><local>file://intlftp01/pool/docs/fkidstv.com</local></map>
+ <map><remote>ftp://dev.fkids.com.br</remote><local>file://intlftp01/pool/docs/fkids.com.br</local></map>
+
+<!-- temporary site mappings for pluto testing -->
+ <map><remote>http://dev.pluto.disneyinternational.com</remote><local>file://intladm01/share/content/dev/intl/pluto</local></map>
+ <map><remote>http://staging.pluto.disneyinternational.com</remote><local>file://intladm01/share/content/staging/intl/spluto</local></map>
+ <map><remote>http://www.pluto.disneyinternational.com</remote><local>file://intladm01/share/content/live/intl/pluto</local></map>
+ <map><remote>ftp://dev.pluto.disneyinternational.com</remote><local>file://intlftp01/pool/docs/pluto.disneyinternational.com</local></map>
+
+<!-- and these for the JP guys -->
+ <map><remote>http://dev.pluto.disney.co.jp</remote><local>file://intladm01/share/content/dev/jp/pluto</local></map>
+ <map><remote>http://staging.pluto.disney.co.jp</remote><local>file://intladm01/share/content/staging/jp/pluto</local></map>
+ <map><remote>http://www.pluto.disney.co.jp</remote><local>file://intladm01/share/content/live/jp/pluto</local></map>
+<map><remote>ftp://dev.pluto.disney.co.jp</remote><local>file://intlftp01/pool/docs/pluto.disney.co.jp</local></map>
+
+<!-- and more temporary mappings for homepage application testing -->
+<map><remote>http://hpdev.disneyinternational.com</remote><local>file://intladm01/share/content/dev/intl/hpdev</local></map>
+<map><remote>http://hplive.disneyinternational.com</remote><local>file://intladm01/share/content/staging/intl/hplive</local></map>
+
+<!-- navbar and ad banner servers -->
+<map><remote>http://navbar.disneyinternational.com</remote><local>file://intladm01/share/content/live/intl/navbar</local></map>
+
+<map><remote>ftp://dev.ads.disneyinternational.com</remote><local>file://intlftp01/pool/docs/ads.disneyinternational.com</local></map>
+<map><remote>http://dev.ads.disneyinternational.com</remote><local>file://intladm01/share/content/dev/intl/adbanners</local></map>
+<map><remote>http://staging.ads.disneyinternational.com</remote><local>file://intladm01/share/content/staging/intl/adbanners</local></map>
+<map><remote>http://ads.disneyinternational.com</remote><local>file://intladm01/share/content/live/intl/adbanners</local></map>
+
+
+
+<!-- advanced apps --> 
+<map><remote>ftp://dev.diggit.co.uk</remote><local>file://intlftp01/pool/docs/diggit.co.uk</local></map>
+<map><remote>ftp://dev.epg.disneyinternational.com</remote><local>file://intlftp01/pool/docs/epg.disneyinternational.com</local></map>
+<map><remote>ftp://dev.booking.disneyinternational.com</remote><local>file://intlftp01/pool/docs/booking.disneyinternational.com</local></map>
+<map><remote>ftp://dev.dcards.disneyinternational.com</remote><local>file://intlftp01/pool/docs/dcards.disneyinternational.com</local></map>
+<map><remote>ftp://dev.di.disneyinternational.com</remote><local>file://intlftp01/pool/docs/di.disneyinternational.com</local></map>
+<map><remote>ftp://dev.hp.disneyinternational.com</remote><local>file://intlftp01/pool/docs/hp.disneyinternational.com</local></map>
+<map><remote>ftp://dev.registration.disneyinternational.com</remote><local>file://intlftp01/pool/docs/registration.disneyinternational.com</local></map>
+<map><remote>ftp://dev.liga.disney.es</remote><local>file://intlftp01/pool/docs/liga.disney.es</local></map>
+<map><remote>ftp://dev.liga.disney.de</remote><local>file://intlftp01/pool/docs/liga.disney.de</local></map>
+<map><remote>ftp://dev.mobile.disneyinternational.com</remote><local>file://intlftp01/pool/docs/mobile.disneyinternational.com</local></map>
+<map><remote>ftp://dev.videos.disney.fr</remote><local>file://intlftp01/pool/docs/videos.disney.fr</local></map>
+<map><remote>ftp://dev.stitchrw.disneyinternational.com</remote><local>file://intlftp01/pool/docs/stitchrw.disneyinternational.com</local></map>
+<map><remote>ftp://dev.sms.disneyinternational.com</remote><local>file://intlftp01/pool/docs/sms.disneyinternational.com</local></map>
+
+
+<!-- adv app dev repository -->
+<map><remote>http://dev.diggit.co.uk</remote><local>file://intladm01/share/content/apps/dev/repository/diggit.co.uk</local></map>
+<map><remote>http://dev.epg.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/epg.disneyinternational.com</local></map>
+<map><remote>http://dev.booking.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/booking.disneyinternational.com</local></map>
+<map><remote>http://dev.dcards.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/dcards.disneyinternational.com</local></map>
+<map><remote>http://dev.di.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/di.disneyinternational.com</local></map>
+<map><remote>http://dev.hp.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/hp.disneyinternational.com</local></map>
+<map><remote>http://dev.registration.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/registration.disneyinternational.com</local></map>
+<map><remote>http://dev.liga.disney.es</remote><local>file://intladm01/share/content/apps/dev/repository/liga.disney.es</local></map>
+<map><remote>http://dev.liga.disney.de</remote><local>file://intladm01/share/content/apps/dev/repository/liga.disney.de</local></map>
+<map><remote>http://dev.mobile.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/mobile.disneyinternational.com</local></map>
+<map><remote>http://dev.videos.disney.fr</remote><local>file://intladm01/share/content/apps/dev/repository/videos.disney.fr</local></map>
+<map><remote>http://dev.stitchrw.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/stitchrw.disneyinternational.com</local></map>
+<map><remote>http://dev.sms.disneyinternational.com</remote><local>file://intladm01/share/content/apps/dev/repository/sms.disneyinternational.com</local></map>
+
+
+<map><remote>http://staging.diggit.co.uk</remote><local>file://intladm01/share/content/apps/staging/repository/diggit.co.uk</local></map>
+<map><remote>http://staging.epg.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/epg.disneyinternational.com</local></map>
+<map><remote>http://staging.booking.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/booking.disneyinternational.com</local></map>
+<map><remote>http://staging.dcards.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/dcards.disneyinternational.com</local></map>
+<map><remote>http://staging.di.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/di.disneyinternational.com</local></map>
+<map><remote>http://staging.hp.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/hp.disneyinternational.com</local></map>
+<map><remote>http://staging.registration.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/registration.disneyinternational.com</local></map>
+<map><remote>http://staging.liga.disney.es</remote><local>file://intladm01/share/content/apps/staging/repository/staging.liga.disney.es</local></map>
+<map><remote>http://staging.liga.disney.de</remote><local>file://intladm01/share/content/apps/staging/repository/staging.liga.disney.de</local></map>
+<map><remote>http://staging.mobile.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/mobile.disneyinternational.com</local></map>
+<map><remote>http://staging.videos.disney.fr</remote><local>file://intladm01/share/content/apps/staging/repository/videos.disney.fr</local></map>
+<map><remote>http://staging.stitchrw.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/stitchrw.disneyinternational.com</local></map>
+<map><remote>http://staging.sms.disneyinternational.com</remote><local>file://intladm01/share/content/apps/staging/repository/sms.disneyinternational.com</local></map>
+
+
+
+<map><remote>http://www.diggit.co.uk</remote><local>file://intladm01/share/content/apps/live/repository/diggit.co.uk</local></map>
+<map><remote>http://www.epg.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/epg.disneyinternational.com</local></map>
+<map><remote>http://www.booking.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/booking.disneyinternational.com</local></map>
+<map><remote>http://www.dcards.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/dcards.disneyinternational.com</local></map>
+<map><remote>http://www.di.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/di.disneyinternational.com</local></map>
+<map><remote>http://hp.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/hp.disneyinternational.com</local></map>
+<map><remote>http://www.registration.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/registration.disneyinternational.com</local></map>
+<map><remote>http://www.liga.disney.es</remote><local>file://intladm01/share/content/apps/live/repository/liga.disney.es</local></map>
+<map><remote>http://www.liga.disney.de</remote><local>file://intladm01/share/content/apps/live/repository/liga.disney.de</local></map>
+<map><remote>http://www.mobile.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/mobile.disneyinternational.com</local></map>
+<map><remote>http://videos.disney.fr</remote><local>file://intladm01/share/content/apps/live/repository/videos.disney.fr</local></map>
+<map><remote>http://www.stitchrw.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/stitchrw.disneyinternational.com</local></map>
+<map><remote>http://www.sms.disneyinternational.com</remote><local>file://intladm01/share/content/apps/live/repository/sms.disneyinternational.com</local></map>
+
+
+</site_map>

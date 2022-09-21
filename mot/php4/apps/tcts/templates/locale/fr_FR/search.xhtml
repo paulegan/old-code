@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Forme De Recherche</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="fr_FR" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Formez pour rechercher des transactions." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/26
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/01/26 18:19:37  eganp
+  - History:	       Added temporary French translation
+  - History:
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/fr_FR/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">Recherche de Transaction</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/search.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'view')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+
+ <!-- MESSAGE invalid_trans_id -
+ <p class="error">
+  L'identification de transaction que vous avez fournie ne semble pas être valide!.
+ </p>
+    - MESSAGE invalid_trans_id -->
+
+ <!-- MESSAGE invalid_batch_id -
+ <p class="error">
+  L'identification en lots que vous avez fournie ne semble pas être valide!
+ </p>
+    - MESSAGE invalid_batch_id -->
+
+ <!-- MESSAGE invalid_employee -
+ <p class="error">
+  L'employé CID est incorrect! Il doit contenir 8 chiffres seulement.
+ </p>
+    - MESSAGE invalid_employee -->
+
+ <!-- MESSAGE invalid_date -
+ <p class="error">
+  La date indiquée n'est pas une date valide.
+ </p>
+    - MESSAGE invalid_date -->
+
+ <!-- MESSAGE nothing_found -
+ <p class="error">
+  Votre recherche n'a renvoyé aucun résultat.
+  Veuillez essayer une requête plus générique.
+ </p>
+    - MESSAGE nothing_found -->
+
+ <!-- MESSAGE delete_success -
+ <p class="error">
+  La transaction {trans_id} a été effacée.
+ </p>
+    - MESSAGE delete_success -->
+
+<form method="post" action="{PHP_SELF}">
+
+<input type="hidden" name="_op" value="view" />
+<input type="hidden" name="_stage" value="results" />
+
+<table class="form" width="650" border="0" cellpadding="6" cellspacing="0">
+	   
+<tr>
+ <td align="right">Transaction:</td>
+ <td><input type="text" name="trans_id" size="15" maxlength="15" value="{trans_id}" /></td>
+</tr>
+	   
+<tr>
+ <td align="right">Lot:</td>
+ <td><input type="text" name="batch_id" size="15" maxlength="15" value="{batch_id}" /></td>
+</tr>
+
+<tr>
+ <td align="right">Soumis Près:</td>
+ <td>
+   <select name="submitted_by">
+    <option value=""></option>
+    <!-- BEGIN submitted_by_options -->
+    <option value="{submitted_by_value}" {submitted_by_selected}>{submitted_by_name}</option>
+    <!-- END submitted_by_options -->
+   </select>
+ </td>
+</tr>
+
+<tr>
+ <td align="right">Mode:</td>
+ <td>
+   <select name="status">
+    <option value=""></option>
+    <!-- BEGIN status_options -->
+    <option value="{status_value}" {status_selected}>{status_name}</option>
+    <!-- END status_options -->
+   </select>
+ </td>
+</tr>
+
+<tr>
+ <td align="right">Employé:</td>
+ <td>
+   <input type="text" name="employee" size="8" maxlength="8" value="{employee}" />
+ </td>
+</tr>
+
+<!-- BEGIN center_select -->
+<tr>
+ <td align="right">Centre:</td>
+ <td>
+   <select name="center">
+    <option value=""></option>
+    <!-- BEGIN center_options -->
+    <option value="{center_value}" {center_selected}>{center_name}</option>
+    <!-- END center_options -->
+   </select>
+ </td>
+</tr>
+<!-- END center_select -->
+
+<tr>
+ <td align="right">Ouvert Après: </td>
+ <td>
+    <input type="text" name="trans_day" size="2" maxlength="2" value="{trans_day}" />/
+    <input type="text" name="trans_month" size="2" maxlength="2" value="{trans_month}" />/
+    <input type="text" name="trans_year" size="4" maxlength="4" value="{trans_year}" /> <span class="comment">(jj/mm/aaaa)</span>
+ </td>
+</tr>
+
+<tr>
+ <td>&nbsp;</td>
+ <td align="right"><input type="submit" value=" Recherche " /></td>
+</tr>
+
+</table>
+    
+</form>
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+</body>
+
+</html>

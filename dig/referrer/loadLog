@@ -1,0 +1,161 @@
+#!/usr/bin/perl -w
+
+######################################################################
+#
+# ID:		$Id$
+#
+# Author:	paul.egan@disney.com
+# 		2001/12/04
+#
+# Last update:	$Author$
+# 		$Date$
+#
+# Description:	
+#
+# Log:		$Log$
+# Log:		Revision 1.2  2001/12/06 16:01:38  pegan
+# Log:		Split date into seperate columns
+# Log:
+# Log:		Revision 1.1  2001/12/05 14:13:52  pegan
+# Log:		Initial revision
+# Log:
+#
+######################################################################
+
+use strict;
+use URI;
+use DBI;
+
+#########################
+# Config:
+
+my $URLmatch = '(\/|\.html|\.htm|\.shtml|\.jsp)$';
+my @IndexPages = ('index.cgi','index.jsp','index.html','home.html',
+		    'down.html','index.htm','index.shtml',
+		    'redirectsurl.html','redirectsurl.htm');
+
+my $Field_URL = 6;
+my $Field_Ref = 9;
+
+my $MaxURLLength = 250;
+my $MaxHostLength = 50;
+
+my $DB_dsn = "DBI:mysql:referrer";
+my $DB_user = "root";
+my $DB_passwd = "myc166dah";
+
+my $CreateSQL = "
+ CREATE TABLE IF NOT EXISTS *TABLE* (
+  year TINYINT NOT NULL,
+  month TINYINT NOT NULL,
+  day TINYINT NOT NULL,
+  url VARCHAR($MaxURLLength) NOT NULL,
+  ref_host VARCHAR($MaxHostLength) NOT NULL,
+  ref_url VARCHAR($MaxURLLength) NOT NULL,
+  count INT NOT NULL,
+  INDEX url_date (url,year,month,day)
+ );";
+
+
+#########################
+# Initialization:
+
+$SIG{__DIE__} = sub { print STDERR $_[0]; };
+
+if (@ARGV != 2 || $ARGV[0] !~ /^[\w.]+$/ || $ARGV[1] !~ /^(\d{2})(\d{2})(\d{2})$/){
+  print "Usage: $0 site.name YYMMDD\n";
+  exit(-1);
+}
+my ($year,$month,$day) = ($1,$2,$3);
+my $table = $ARGV[0]; # ."_$1$2";
+$table =~ s/\./_/g;
+
+my $indeces = join("|",@IndexPages);
+
+$CreateSQL =~ s/\*TABLE\*/$table/;
+
+
+#########################
+# Main:
+
+my %count;
+my $db = DBI->connect($DB_dsn,$DB_user,$DB_passwd);
+
+if (!$db){
+  print "Couldn't connect to database.\n";
+  exit(1);
+}
+
+if (!$db->do($CreateSQL)){
+  print "Couldn't create table, $table.\n";
+  exit(1);
+}
+
+if (!parseLog(\%count)){
+  print "Error while parsing log file\n";
+  exit(1);
+}
+
+if (!insert($db, $table, $year,$month,$day, \%count)){
+  print "Error while inserting database values\n";
+  exit(1);
+}
+
+$db->disconnect();
+
+exit(0);
+
+
+######################################################################
+# insert() - 
+
+sub insert
+{
+ my $db = $_[0];
+ my $table = $_[1];
+ my $year = $_[2];
+ my $month = $_[3];
+ my $day = $_[4];
+ my $count = $_[5];
+
+ my $i = $db->prepare_cached("INSERT INTO $table VALUES (?,?,?,?,?,?,?);");
+ return (0) if (!$i);
+
+ foreach my $key ( keys(%$count) ){
+   my ($url,$ref_host,$ref_url) = split(":",$key);
+   $i->execute($year,$month,$day, $url, $ref_host, $ref_url, $count->{$key});
+ }
+
+ return (1);
+}
+
+######################################################################
+# parseLog() -
+
+sub parseLog
+{
+ my $count = $_[0];
+
+ while (<STDIN>){
+
+   my @e = split();
+
+   next if (!$e[$Field_URL] || !$e[$Field_Ref] || $e[$Field_URL] !~ /$URLmatch/);
+
+   my $url = substr($e[$Field_URL],0,$MaxURLLength);
+   $url =~ s/($indeces)$//;
+
+   my $ref_host = "-";
+   my $ref_url = "-";
+   if ($e[$Field_Ref] =~ /^"(https?:\/\/[^"]+)/){
+     my $ref = new URI($1);
+     $ref_host = substr($ref->host(),0,$MaxHostLength);
+     $ref_url = substr($ref->path_query(),0,$MaxURLLength);
+   }
+
+   $count->{"$url:$ref_host:$ref_url"}++;
+ }
+
+ return (1);
+}
+

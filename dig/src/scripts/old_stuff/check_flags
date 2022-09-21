@@ -1,0 +1,17 @@
+#!/usr/bin/perl -w
+#
+# script to check for flags to be run on the server
+#
+# by David Kelly 2001
+
+@files=`ls /pool/flags`;
+
+foreach $flag (@files)
+{
+	chomp($flag);
+	if ($flag =~ /^akamai/)
+	{
+		system "/local/bin/aka-my";
+	};
+};
+

@@ -1,0 +1,33 @@
+extractLive ()
+{
+echo "Country Code is $COUNTRY_CODE"
+SERVER="live"
+case $COUNTRY_CODE in
+be)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+nl)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+ch)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+dk)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+no)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+fn)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+se)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+es)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+it)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST europe $COUNTRY_CODE $SERVER;;
+au)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+jp)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+kr)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+nz)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+asia)           /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+tw)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+sg)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST asia $COUNTRY_CODE $SERVER;;
+la)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST latin $COUNTRY_CODE $SERVER;;
+br)             /opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST latin $COUNTRY_CODE $SERVER;;
+la)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST latin $COUNTRY_CODE $SERVER;;
+br)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST latin $COUNTRY_CODE $SERVER;;
+fr)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST fr $COUNTRY_CODE $SERVER;;
+uk)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST uk $COUNTRY_CODE $SERVER;;
+de)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST de $COUNTRY_CODE $SERVER;;
+intl)	/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST inter $COUNTRY_CODE $SERVER;;
+ca)		/opt/customer/local/bin/akamai_library/parser.sh $HTML_FILE_LIST inter $COUNTRY_CODE $SERVER;;
+*)      echo "Country Code has not been recogniszed. Exiting now...";exit;;
+esac
+}

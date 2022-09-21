@@ -1,0 +1,103 @@
+#!/usr/bin/perl -wT
+
+######################################################################
+#
+# ID:		$Id:$
+#
+# Author:	paul.egan@disney.com
+# 		2001/08/23
+#
+# Last update:	$Author: $
+# 		$Date: $
+#
+# Description:	CGI to display a summary of info gathered by the
+#		HitBox test script.
+#
+# Log:		$Log: $
+#
+######################################################################
+
+$SIG{__DIE__} = sub { die("Content-Type: text/plain\n\n".$_[0]); };
+$ENV{'PATH'} = "/bin";
+
+use strict;
+use CGI(':cgi');
+use File::ReadBackwards;
+
+
+#########################
+# Config:
+
+my $logDir = '/nslogs/hitbox/data';
+my $header = slurpFile('./HG.summary.head');
+my $footer = slurpFile('./HG.summary.tail');
+my $tailCount = 5;
+my $refresh = 60;
+my $refresh_tail = 5;
+
+
+#########################
+# Main:
+
+my $search = param('search') || '.';
+my $logFile = `date +'%Y%m%d'`; chomp($logFile);
+$logFile = $1 if (param('date') && param('date') =~ /(\d+)/);
+$refresh = $refresh_tail if (param('tail'));
+$header =~ s/\$REFRESH/$refresh/g;
+print header().$header;
+
+my $log = File::ReadBackwards->new("$logDir/$logFile") || die("Could not open log file : $!\n");
+while ($_ = $log->readline()){
+  chomp();
+  my ($date,$host,$query) = split();
+  if ($date && $host && $query && $query =~ /$search/){
+    printRow($date,$host,$query);
+    last if (param('tail') && !$tailCount--);
+  }
+}
+
+print $footer;
+
+exit(0);
+
+
+#########################
+# printRow:
+
+sub printRow
+{
+ my $date = $_[0];
+ my $host = $_[1];
+ my $data = new CGI($_[2]);
+
+ foreach my $p ( 'hb','vcon','n','rf','bn','bv' ){
+   $data->param($p,'') if (!$data->param($p));
+ }
+ print "<tr".(($ENV{'REMOTE_ADDR'} && $host eq $ENV{'REMOTE_ADDR'})?' style="font-weight: bold">':'>');
+ print "<td>$date</td><td>$host</td>";
+ print "<td>".join("<br>",split(';',$data->param('hb')))."</td>";
+ print "<td>".join("<br>",split(';',$data->param('vcon')))."</td>";
+ print "<td>".join("<br>",split(';',$data->param('n')))."</td>";
+ print "<td>".$data->param('bn')."&nbsp;".$data->param('bv')."</td>";
+ print "<td>".$data->param('rf')."</td>";
+ print "</tr>\n";
+
+ return;
+}
+
+#########################
+# slurpFile:
+
+sub slurpFile
+{
+ my $file = $_[0];
+ my $contents = "";
+ local $/ = undef;
+
+ open(F,"<$file") || die("Could not open $file : $!\n");
+ $contents = <F>;
+ close(F);
+
+ return ($contents);
+}
+

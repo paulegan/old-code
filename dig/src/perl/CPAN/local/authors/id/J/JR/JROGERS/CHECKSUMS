@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Net-Telnet-3.03.tar.gz' => {
+    'md5-ungz' => '392ea40dc9a656fc6dfddf17081966ec',
+    'md5' => '2f7d34b09d6117baefe89d44cff9d5fc',
+    'size' => '35641'
+  }
+};

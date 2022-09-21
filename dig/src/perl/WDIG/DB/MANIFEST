@@ -1,0 +1,12 @@
+Makefile.PL
+MANIFEST
+README
+DB.pm
+DB/SqlInterpreter.pm
+DB/SqlInterpreter/isql.pm
+DB/SqlInterpreter/utils_schema.pm
+t/isql.t
+t/utils_schema.t
+t/wl.t
+t/name_test.sql
+t/test_script.sql

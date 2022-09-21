@@ -1,0 +1,13 @@
+MANIFEST
+README
+Makefile.PL
+Config.pm
+Config/Default.pm
+Config/Default/config.xsd
+Config/Default/defaults.xsl
+Config/Runtime.pm
+t/Config.t
+t/Default.t
+t/Runtime.t
+t/config/petstore/config.xml
+t/config/mydomain/config.xml

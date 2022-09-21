@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'Test-Simple-0.47.tar.gz' => {
+    'md5-ungz' => '0267b3ed2c97c3251ca35b92241fe7be',
+    'md5' => '4a6c12685bfeadfe8ff6fca70825f90c',
+    'size' => '45820'
+  }
+};

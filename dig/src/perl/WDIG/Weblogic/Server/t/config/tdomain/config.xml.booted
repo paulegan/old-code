@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--If your domain is active, please do not edit the config.xml file. Any changes made to that file while the domain is active will not have any effect on the domain's configuration and are likely to be lost. If your domain is inactive, you may edit this file with an XML editor. If you do so, please refer to the BEA Weblogic Server Configuration Reference  documentation available from http://edocs.bea.com/wls/docs61/reference.html.  In general, we recommend that changes to your configuration file be made through the Administration Console.-->
+<Domain ConsoleEnabled="false" Name="tdomain">
+    <UnixMachine Name="localhost">
+        <NodeManager Name="localhost"/>
+    </UnixMachine>
+    <Security GuestDisabled="true" Name="tdomain"
+        PasswordPolicy="wl_default_password_policy" Realm="wl_default_realm"/>
+    <SNMPAgent Name="tdomain"/>
+    <PasswordPolicy Name="wl_default_password_policy"/>
+    <Realm FileRealm="wl_default_file_realm" Name="wl_default_realm"/>
+    <Log FileName="/dev/null" Name="tdomain"/>
+    <FileRealm Name="wl_default_file_realm"/>
+    <Server ListenPort="7001" Machine="localhost" Name="tserver" TransactionLogFilePrefix="./logs/tdomain/transaction/">
+        <SSL Name="tserver"/>
+        <ExecuteQueue Name="default" ThreadCount="15"/>
+        <KernelDebug Name="tserver"/>
+        <ServerDebug Name="tserver"/>
+        <ServerStart Name="tserver"/>
+        <WebServer LogFileName="./logs/tdomain/http/tserver.log"
+            LoggingEnabled="true" Name="tserver"/>
+        <Log FileName="./logs/tdomain/weblogic/tserver.log" Name="tserver"/>
+    </Server>
+    <JTA Name="tdomain"/>
+    <ApplicationManager Name="tdomain"/>
+</Domain>

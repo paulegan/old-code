@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>User management help</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="How to add TCTS users." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="../../en_UK.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/25
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.1  2001/01/25 20:42:55  eganp
+  - History:	       Added help system
+  - History:
+  -
+  -->
+
+<body>
+
+<table class="pageHeader" width="660" border="0" cellpadding="1" cellspacing="0">
+ <tr><td><p class="pageHeader">
+  <a href="index.html" style="color: #FFFFFF;">TCTS Help</a> ::
+  <a href="overview.html" style="color: #FFFFFF;">Overview</a> ::
+  Add Users
+ </p></td></tr>
+</table>
+
+<br />
+
+<img src="../../images/en_UK/help_userAdd.jpg" alt="User add screenshot" width="660" height="380" />
+
+<table width="660" border="0" cellpadding="5" cellspacing="0">
+
+<tr><td colspan="2"><p>
+ The number of rows in the permission matrix will change depending on how
+ many centres you have the "manage users" privilege.  If only one centre is
+ allowed, the row title will be "Access" rather than the centre name.
+</p></td></tr>
+
+<tr><td colspan="2"><p>
+ Users with the "submit batch" privilege will appear in the "Submitted By"
+ lists for the appropriate center.
+</p></td></tr>
+
+<tr>
+ <td valign="top"><p class="step">1.</p></td>
+ <td valign="top"><p class="discussion">
+  Enter a list of user IDs, 1 per line.  The user ID must be a valid core
+  directory user ID if the user is log on to the system.  If you simply wish
+  to add an entry to the "Submitted By" lists (by assigned the user the
+  "submit batch" privilege) the user ID does not have to be valid.  If you
+  enter a commerce ID it will automatically be converted to the correct user
+  ID.
+ </p></td>
+</tr>
+
+<tr>
+ <td valign="top"><p class="step">2.</p></td>
+ <td valign="top"><p class="discussion">
+  Click on the "Check User IDs" button to validate all user IDs entered.
+  All valid user IDs will be followed by that user's name.  You must
+  remove any users that already exist.  If the user ID was not found to be 
+  a valid employee the user's name will be set to "Name Unknown"; you may
+  change this.
+ </p></td>
+</tr>
+
+<tr>
+ <td valign="top"><p class="step">3.</p></td>
+ <td valign="top"><p class="discussion">
+  Change the permissions as required by selecting/unselecting the checkboxes
+  in the permission matrix.  When a checkbox is selected this indicates that
+  the user will be permitted to perform the operation specified by the column
+  title for the center specified by the row title.  Alternatively you can select
+  a role from the "Role" list.  These defined common permission combinations.
+ </p></td>
+</tr>
+
+<tr>
+ <td valign="top"><p class="step">4.</p></td>
+ <td valign="top"><p class="discussion">
+  Click the "Add Users" button to add all the user's listed to the system with
+  the specified privileges.
+ </p></td>
+</tr>
+
+<tr>
+ <td valign="top"><p class="step">5.</p></td>
+ <td valign="top"><p class="discussion">
+  Click "Edit Users" to open the user update page.  Any user's listed will
+  <em>not</em> be added - first use the "Add Users" button.
+ </p></td>
+</tr>
+
+</table>
+
+</body>
+
+</html>
+

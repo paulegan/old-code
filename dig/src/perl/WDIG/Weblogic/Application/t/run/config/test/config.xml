@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--If your domain is active, please do not edit the config.xml file. Any changes made to that file while the domain is active will not have any effect on the domain's configuration and are likely to be lost. If your domain is inactive, you may edit this file with an XML editor. If you do so, please refer to the BEA Weblogic Server Configuration Reference  documentation available from http://edocs.bea.com/wls/docs61/reference.html.  In general, we recommend that changes to your configuration file be made through the Administration Console.-->
+<Domain ConsoleEnabled="true" Name="test">
+    <Realm FileRealm="wl_default_file_realm" Name="wl_default_realm"/>
+    <UnixMachine Name="localhost">
+        <NodeManager Name="localhost"/>
+    </UnixMachine>
+    <SNMPAgent Name="test"/>
+    <Application Deployed="true" Name="my_app"
+        Path="/share/src/perl/WDIG/Weblogic/Application/t/content/test/my_app/app" StagedTargets="my_app1,my_app2">
+        <WebAppComponent DeploymentOrder="1001" Name="web_app"
+            Targets="my_app1,my_app2" URI="web_app"/>
+    </Application>
+    <ApplicationManager Name="test"/>
+    <FileRealm Name="wl_default_file_realm"/>
+    <Server ListenPort="7002" Machine="localhost" Name="my_app2" TransactionLogFilePrefix="logs/test/transaction/">
+        <ServerStart Name="my_app2"/>
+        <KernelDebug Name="my_app2"/>
+        <SSL Name="my_app2"/>
+        <ServerDebug Name="my_app2"/>
+        <ExecuteQueue Name="default" ThreadCount="15"/>
+        <WebServer LogFileName="logs/test/http/my_app2.log"
+            LoggingEnabled="true" Name="my_app2"/>
+        <Log FileName="logs/test/weblogic/my_app2.log" Name="my_app2"/>
+    </Server>
+    <Security GuestDisabled="true" Name="test"
+        PasswordPolicy="wl_default_password_policy" Realm="wl_default_realm"/>
+    <Log FileName="/dev/null" Name="test"/>
+    <JTA Name="test"/>
+    <Server ListenPort="7001" Machine="localhost" Name="my_app1" TransactionLogFilePrefix="logs/test/transaction/">
+        <ExecuteQueue Name="default" ThreadCount="15"/>
+        <WebServer LogFileName="logs/test/http/my_app1.log"
+            LoggingEnabled="true" Name="my_app1"/>
+        <Log FileName="logs/test/weblogic/my_app1.log" Name="my_app1"/>
+        <ServerStart Name="my_app1"/>
+        <SSL Name="my_app1"/>
+        <KernelDebug Name="my_app1"/>
+        <ServerDebug Name="my_app1"/>
+    </Server>
+    <PasswordPolicy Name="wl_default_password_policy"/>
+</Domain>

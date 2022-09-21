@@ -1,0 +1,65 @@
+#!/bin/ksh -f
+
+# replaceString - replaces the given string with another for all HTML files in a dir
+
+# paul.egan@disney.com		20010508
+
+dir=.
+type="html,htm,shtml"
+usage="Usage: $0 [-q] [-d dir] [-b backupDir] [-t type,...] searchString replacement"
+
+while getopts qib:d:t: opt; do
+  case $opt in
+    b) backupDir="$OPTARG";;
+    d) dir="$OPTARG";;
+    t) type="$OPTARG";;
+    q) quiet=1;;
+    ?) echo $usage
+       exit 2;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ -z "$1" ]; then
+  echo $usage
+  exit 2
+fi
+searchString=$1
+replacement=$2
+
+perl -pe "s|$searchString|$replacement|g" /dev/null
+[ $? -eq 0 ] || exit 2
+
+if [ ! -z "$dir" ] && [ ! -d "$dir" ]; then
+  echo "$dir not found!"
+  exit 2;
+fi
+
+if [ ! -z "$backupDir" ] && [ ! -d "$backupDir" ]; then
+  mkdir $backupDir
+fi
+
+if [ $type = "*" ]; then
+  findExp="-type f"
+else
+  findExp=`echo $type | sed 's/^/-name *./;s/,/ -o -name *./g'`
+fi
+
+for file in `find $dir \( $findExp \) -print | grep -v "[' ]" | xargs grep -l "$searchString"`; do
+  if [ ! -w $file ]; then
+    echo "ERROR: Could not write to $file"
+    continue
+  fi
+  if [ ! -z "$backupDir" ]; then
+    path=`dirname $file`
+    mkdir -p "$backupDir/./$path"
+    cp $file "$backupDir/./$path"
+  fi
+  perl -pe "s|$searchString|$replacement|g" $file > $file.tmp.$$
+  if [ $? -eq 0 ] && [ -s "$file.tmp.$$" ]; then
+    mv $file.tmp.$$ $file
+    [ ! -z "$quiet" ] || echo $file
+  else
+    echo "ERROR: sed error with $file"
+  fi
+done

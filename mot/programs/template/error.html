@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Error</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990824">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="System error.">
+ <META NAME="Keywords"          CONTENT="error">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<SERVER>
+ var msg = (client.errorMessage==null?"Unknown":client.errorMessage);
+
+ addToLog(msg+(client.errorPage?(" [["+client.errorPage+"]] "):""));
+</SERVER>
+
+<P ALIGN=CENTER>
+ <FONT SIZE=+1 COLOR=RED><B>AN UNEXPECTED ERROR HAS OCCURED!</B></FONT>
+ <BR>
+ <SERVER>write(msg);</SERVER>
+</P>
+
+<P ALIGN=CENTER>
+ <FORM><INPUT TYPE=BUTTON VALUE=" BACK " onClick="history.go(-1);">
+</P>
+
+</BODY>
+
+</HTML>

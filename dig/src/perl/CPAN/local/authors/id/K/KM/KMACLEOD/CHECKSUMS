@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'libxml-perl-0.07.tar.gz' => {
+    'md5-ungz' => '81bf6f755d7e03ae61dfd97e89cc9c58',
+    'md5' => 'a79c6da708e5906fec84ea611fa4b41e',
+    'size' => '53197'
+  }
+};

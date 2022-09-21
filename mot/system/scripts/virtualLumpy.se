@@ -1,0 +1,661 @@
+
+/*
+ * 
+ * paul@hr.emea.mot.com		19990725
+ * 
+ * SymbEL script to watch the system performance.
+ * 
+ */
+
+#include <stdio.se>
+#include <stdlib.se>
+#include <unistd.se>
+#include <string.se>
+#include <kstat.se>
+#include <sysdepend.se>
+#include <time.se>
+#include <dirent.se>
+#include <diskinfo.se>
+#include <p_iostat_class.se>
+#include <p_vmstat_class.se>
+#include <netif.se>
+#include <p_netstat_class.se>
+#include <utsname.se>
+#include <proc.se>
+#include <uptime_class.se>
+#include <mnt_class.se>	/* these added for NFS mounts */
+#include <mutex.se>
+#include <vfs.se>
+#include <condvar.se>
+#include <tiuser.se>
+#include <rpc_clnt.se>
+#include <nfs_clnt.se>
+#include <pure_rules.se>
+#include <live_rules.se>
+#include <mib.se>
+#include <tcp_class.se>
+#include <tcp_rules.se>
+
+#define SAMPLE_INTERVAL   60	/* 30 seconds to avoid false alarms */
+string  command;
+#define MAX_NCSIZE (17*256+90)	/* maximum ncsize suggested */
+
+/* pwatch process monitor default parameters */
+#define PWPID		3	/* fsflush is always pid 3 */
+#define PWMAXCPU	5.0	/* maximum CPU consumption allowed */
+int	pwpid = PWPID;
+double  pwmaxcpu = PWMAXCPU;
+string  epwpid = "PWPID";
+string  epwmaxcpu = "PWMAXCPU";
+double	secs = 0.0;		/* time taken */
+double	oldsecs = 0.0;		/* last time taken */
+double	pwcpu = 0.0;		/* CPU % used */
+int	pid_ok;			/* nonzero if the pid can be monitored  */
+int     kvm$tune_t_fsflushr;	/* misc kernel variables */
+int     kvm$autoup;
+int     kvm$lotsfree;
+int     kvm$ncsize;
+int	kvm$ufs_ninode;
+
+/* nfsmonitor definitions and parameters */
+#define NFSRTALLSLOW 50  /* NFS client round trip time in ms for all calls */
+#define NFSCACTIVE 2.0	/* NFS client ops/sec considered active */
+/* used in argument strings only */
+#define srtt_to_ms(x) x, (x * 2 + x/2)
+#define dev_to_ms(x)  x, (x * 5)
+/* convert ms to srtt value */
+#define ms_to_srtt(x) ((x * 2) / 5)
+string  enfsrtall = "NFSRTALLSLOW"; /* setenv NFSRTALLSLOW 40 or somesuch */
+int     nfsrtall = NFSRTALLSLOW;
+string	enfscactive = "NFSCACTIVE";  /* for setenv */
+double	nfscactive = NFSCACTIVE;
+int     nfs_srtt_all;
+int     nfsc_warn;
+
+int     ncpus;
+int     online;
+ulong	hands;
+utsname_t u[1];
+int     euid;
+long  now;    /* current time */
+long  then;   /* time of last sample */
+char  state_char[6] = { 'w', 'b', 'g', 'A', 'R', 'B' };
+
+string who = "lumpy";
+
+main(int argc, string argv[3])
+{
+  lr_disk_t lr_disk$dr;
+  lr_disk_t tmp_dr;
+  lr_net_t lr_net$nr;
+  lr_net_t tmp_nr;
+  lr_rpcclient_t lr_rpcclient$r;
+  lr_rpcclient_t tmp_lrpcc;
+  lr_swapspace_t lr_swapspace$s;
+  lr_swapspace_t tmp_lrswap;
+  lr_ram_t lr_ram$ram;
+  lr_ram_t tmp_lrram;
+  lr_kmem_t lr_kmem$kmem;
+  lr_kmem_t tmp_lrkmem;
+  lr_cpu_t lr_cpu$cpu;
+  lr_cpu_t tmp_lrcpu;
+  lr_mutex_t lr_mutex$mutex;
+  lr_mutex_t tmp_lrmutex;
+  lr_dnlc_t lr_dnlc$dnlc;
+  lr_dnlc_t tmp_lrdnlc;
+  lr_inode_t lr_inode$inode;
+  lr_inode_t tmp_lrinode;
+  lr_tcp_t lr_tcp$tcp;
+  lr_tcp_t tmp_lrtcp;
+  p_vmstat vmstat;	/* used to accumulate totals from GLOBALs */
+  prpsinfo_t 	p;
+
+  double	putthru;
+  int 		i;
+  int 		interval = SAMPLE_INTERVAL;
+  int 		warning;
+  int		vmwarn;
+  int		ncsize;
+  int		ncnew;
+  long		n;
+
+  switch(argc) {
+  case 1:
+    break;
+  case 2:
+    interval = atoi(argv[1]);
+    break;
+  case 3:
+    interval = atoi(argv[1]);
+    command = argv[2];
+    break;
+  default:
+    printf("use: %s [interval] [command]\n", argv[0]);
+    printf("with environment variables:\n");
+    printf("%s (default %d is fsflush)\n%s (default %4.1f%% max CPU usage)\n",
+      epwpid, pwpid, epwmaxcpu, pwmaxcpu);
+    printf("%s (default %dms max NFS round trip time)\n", enfsrtall, nfsrtall);
+    printf("%s (default %4.2f minimum client NFS ops/sec)\n", enfscactive, nfscactive);
+    print_pr_disk(stdout);
+    print_lr_disk(stdout);
+    print_pr_enet(stdout);
+    print_pr_rpcclient(stdout);
+    print_pr_swapspace(stdout);
+    print_pr_ram(stdout);
+    print_pr_kmem(stdout);
+    print_pr_cpu(stdout);
+    print_pr_mutex(stdout);
+    print_pr_dnlc(stdout);
+    print_pr_inode(stdout);
+    print_pr_tcp(stdout);
+    fflush(stdout);
+    exit(1);
+  }
+  /* thresholds are now loaded from environment variables by pure_rules.se */
+  /* NFS client and process watcher are not done via the rule system */
+  if (getenv(epwpid) != nil) {
+    pwpid = atoi(getenv(epwpid));
+  }
+  if (getenv(enfsrtall) != nil) {
+    nfsrtall = atoi(getenv(enfsrtall));
+  }
+  if (getenv(enfscactive) != nil) {
+    nfscactive = atof(getenv(enfscactive));
+  }
+  nfs_srtt_all = ms_to_srtt(nfsrtall);
+
+  n = time(0);
+  euid = geteuid();	/* note whether we are running as root */
+#ifdef EUIDCHECK
+  printf("effective userid is %d\n",euid);
+#endif
+  then = time(0);	/* note the time */
+
+  p = get_proc(pwpid);  /* see if the process can be monitored */ 
+  if (p.pr_fname == "") { 
+    printf("Warning: Cannot get info for pid %d.\n", pwpid);
+    if (euid != 0) {
+      printf("superuser permissions are needed to access every process\n");
+    }
+    pid_ok = 0;
+  } else {
+    pid_ok = 1;	/* this pid can be monitored (for now at least) */
+    oldsecs = p.pr_time.tv_sec + (p.pr_time.tv_nsec / 1000000000.0);
+  }
+
+  static_check();
+
+  /* see if the static check managed to change or figure out this value */
+  if (hands != 0) {
+	lr_ram$ram.handspreadpages = hands;
+  }
+
+  fflush(stdout);
+
+  /* main loop starts here */
+  for(;;) {
+    sleep(interval);
+    now = time(0);	/* note the current time */
+    warning=0; /* no warnings this time yet */
+    /********************** disks first **************************/
+    /* use the live disk rule */
+    tmp_dr = lr_disk$dr;
+    if (worst_state(tmp_dr.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected slow disk(s) %s: %s%s\n",
+	 who, state_string(tmp_dr.state), ctime(&now), tmp_dr.action);
+printf(
+"State       ------throughput------ -----wait queue----- -----active queue----\n");
+printf(
+"  disk      r/s  w/s   Kr/s   Kw/s qlen res_t svc_t %%ut qlen  res_t svc_t %%ut\n"
+);
+
+      for(i = 0; i < tmp_dr.disk_count; i++) {
+        if (worst_state(tmp_dr.states[i], ST_GREEN) != ST_GREEN) {
+          putthru = GLOBAL_disk[i].reads + GLOBAL_disk[i].writes;
+          if (putthru != 0.0) {
+            putthru = 10.0 / putthru; /* allow for percentage to ms as well */
+          }
+          printf("%c %-8.8s %4.1f %4.1f %6.1f %6.1f %4.2f %5.2f %5.2f %3.0f %4.2f %6.2f %5.2f %3.0f\n",
+            state_char[tmp_dr.states[i]],
+            tmp_dr.names[i],
+            GLOBAL_disk[i].reads, GLOBAL_disk[i].writes,
+            GLOBAL_disk[i].kreads, GLOBAL_disk[i].kwrites,
+            GLOBAL_disk[i].avg_wait, GLOBAL_disk[i].avg_wait_time,
+            GLOBAL_disk[i].wait_percent * putthru, GLOBAL_disk[i].wait_percent,
+            GLOBAL_disk[i].avg_run, GLOBAL_disk[i].avg_serv_time,
+            GLOBAL_disk[i].run_percent * putthru, GLOBAL_disk[i].run_percent);
+       /*   GLOBAL_disk[i].service * (GLOBAL_disk[i].reads + GLOBAL_disk[i].writes)); */
+        }
+      }
+      warning = 1;
+    }
+    /*********************** network second ***********************/
+    /* use the live net rule */
+    tmp_nr = lr_net$nr;
+    if (worst_state(tmp_nr.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected slow net(s): %s%s\n", who, ctime(&now), tmp_nr.action);          
+      printf("%-6s%-8s%8s%8s%8s%8s%6s%7s%7s\n", "State", "Name", 
+         "Ipkt/s", "Ierr/s", "Opkt/s", "Oerr/s", "Coll%", "NoCP/s", "Defr/s");
+      for(i = 0; i < tmp_nr.net_count; i++) {
+        if (worst_state(tmp_nr.states[i], ST_GREEN) != ST_GREEN) {
+          printf("%-6.6s%-8s %7.1f %7.1f %7.1f %7.1f %5.2f %6.2f %6.2f\n",
+            state_string(tmp_nr.states[i]),
+            tmp_nr.names[i],
+            GLOBAL_net[i].ipackets,
+            GLOBAL_net[i].ierrors,
+            GLOBAL_net[i].opackets,
+            GLOBAL_net[i].oerrors,
+            GLOBAL_net[i].collpercent, GLOBAL_net[i].nocanput,
+	    GLOBAL_net[i].defer);
+        }
+      }
+      warning = 1;
+    }
+
+    /*********************** memory and CPU third ***********************/
+    /* use the live rules */
+    vmwarn = 0;		/* flag whether to print vmstat output line */
+    tmp_lrswap = lr_swapspace$s;
+    if (worst_state(tmp_lrswap.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected low swapspace (%s): %s%s\n", who, 
+        state_string(tmp_lrswap.state), ctime(&now), tmp_lrswap.action);
+      vmwarn = 1;
+    }
+    tmp_lrram  = lr_ram$ram;
+    if (worst_state(tmp_lrram.state, ST_GREEN) != ST_GREEN) { 
+      printf("\n%s detected RAM shortage (%s): %s%s\n", who,
+        state_string(tmp_lrram.state), ctime(&now), tmp_lrram.action);
+      vmwarn = 1; 
+    }
+    tmp_lrcpu  = lr_cpu$cpu;
+    if (worst_state(tmp_lrcpu.state, ST_GREEN) != ST_GREEN) { 
+      printf("\n%s detected CPU overload (%s): %s%s\n", who, 
+        state_string(tmp_lrcpu.state), ctime(&now), tmp_lrcpu.action);
+      vmwarn = 1; 
+    }
+    tmp_lrmutex  = lr_mutex$mutex;
+    if (worst_state(tmp_lrmutex.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected mutex contention (%s): %s%s\n", who,
+        state_string(tmp_lrmutex.state), ctime(&now), tmp_lrmutex.action);
+      vmwarn = 1;
+    }
+    if (vmwarn == 1) {
+      vmstat = vmglobal_total();
+      printf(
+ "  procs        memory         page             faults              cpu\n");
+      printf(
+ " r  b  w    swap    free    pi  po  sr  rt  in    sy    cs  smtx us sy id\n");
+      printf(
+        "%2.0f %2.0f %2.0f %7d %7d %5.0f %3.0f %3.0f %3d %3.0f %5.0f %5.0f %5d %2.0f %2.0f %2.0f\n",
+        vmstat.runque, vmstat.waiting, vmstat.swpque,
+        vmstat.swap_avail, vmstat.freemem,
+        vmstat.pages_in, vmstat.pages_out, vmstat.scan, tmp_lrram.restime,
+        vmstat.interrupts, vmstat.system_calls,
+        vmstat.context_switches,
+        tmp_lrmutex.smtx,
+        vmstat.user_time, vmstat.system_time, 
+        vmstat.wait_time + vmstat.idle_time);
+      if (vmstat.swap_avail == 0 && vmstat.freemem == 0) {
+        printf("WARNING: Swap space and free indicate zero!\n");
+        printf("This is probably a measurement glitch during a state change.\n");
+      } else {
+        if (tmp_lrswap.state == ST_BLACK) {
+          printf("DANGER: Swap space down to less than panic threshold!\n");
+	  /* see Hogfather by Terry Pratchett - Hex is upset */
+	  printf("+++OUT OF CHEESE ERROR+++\n+++MELON MELON MELON+++\n+++PLEASE RELOAD UNIVERSE AND RESTART+++\n");
+          printf("Virtual %s will now exit to free up some swap space\n", who);
+          exit(1);
+        }
+      }
+      warning = 1;
+    }
+    /************* rest of Appendix A rule set **********************/
+    /* use the kmem rule */
+    tmp_lrkmem = lr_kmem$kmem;
+    if (worst_state(tmp_lrkmem.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected kernel memory problem (%s): %s%s\n", who,
+        state_string(tmp_lrkmem.state), ctime(&now), tmp_lrkmem.action);
+      warning = 1;
+    }
+    /* use the DNLC rule */
+    tmp_lrdnlc = lr_dnlc$dnlc;
+    if (worst_state(tmp_lrdnlc.state, ST_GREEN) != ST_GREEN) { 
+      printf("\n%s detected heavy Directory Name Cache activity (%s): %s%s\n", who, 
+        state_string(tmp_lrdnlc.state), ctime(&now), tmp_lrdnlc.action);
+      printf("DNLC hitrate %3.1f%%, reference rate %4.2f/s\n",
+        tmp_lrdnlc.hitrate, tmp_lrdnlc.refrate);
+      if (euid == 0) { /* check cache size and advise change */
+        ncsize = kvm$ncsize;
+        if (ncsize < MAX_NCSIZE) {
+          ncnew = ncsize * 2;
+          if (ncnew > MAX_NCSIZE) {
+            ncnew = MAX_NCSIZE;
+          }
+          printf("DNLC has %d entries, try increasing it (and inode cache) to %d\n",
+            ncsize, ncnew);
+#ifdef VERBOSE_DNLC
+          /* this is a bit verbose to keep repeating */
+          printf("Add these lines to /etc/system and reboot\n");
+          printf("set ncsize=%d\nset ufs_ninode=%d\n", ncnew, ncnew);
+          printf("Also look for unnecessary use of the find(1) command\n");
+#endif
+        }
+      }
+      warning = 1; 
+    }
+    /* use the inode rule */
+    tmp_lrinode = lr_inode$inode;
+    if (worst_state(tmp_lrinode.state, ST_GREEN) != ST_GREEN) {  
+      printf("\n%s detected Inode Cache problem (%s): %s%s\n", who, 
+        state_string(tmp_lrinode.state), ctime(&now), tmp_lrinode.action);
+      printf("Inode hitrate %3.1f%%, reference rate %4.2f/s\n",
+	tmp_lrinode.hitrate, tmp_lrinode.refrate);
+      warning = 1;
+    }
+    /* use the TCP rule */
+    tmp_lrtcp = lr_tcp$tcp;
+    if (worst_state(tmp_lrtcp.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected TCP/IP problem (%s): %s%s\n", who,
+        state_string(tmp_lrtcp.state), ctime(&now),
+	tmp_lrtcp.explanation);
+      printf("%9s %9s %9s %9s %9s %9s %7s %7s\n", "tcpIn", "tcpOut", "InConn/s", "OutConn/s",
+	"%Retran", "ListenDrop/s", "Reset/s", "Attempt/s");
+      printf("%9.0f %9.0f %9.2f %9.2f %9.2f %9.2f %7.2f %7.2f\n",
+        GLOBAL_tcp.InDataBytes, GLOBAL_tcp.OutDataBytes, 
+	GLOBAL_tcp.ActiveOpens, GLOBAL_tcp.PassiveOpens, 
+	GLOBAL_tcp.RetransPercent, GLOBAL_tcp.ListenDrop,
+	GLOBAL_tcp.OutRsts, GLOBAL_tcp.AttemptFails );
+
+      warning = 1;
+    }
+    /*********************** process monitor ***********************/
+    if (pid_ok != 0) {
+      p = get_proc(pwpid);
+      if (p.pr_pid == pwpid) {
+        secs = p.pr_time.tv_sec + (p.pr_time.tv_nsec / 1000000000.0);
+        pwcpu = 100.0 * (secs - oldsecs) / (now - then);
+/* ((now.tv_sec - then.tv_sec) +
+			((now.tv_nsec - then.tv_nsec) / 1000000000.0)));
+*/
+	if (pwcpu > pwmaxcpu) {
+          printf("\n%s detected a busy process: %s", who, ctime(&now));
+          printf("%s used %4.1f%% of a CPU (max %4.1f%%)\n", p.pr_fname, pwcpu, pwmaxcpu);
+          if (pwpid == 3) {	/* if we can monitor pid 3 then kvm$ is OK */
+            printf("fsflush may be using too much CPU time, right now it runs every %d (tune_t_fsflushr)\n", kvm$tune_t_fsflushr);
+            printf("seconds and checks each page every %d (autoup) seconds\n",
+		kvm$autoup);
+            printf("Put the following settings in /etc/system and reboot\n");
+            printf("set tune_t_fsflushr=%d\n", kvm$tune_t_fsflushr + 5);
+            printf("set autoup=%d\n", kvm$autoup * 2);
+          }
+        warning = 1;
+	}
+        oldsecs = secs;
+      } else {
+        printf("Cannot get info for %s pid %d, disabling process watcher.\n",
+	  p.pr_fname, pwpid);
+        pid_ok = 0;
+        warning = 1;
+      }
+    }
+    /*********************** NFS Client rule and response time ************/
+    /* use the rpcc rule */
+    tmp_lrpcc = lr_rpcclient$r;
+    if (worst_state(tmp_lrpcc.state, ST_GREEN) != ST_GREEN) {
+      printf("\n%s detected RPC/NFS Client problem (%s): %s%s\n", who,
+        state_string(tmp_lrpcc.state), ctime(&now), tmp_lrpcc.action);
+      printf("RPC calls %6.2f/s, timeouts %4.2f%%, badxids %4.2f%%\n",
+        tmp_lrpcc.calls, 100.0 * tmp_lrpcc.timeouts / tmp_lrpcc.calls,
+        100.0 * tmp_lrpcc.badxids / tmp_lrpcc.calls);
+      warning = 1;
+    }
+    /* must be root to read NFS mount info, and must have some activity */
+    if (euid == 0 && tmp_lrpcc.calls > nfscactive) {
+      nfs_client_check();
+      if (nfsc_warn == 1) {
+        warning = 1;
+      }
+    }
+    /************************* if anything happened complain **************/
+    if (warning == 1) {
+      fflush(stdout);
+      if ( command != nil) {
+        system(command); 
+      }
+    }
+  }
+}
+
+struct flagval_t {
+  int flag;
+  string value;
+};
+
+nfs_client_check() {
+    mnttab_t mnt$mount;
+    mnttab_t tmp_mount;
+    ks_nfs_mount kstat$nfs;
+    ks_nfs_mount tmp_nfs;
+    string auth[7] = {
+        "none", "sys", "short", "des", "kerberos", "unknown", "gss-api"
+    };
+    flagval_t flag_values[17] = {
+        { MI_PRINTED,     ",printed"      },
+        { MI_DOWN,        ",down"         },
+        { MI_NOAC,        ",noac"         },
+        { MI_NOCTO,       ",nocto"        },
+        { MI_DYNAMIC,     ",dynamic"      },
+        { MI_LLOCK,       ",llock"        },
+        { MI_GRPID,       ",grpid"        },
+        { MI_RPCTIMESYNC, ",rpctimesync"  },
+        { MI_LINK,        ",link"         },
+        { MI_SYMLINK,     ",symlink"      },
+        { MI_READDIR,     ",readdir"      },
+        { MI_ACL,         ",acl"          },
+        { MI_BINDINPROG,  ",bindinprog"   },
+        { MI_LOOPBACK,    ",loopback"     },
+        { MI_SEMISOFT,    ",semisoft"     },
+        { MI_NOPRINT,     ",noprint"      },
+        { 0,              nil             }
+    };
+    int i;
+
+    nfsc_warn = 0;
+    for(mnt$mount.number$=0; ; mnt$mount.number$++) {
+      tmp_mount = mnt$mount;
+      if (tmp_mount.number$ == -1) {
+        break;
+      }
+      // skip non-nfs
+      if (tmp_mount.mnt_fstype != "nfs") {
+        continue;
+      }
+      // hunt down the mntinfo stats in the chain
+      for(kstat$nfs.number$=0; ; kstat$nfs.number$++) {
+        tmp_nfs = kstat$nfs;
+        if (tmp_nfs.number$ == -1) {
+          // oof, I can't find it
+          return;
+        }
+        if (tmp_nfs.instance == (tmp_mount.mnt_fsid & 0xFFFF)) {
+          break;
+        }
+      }
+      // vold mount
+      if (tmp_nfs.mik_proto == "-") {
+        continue;
+      }
+      if (tmp_nfs.all_srtt > nfs_srtt_all) {
+	if (nfsc_warn == 0) {
+          printf("\n%s detected slow NFS mount(s): %s", who, ctime(&now));
+	  nfsc_warn = 1;
+	}
+        printf("%s from %s\n", tmp_mount.mnt_mountp, tmp_mount.mnt_special);
+        printf(" Flags:   vers=%d,proto=%s,sec=%s",
+               tmp_nfs.mik_vers, tmp_nfs.mik_proto, auth[tmp_nfs.mik_secmod]);
+        fputs((((tmp_nfs.mik_flags & MI_HARD) != 0)?",hard" : ",soft"), stdout);
+        fputs((((tmp_nfs.mik_flags & MI_INT) != 0)?",intr":",nointr"), stdout);
+        for(i=0; flag_values[i].value != nil; i++) {
+          if ((tmp_nfs.mik_flags & flag_values[i].flag) != 0) {
+            fputs(flag_values[i].value, stdout);
+          }
+        }
+
+        printf(",rsize=%d,wsize=%d,",tmp_nfs.mik_curread,tmp_nfs.mik_curwrite);
+        printf("retrans=%d\n", tmp_nfs.mik_retrans);
+    
+        if ((tmp_nfs.lookup_srtt != 0) || (tmp_nfs.lookup_rtxcur != 0)) {
+          printf(" Lookups: srtt=%d (%dms), dev=%d (%dms), cur=%d (%dms)\n",
+                 srtt_to_ms(tmp_nfs.lookup_srtt),
+                 dev_to_ms(tmp_nfs.lookup_deviate),
+                 tmp_nfs.lookup_rtxcur,
+                 tmp_nfs.lookup_rtxcur*20);
+        }
+    
+        if ((tmp_nfs.read_srtt != 0) || (tmp_nfs.read_rtxcur != 0)) {
+          printf(" Reads:   srtt=%d (%dms), dev=%d (%dms), cur=%d (%dms)\n",
+                 srtt_to_ms(tmp_nfs.read_srtt),
+                 dev_to_ms(tmp_nfs.read_deviate),
+                 tmp_nfs.read_rtxcur,
+                 tmp_nfs.read_rtxcur*20);
+        }
+    
+        if ((tmp_nfs.write_srtt != 0) || (tmp_nfs.write_rtxcur != 0)) {
+          printf(" Writes:  srtt=%d (%dms), dev=%d (%dms), cur=%d (%dms)\n",
+                 srtt_to_ms(tmp_nfs.write_srtt),
+                 dev_to_ms(tmp_nfs.write_deviate),
+                 tmp_nfs.write_rtxcur,
+                 tmp_nfs.write_rtxcur*20);
+        }
+    
+        printf(" All:     srtt=%d (%dms), dev=%d (%dms), cur=%d (%dms)\n\n",
+                 srtt_to_ms(tmp_nfs.all_srtt),
+                 dev_to_ms(tmp_nfs.all_deviate),
+                 tmp_nfs.all_rtxcur,
+                 tmp_nfs.all_rtxcur*20);
+      }
+  }
+}
+
+
+/* check out and patch the settings of various variables that don't change */
+static_check()
+{
+  int kvm$slowscan;
+  int kvm$fastscan;
+  int kvm$maxpgio;
+  int kvm$handspreadpages;
+  int kvm$physmem;
+  int physby4;
+  int kvm$priority_paging;
+  int kvm$cachefree;
+
+  uname(u);
+  online = sysconf(_SC_NPROCESSORS_ONLN);
+  ncpus  = sysconf(_SC_NPROCESSORS_CONF);
+
+  switch(u[0].release) {
+    case "5.0":
+    case "5.1":
+    case "5.2":
+    case "5.3":
+    case "5.4": /* 5.4 = Solaris 2.4 */
+    case "5.5":
+    case "5.5.1":
+      printf("Yuk, upgrade this crummy old version of Solaris!\n");
+      break;
+    case "5.6":
+    case "5.7":
+      if (euid == 0) {
+        if (kvm$slowscan < 500) {
+          printf("Increasing slowscan to 500 pages/s for fewer pager wakeups\n");
+	  kvm$slowscan = 500;
+        }
+	if (kvm$maxpgio < 25468) {	/* Richard McDougall's recommendations */
+	  printf("Removing limit on paging rates by setting maxpgio = 25468\n");
+	  kvm$maxpgio = 25468;
+	}
+	physby4 = kvm$physmem/4;
+	if (online > 1 && kvm$fastscan < physby4) { /* Richards Recommendations */ 
+	  printf("Increasing fastscan rate on MP machine to speed up filesystem\n");
+	  printf("Increasing handspreadpages, but clamping to about 250MB\n");
+	  kvm$fastscan = physby4;
+	  if (physby4 < 30960) {
+	    kvm$handspreadpages = physby4;
+	  } else {
+	    kvm$handspreadpages = 30960;
+	  }
+	  /* fix the rule, which assumes its clamped to 64MB otherwise */
+	  /* rule isn't in scope so pass via a global - yuk... */
+	  hands = kvm$handspreadpages;
+	}
+
+      if (kvm$priority_paging == 0) {
+	printf("Priority paging is available, so I'm enabling it now, see\n");
+	printf("http://www.sun.com/sun-on-net/performance/priority_paging.html\n");
+	printf("set priority_paging=1 in /etc/system to permanently enable\n");
+	if (kvm$cachefree <= kvm$lotsfree) {
+	  printf("setting cachefree to twice lotsfree\n");
+	  kvm$cachefree = 2 * kvm$lotsfree;
+	}
+	kvm$priority_paging = 1;
+      }     
+      }
+    case "5.8": /* no need to mess with tunables or priority_paging on Solaris 8 :-) */
+    default:	/* for all releases */
+      nfsserver_check(0);
+  }
+  if (ncpus > online) {
+    printf("WARNING: there are %d CPUs but only %d are online\n\n", ncpus, 
+      online);
+  }
+  if (sysconf(_SC_PHYS_PAGES) < 5000) {
+    printf("There is not enough memory to run this program, at least 24MB is advised\n");
+    exit(1);
+  }
+}
+
+
+nfsserver_check(int old)
+{
+  int ok = 0;
+  int unino;
+  int ncs;
+  ks_nfs_server kstat$nfs;
+  ks_nfs_server nfss;
+
+  if (euid == 0) {
+    unino = kvm$ufs_ninode;
+    ncs = kvm$ncsize;
+    if (old == 1) {
+      if (unino > ncs) {
+	if ( unino >= 10000 && ncs >= 5000) {
+	  ok = 1;
+	}
+      } else {
+        printf("Increasing inode cache limit (ufs_ninode) from %d to %d\n",
+		unino, ncs+ncs);
+        unino = ncs + ncs;
+	kvm$ufs_ninode = unino;
+      }
+    } else { /* must be Solaris 2.4 or later with new inode code */
+      if ( unino >= 5000 && ncs >= 5000) {
+        ok = 1;
+      }
+    }
+  }
+
+  nfss = kstat$nfs;
+  if (ok == 0 && nfss.calls > 0) {
+    printf("If this system is a heavily used NFS server then it\n");
+    printf("should have big inode and DNLC caches.\n");
+    if (old == 1) {
+      printf("The inode cache should be twice the size of the DNLC.\n");
+      printf("set ufs_ninode= 10000\n");
+    } else {
+      printf("set ufs_ninode= 5000\n");
+    }
+  printf("set ncsize= 5000\n");
+  }
+}
+

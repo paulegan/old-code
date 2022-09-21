@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990417">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System search page. Introduction to the system with simple form for searching by job function & keyword.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,IOS,search">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<FORM METHOD=POST ACTION="results.html">
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR>
+
+<TD WIDTH=280 VALIGN=TOP>
+
+  <P ALIGN=CENTER><FONT SIZE=4 FACE="Arial,Helvetica"><B>
+   Welcome to the<BR>
+   Redeployment Website
+  </B></FONT></P>
+
+  <P><FONT SIZE=2>
+   The Redeployment System consolidates all internal job opportunities
+   in Motorola and is being made available not only to internal
+   Motorolans but also to those affected by reductions for a limited
+   period of time.  This site replaces all other IOS systems.  As
+   positions become available through either vacancies caused by
+   voluntary separations from Motorola or new opportunities that
+   develop, we will make them available to you here.  A
+   cross-functional team of Motorolans is engaged in design of a new
+   system for job postings which will be launched sometime in the
+   latter half of 1999.  
+  </FONT></P>
+
+  <P><FONT SIZE=2>
+   If you find a job opening that matches your interests, experiences
+   and skills, you will have the opportunity to apply for the position
+   on-line.  <B>After submitting five applications you will receive a
+   warning asking you to talk to your local HR or Staffing
+   representative.  After ten applications you will no longer be
+   allowed to use the Redeployment System until you've had a discussion
+   with HR.</B>  Once you've applied on-line, you will receive an
+   acknowledgement that your application has been received and it will
+   be forwarded to the hiring manager for review. The hiring manager
+   will then contact you directly.
+  </FONT></P>
+
+</TD><TD ROWSPAN=2 WIDTH=300 VALIGN=TOP BGCOLOR=#EEEEEE>
+
+  <P>
+   <FONT SIZE=3 FACE="Arial,Helvetica"><B>FUNCTION SEARCH</B></FONT>
+   <BR>
+   <FONT SIZE=2><I>Search the entire database by not selecting any specific function,
+   or restrict your search to the functions below.</I></FONT>
+   <SERVER>
+    var functionCBF = new CheckboxField("function");
+    functionCBF.write(1);
+   </SERVER>
+  </P>
+
+  <P>
+   <FONT SIZE=3 FACE="Arial,Helvetica"><B>TIME OF POSTING</B></FONT>
+   <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=10><TR><TD>
+     <FONT SIZE=2><I>Show only vacancies<BR>posted within the last</I></FONT>
+    </TD><TD>
+     <SELECT NAME="timeOfPosting">
+      <OPTION VALUE="0" SELECTED> All
+      <OPTION VALUE="1"> day
+      <OPTION VALUE="7"> week
+      <OPTION VALUE="30"> month
+      <OPTION VALUE="365"> year
+     </SELECT>
+   </TD></TR></TABLE>
+  </P>
+
+  <P>
+   <FONT SIZE=3 FACE="Arial,Helvetica"><B>KEYWORD SEARCH</B></FONT>
+   <BR>
+   <FONT SIZE=2><I>You can restrict your search further by entering keywords like
+   &quot;secretary&quot; or &quot;manager&quot;.</I></FONT>
+   <INPUT TYPE=HIDDEN NAME="logicOp" VALUE="AND">
+   <CENTER><INPUT TYPE=TEXT NAME="keywords" SIZE=30></CENTER>
+  </P>
+
+  <TABLE BORDER=0 WIDTH=100% CELLSPACING=0 CELLPADDING=10><TR>
+   <TD ALIGN=RIGHT>
+    <A HREF="advanced.1.html">Advanced Search</A>
+   </TD>
+   <TD ALIGN=RIGHT>
+    <!-- <INPUT TYPE=IMAGE NAME="searchBtn" ALIGN=RIGHT SRC="images/button_search.gif" ALT="Search" BORDER=0 WIDTH=86 HEIGHT=40> -->
+    <INPUT TYPE="SUBMIT" VALUE=" Search ">
+   </TD>
+  </TR></TABLE>
+
+</TD></TR><TR><TD WIDTH=280 VALIGN=BOTTOM>
+
+   <P><FONT SIZE=2>
+    Motorola is an Equal Opportunity / Affirmative Action Employer.
+    We welcome and encourage diversity in our workforce.
+   </FONT></P>
+
+</TD></TR>
+
+</TABLE>
+
+</CENTER>
+
+<BR CLEAR=ALL>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Internal Use Only
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</FORM>
+
+</BODY>
+
+</HTML>

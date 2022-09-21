@@ -1,0 +1,73 @@
+*** sapi/cgi/cgi_main.c.orig	Sat Jan 20 00:09:12 2001
+--- sapi/cgi/cgi_main.c	Sat Jan 20 00:08:42 2001
+***************
+*** 168,174 ****
+  			l += strlen(sn);
+  		if (pi)
+  			l += strlen(pi);
+! 		if (pi && sn && !strcmp(pi, sn)) {
+  			l -= strlen(pi);
+  			pi = NULL;
+  		}
+--- 168,174 ----
+  			l += strlen(sn);
+  		if (pi)
+  			l += strlen(pi);
+! 		if (pi && sn && !strncmp(pi, sn, strlen(sn))) {
+  			l -= strlen(pi);
+  			pi = NULL;
+  		}
+***************
+*** 314,323 ****
+--- 314,337 ----
+  
+  	SG(request_info).request_method = getenv("REQUEST_METHOD");
+  	SG(request_info).query_string = getenv("QUERY_STRING");
++ /*
+  	SG(request_info).request_uri = getenv("PATH_INFO");
+  	if (!SG(request_info).request_uri) {
+  		SG(request_info).request_uri = getenv("SCRIPT_NAME");
+  	}
++ */
++ 	
++ 	SG(request_info).request_uri = getenv("SCRIPT_NAME");
++ 	if (SG(request_info).request_uri && SG(request_info).argv0 && IS_SLASH(SG(request_info).request_uri[strlen(SG(request_info).request_uri)-1])) {
++ 		char *arg_file = strrchr(SG(request_info).argv0,DEFAULT_SLASH);
++ 		if (arg_file) {
++ 			char *script_name = emalloc(strlen(SG(request_info).request_uri)+strlen(arg_file)+1);
++ 			strcpy(script_name,SG(request_info).request_uri);
++ 			strcat(script_name,arg_file+1);
++ 			SG(request_info).request_uri = script_name;
++ 		}
++ 	}
++ 
+  	SG(request_info).path_translated = NULL; /* we have to update it later, when we have that information */
+  	SG(request_info).content_type = getenv("CONTENT_TYPE");
+  	SG(request_info).content_length = (content_length?atoi(content_length):0);
+***************
+*** 507,518 ****
+  		ap_php_optarg = orig_optarg;
+  	}
+  
+  	init_request_info(SLS_C);
+  	SG(server_context) = (void *) 1; /* avoid server_context==NULL checks */
+  	CG(extended_info) = 0;
+  
+- 	SG(request_info).argv0 = argv0;
+- 
+  	zend_llist_init(&global_vars, sizeof(char *), NULL, 0);
+  
+  	if (!cgi) {					/* never execute the arguments if you are a CGI */
+--- 521,532 ----
+  		ap_php_optarg = orig_optarg;
+  	}
+  
++ 	SG(request_info).argv0 = argv0;
++ 
+  	init_request_info(SLS_C);
+  	SG(server_context) = (void *) 1; /* avoid server_context==NULL checks */
+  	CG(extended_info) = 0;
+  
+  	zend_llist_init(&global_vars, sizeof(char *), NULL, 0);
+  
+  	if (!cgi) {					/* never execute the arguments if you are a CGI */

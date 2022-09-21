@@ -1,0 +1,27 @@
+#!/www/php/php-current
+<?php
+   include('./tcts_includes.php');
+  
+  /* main method */
+  
+  if ($transID != "")
+  {
+    $tt = new TransactionTable; 
+    if ($tt->isValidTransID($transID))
+    {
+      if ($stage == "modify")
+      {
+        if (hris_isCID($emp_cid))
+	{
+           $tt->modifyCID($transID,$emp_cid);
+	   printSuccess($transID,"modified.pat");
+	}
+	else hris_printError("The CID $cid is not valid");
+      }
+      else printDetailsForm($transID,"modify","modify.pat");
+    }
+    else hris_printError("Invalid transaction ID : $transID");
+  }
+  else hris_printOutput(hris_includeFile("$patDir/update.pat"));
+
+?>

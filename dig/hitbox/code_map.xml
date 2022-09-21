@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE code_map PUBLIC "-//Disney Enterprises, Inc.//DTD HitBox Code Map 1.1//EN" "http://hitbox.disneyinternational.com/code_map.dtd">
+
+<!-- $Id$ -->
+
+<code_map>
+
+ <map type="country"><code>AA</code><text>Asia TDC</text></map>
+ <map type="country"><code>AU</code><text>Australia</text></map>
+ <map type="country"><code>BE</code><text>Belguim</text></map>
+ <map type="country"><code>BR</code><text>Brazil</text></map>
+ <map type="country"><code>CA</code><text>Canada</text></map>
+ <map type="country"><code>CH</code><text>Switzerland</text></map>
+ <map type="country"><code>DE</code><text>Germany</text></map>
+ <map type="country"><code>DK</code><text>Denmark</text></map>
+ <map type="country"><code>ES</code><text>Spain</text></map>
+ <map type="country"><code>FI</code><text>Finland</text></map>
+ <map type="country"><code>FR</code><text>France</text></map>
+ <map type="country"><code>IE</code><text>Ireland</text></map>
+ <map type="country"><code>IT</code><text>Italy</text></map>
+ <map type="country"><code>JP</code><text>Japan</text></map>
+ <map type="country"><code>KR</code><text>Korea</text></map>
+ <map type="country"><code>ME</code><text>Middle East</text></map>
+ <map type="country"><code>NL</code><text>Holland</text></map>
+ <map type="country"><code>NO</code><text>Norway</text></map>
+ <map type="country"><code>SE</code><text>Sweden</text></map>
+ <map type="country"><code>SG</code><text>Singapore</text></map>
+ <map type="country"><code>TW</code><text>Taiwan</text></map>
+ <map type="country"><code>UK</code><text>United Kingdom</text></map>
+ <map type="country"><code>XX</code><text>Latin America</text></map>
+ <map type="country"><code>ZZ</code><text>Central America</text></map>
+ <map type="country"><code>NONE</code><text>Global</text></map>
+
+ <map type="unit"><code>BVHE</code><text>BuenaVista Home Entertainment</text></map>
+ <map type="unit"><code>BVI</code><text>BuenaVista International</text></map>
+ <map type="unit"><code>DCP</code><text>Disney Consumer Products</text></map>
+ <map type="unit"><code>DI</code><text>Disney Interactive</text></map>
+ <map type="unit"><code>DISNEY-I</code><text>Disney Interactive (Japan)</text></map>
+ <map type="unit"><code>DLP</code><text>DisneyLand Paris</text></map>
+ <map type="unit"><code>DOL</code><text>Disney Online</text></map>
+ <map type="unit"><code>DPWW</code><text>Disney PWW</text></map>
+ <map type="unit"><code>NONE</code><text>No Unit</text></map>
+ <map type="unit"><code>TDC</code><text>The Disney Channel</text></map>
+ <map type="unit"><code>TDS</code><text>The Disney Store</text></map>
+ <map type="unit"><code>THEATRE</code><text>Disney Theatre</text></map>
+ <map type="unit"><code>WDPRO</code><text>Walt Disney Parks &amp; Resorts</text></map>
+ <map type="unit"><code>WDPRO_TOUR</code><text>Walt Disney Parks &amp; Resorts Tour</text></map>
+ <map type="unit"><code>WDR</code><text>Walt Disney Radio</text></map>
+ <map type="unit"><code>WDTV</code><text>Walt Disney TV</text></map>
+
+ <map type="brand"><code>BVI</code><text>BuenaVista International</text></map>
+ <map type="brand"><code>D100</code><text>D100</text></map>
+ <map type="brand"><code>DIG</code><text>Diggit</text></map>
+ <map type="brand"><code>DIS</code><text>Disney</text></map>
+ <map type="brand"><code>FIL</code><text>Film Factory</text></map>
+
+</code_map>

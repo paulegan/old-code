@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE url_map PUBLIC "-//Disney Enterprises, Inc.//DTD HitBox URL Map 1.1//EN" "http://hitbox.disneyinternational.com/url_map.dtd">
+ 
+<url_map>
+ 
+ <site host="disney.ie" root="/docs">
+  <path pattern="/films/*" order="1">
+   <country>IE</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/lumpy/*" order="9">
+   <country>IE</country>
+   <unit>NONE</unit>
+   <brand>LUMPY</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>IE</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+  
+ <site host="pingu" root="/pingu">
+  <path pattern="*" order="0">
+   <country>INTL</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+</url_map>

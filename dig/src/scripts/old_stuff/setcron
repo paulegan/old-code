@@ -1,0 +1,106 @@
+#!/usr/bin/sh
+
+######################################
+# Write cron             by S.Mackay #
+######################################
+
+FrobEcho=/bin/echo
+
+TMPFILE="tempcronfile.txt"
+STAGINGPATH=`pwd | sed 's/\/pool\/live/\/pool\/staging/'`
+DEVPATH=`pwd | sed 's/\/pool\/live/\/pool\/dev/'`
+LIVEPATH=`pwd`
+CRONTAB_L=`crontab -l`
+loginID=`whoami`
+myusername=`logname`
+
+echo "${CRONTAB_L}"
+clear
+
+echo "This script was created and is maintained by Steve"
+echo "Your current location is ${STAGINGPATH}"
+echo "The dev path is ${DEVPATH}"
+echo "Have a great day ;)"
+date
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 1 ~~~~~~~~~~~~~~~~~~~~~~"
+
+if [ "$loginID" != disweb ]
+then
+        clear
+        echo ""
+        echo "You must be disweb to use this script."
+        echo ""
+        exit 1; 
+fi
+
+echo ""
+echo "Enter MINUTES (0-59)"
+read mymin
+
+echo ""
+echo "Enter HOUR (1-24)"
+read myhour
+
+echo ""
+echo "Enter DAY of month (1-31)"
+read mydayofmonth
+
+echo ""
+echo "Enter MONTH of year (1-12)"
+read mymonthofyear
+
+echo ""
+echo "Enter DAY OF WEEK (0-6 with 0=Sunday"
+read dayofweek 
+
+echo ""
+echo "Enter file"
+read mytarfile
+
+echo ""
+echo "Hit with a hammer the letter (P) to Push content, (M) to send a mail, (O) other."
+read idowhat
+
+if [ "$idowhat" = P ]
+then
+	echo "Do You want to copy the file to this location from the DEV? (y/N)"
+	read myscp
+	echo ""
+
+	if [ "$myscp" != N ]
+	then
+		scp ${myusername}@${STAGE}:${DEVPATH}/${mytarfile} ./ 
+	fi
+
+	echo ""
+	echo "Enter code"
+	read stagingcode
+
+	$FrobEcho "${mymin} ${myhour} ${mydayofmonth} ${mymonthofyear} ${dayofweek} cd ${LIVEPATH}; /pool/local/bin/margaux ${mytarfile} live ${stagingcode}\n${CRONTAB_L}" > $TMPFILE
+fi
+
+if [ "$idowhat" = M ]
+then
+
+	echo ""
+	echo "Enter subject"
+	read mysubject
+
+	echo ""
+	echo "Enter email address"
+	read mytoemail
+
+	$FrobEcho "${mymin} ${myhour} ${mydayofmonth} ${mymonthofyear} ${dayofweek} cat ${LIVEPATH}/${mytarfile} | mailx -s ''${mysubject}'' ${mytoemail}\n${CRONTAB_L}" > $TMPFILE
+fi
+
+if [ "$idowhat" = O ]
+then
+	echo "Sorry this is not available at the moment"
+fi
+
+crontab $TMPFILE
+cat $TMPFILE
+rm $TMPFILE
+
+exit 0;

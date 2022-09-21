@@ -1,0 +1,1 @@
+exec cat /var/adm/sudo.log | sed 's/ : command not allowed/*/;s/ : user NOT in sudoers/*/;s/ : [^ ]* incorrect passwords/?/;s/^.* : *\([^ ]*\) . TTY.*USER=\([^ ]*\).*COMMAND=\(.*\)$/\1->\2 : \3/' | sort | uniq -c

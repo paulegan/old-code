@@ -1,0 +1,37 @@
+
+<FONT SIZE=4 COLOR=#333366 FACE="Helvetica,Arial"><B>
+ Web Based System Activity Reporter
+</B></FONT>
+
+<STYLE TYPE="text/css">
+ <!-- A:link {text-decoration:none;} -->
+</STYLE>
+
+<FORM NAME="reportSelect" METHOD=POST ACTION="#URL#">
+
+<TABLE BORDER=0 WIDTH=90% CELLPADDING=6 CELLSPACING=0 BGCOLOR=C3C3C3><TR>
+
+<TD>
+ &nbsp;
+</TD>
+
+<TD>
+ <SELECT NAME="host">
+  #HOSTS#
+ </SELECT>
+</TD>
+
+<TD>
+ <A HREF="javascript:void(0);" onClick="document.reportSelect.date.value=(Number(document.reportSelect.date.value)-1);"><B>&lt;</B></A>
+ <INPUT TYPE=TEXT SIZE=8 NAME="date" VALUE="#DATE#">
+ <A HREF="javascript:void(0);" onClick="document.reportSelect.date.value=(Number(document.reportSelect.date.value)+1);"><B>&gt;</B></A>
+</TD>
+
+<TD>
+ <INPUT TYPE=SUBMIT VALUE=" Report ">
+</TD>
+
+</TR></TABLE>
+
+</FORM>
+

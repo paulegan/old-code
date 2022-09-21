@@ -1,0 +1,1 @@
+grep '^# [a-zA-Z]' | sed 's/#/#=item/;s/ - /##/' | tr '#' '\n'

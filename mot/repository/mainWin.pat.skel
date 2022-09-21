@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+
+<HEAD>
+ <TITLE>#REP_NAME#</TITLE>
+ <META NAME="Author"		CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990226">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="History"		CONTENT="">
+ <META NAME="Description"       CONTENT="File repository tool">
+ <META NAME="Keywords"          CONTENT="file,repository">
+ <META NAME="Notes"             CONTENT=""> 
+</HEAD>
+
+#HEADER#
+
+#LEFTBAR#
+
+<style type="text/css"><!--	A {text-decoration: none}--></style>
+
+<FONT FACE="Helvetica,Arial">
+
+<P ALIGN=LEFT><B><FONT SIZE=+1 COLOR=#333366>
+  #REP_NAME#
+</B></FONT></P>
+
+<P>
+ <B>Current Folder:</B> #PATH_WITH_LINKS#
+</P>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+ <TR>
+  <TD VALIGN=MIDDLE WIDTH=553 HEIGHT=51 BACKGROUND="/images/docrep_back_top.gif">
+    <IMG SRC="/images/docrep_blank.gif" WIDTH=2 HEIGHT=4><BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <FONT FACE="MS Sans Serif" SIZE="2" COLOR="FFFFFF"><B>
+    #PATH#
+   </B></FONT>
+  </TD>
+ </TR>
+</TABLE>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+ <TR>
+  <TD VALIGN=TOP ALIGN=CENTER WIDTH=553 BACKGROUND="/images/docrep_back_middle.gif">
+
+   #LS_TABLE#
+
+  </TD>
+ </TR>
+</TABLE>
+
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
+ <TR>
+  <TD VALIGN=TOP WIDTH=553 HEIGHT=35 BACKGROUND="/images/docrep_back_bottom.gif">
+   &nbsp;
+  </TD>
+ </TR>
+</TABLE>
+
+#BUTTONS#
+
+</FONT>
+
+#FOOTER#
+
+</BODY>
+
+</HTML>

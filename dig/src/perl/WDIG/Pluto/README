@@ -1,0 +1,27 @@
+WDIG::Pluto version 1.0
+=======================
+
+$Id$
+
+XML RPC interface to the pluto workflow app
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   perl -I blib/lib -w t/RpcClient.t
+   make install
+
+DEPENDENCIES
+
+RPC::XML 0.53
+Error 0.15
+Log::Log4perl 0.31
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

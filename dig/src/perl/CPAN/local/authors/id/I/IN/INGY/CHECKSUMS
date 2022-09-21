@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'YAML-0.35.tar.gz' => {
+    'md5-ungz' => 'c561858a7ff00c79d428175ddded824b',
+    'md5' => '03f1c4446fae2bcc7d606b0b3ded0632',
+    'size' => '55741'
+  }
+};

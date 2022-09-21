@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Submit Batch</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="Form to submit a batch of transactions. " />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+</head>
+
+<!--
+  - File:	       $Source$
+  -
+  - Created:	       2001/01/14
+  - Created By:        Paul Egan
+  -
+  - Last Edited:       $Date$
+  - Edited By:         $Author$
+  -
+  - ID: 	       $Id$
+  -
+  - History:	       $Log$
+  - History:	       Revision 1.3  2001/02/05 19:02:24  eganp
+  - History:	       CID check now occurs on submission of form when employee field has changed
+  - History:
+  - History:	       Revision 1.2  2001/01/24 19:42:41  eganp
+  - History:	       Updated header with correct header image & css locations
+  - History:	       Added help menu option with helper script
+  - History:	       Added copyright footer
+  - History:	       Changed links & action to use PHP_SELF
+  - History:	
+  - History:	       Revision 1.1.1.1  2001/01/19 11:41:06  eganp
+  - History:	       Initial import of TCTS3.
+  - History:	
+  -
+  -->
+
+<body>
+
+
+
+
+<form method="get" action="{PHP_SELF}">
+
+<table class="pageHeader" width="650" border="0" cellspacing="0" cellpadding="2">
+ <tr><td colspan="2">
+   <img src="images/en_UK/header.gif" alt="TCTS" width="645" height="100"/>
+ </td></tr>
+ <tr>
+  <td>
+    <p class="pageHeader">Submit Batch</p>
+  </td>
+  <td align="right">
+   <!-- BEGIN _center_select -->
+   <select name="_center" onchange="this.form.submit(); return (false);">
+    <!-- BEGIN _center_options -->
+    <option value="{_center_value}" {_center_selected}>{_center_name}</option>
+    <!-- END _center_options -->
+   </select>
+   <!-- END _center_select -->
+   <select name="_op" onchange="return (doOpSelect(this.form));">
+    <!-- BEGIN _op_options -->
+    <option value="{_op_value}" {_op_selected}>{_op_name}</option>
+    <!-- END _op_options -->
+    <option value="help">help</option>
+    <option value="logout">logout</option>
+   </select>
+  </td>
+ </tr>
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function doOpSelect(form)
+ {
+  if (form['_op'].options[form['_op'].selectedIndex].value == 'help'){
+    window.open('help/en_UK/createBatch.html','tcts_help','width=700,height=800,resizable=1,scrollbars=yes');
+    for (var e=0; e<form['_op'].options.length; e++)
+      if (form['_op'].options[e].value == 'submit batch')
+        form['_op'].options[e].selected = true;
+  }else{
+    form.submit();
+  }
+   
+  return (false);
+ }
+//-->
+</script>
+
+<table width="650" border="0"><tr><td>
+
+ <!-- MESSAGE invalid_trans_date -
+ <p class="error">
+  The transaction date you provided does not seem to be valid!.
+ </p>
+    - MESSAGE invalid_trans_date -->
+
+ <!-- MESSAGE invalid_employee -
+ <p class="error">
+  The employee reference on line {employee_err_line} is invalid!.  This must be a
+  valid CID or an alphanumeric string between 3 &amp; 8 characters long.
+ </p>
+    - MESSAGE invalid_employee -->
+
+ <!-- MESSAGE invalid_approved_date -
+ <p class="error">
+  The approved date provided on line {approved_err_line} is invalid!.
+ </p>
+    - MESSAGE invalid_approved_date -->
+
+ <!-- MESSAGE invalid_effective_date -
+ <p class="error">
+  The effective date provided on line {effective_err_line} is invalid!.
+ </p>
+    - MESSAGE invalid_effective_date -->
+
+ <!-- MESSAGE create_success -
+ <p class="error">
+  {num_created} new transactions successfully created.
+ </p>
+    - MESSAGE create_success -->
+
+ <!-- MESSAGE check_cids -
+ <p class="error">
+  Please verify that the employee CIDs are correct before submitting the form.
+ </p>
+    - MESSAGE check_cids -->
+
+</td></tr></table>
+
+<form method="post" action="{PHP_SELF}" name="createForm">
+
+<input type="hidden" name="_op" value="submit batch" />
+<input type="hidden" name="_stage" value="commit" />
+<input type="hidden" name="num_lines" value="{num_lines}" />
+
+<table class="form" width="650" border="0" cellpadding="3" cellspacing="0">
+
+ <tr>
+  <td><p class="label">Date:</p></td>
+  <td><p class="label">Submitted Via:</p></td>
+  <td><!-- <input type="button" value=" Check  CIDs " onclick="this.form['_stage'].value='check cids'; this.form.submit(); return (false);" /> -->&nbsp;</td>
+ </tr>
+ 
+ <tr>
+  <td>
+    <input type="text" name="trans_day" size="2" maxlength="2" value="{trans_day}" />/
+    <input type="text" name="trans_month" size="2" maxlength="2" value="{trans_month}" />/
+    <input type="text" name="trans_year" size="4" maxlength="4" value="{trans_year}" />
+    <span class="comment">(dd/mm/yyyy)</span>
+  </td>
+  <td>
+    <small>
+     <select name="submitted_via">
+      <!-- BEGIN submitted_via_options -->
+      <option value="{submitted_via_value}" {submitted_via_selected}>{submitted_via_name}</option>
+      <!-- END submitted_via_options -->
+     </select>
+    </small>
+  </td>
+  <td>
+    <input type="submit" value="   Submit   " />
+  </td>
+ </tr> 
+
+</table>
+
+<br />
+
+<table class="form" width="650" border="0" cellpadding="3" cellspacing="0">
+
+ <thead>
+ <tr>
+  <td><p class="label">Employee:</p></td>
+  <td><p class="label">Transaction:</p></td>
+  <td><p class="label">Approved:</p></td>
+  <td><p class="label">Effective:</p></td>
+ </tr>
+ </thead>
+
+ <tbody>
+ <!-- BEGIN employee_row -->
+ <tr> 
+  <td>
+    <input type="text" name="employee{n}" size="8" maxlength="8" value="{employee}" onchange="this.form['_stage'].value='check cids';" />
+    <small>
+     {employee_name}
+     <!-- MESSAGE unknown_cid -
+     <span class="error">Unknown CID</span>
+        - MESSAGE unknown_cid -->
+    </small>
+  </td>
+  <td>
+    <small><select name="type{n}" style="width:15em">
+     <!-- BEGIN type_options -->
+     <option value="{type_value}" {type_selected}>{type_name}</option>
+     <!-- END type_options -->
+    </select></small>
+  </td> 
+  <td>
+    <input type="text" name="approved_day{n}" size="2" maxlength="2" value="{approved_day}" />/<input type="text" name="approved_month{n}" size="2" maxlength="2" value="{approved_month}" />/<input type="text" name="approved_year{n}" size="4" maxlength="4" value="{approved_year}" />
+  </td> 
+  <td>
+    <input type="text" name="effective_day{n}" size="2" maxlength="2" value="{effective_day}" />/<input type="text" name="effective_month{n}" size="2" maxlength="2" value="{effective_month}" />/<input type="text" name="effective_year{n}" size="4" maxlength="4" value="{effective_year}" />
+  </td> 
+ </tr>
+ <!-- END employee_row -->
+ </tbody>
+ 
+</table>
+
+</form>
+
+<script type="text/javascript">
+<!--
+ function changeLines(op)
+ {
+  eval("document.createForm.num_lines.value = Number(document.createForm.num_lines.value) "+(op?op:"+")+" Number(document.changeLinesForm.num_lines.value)");
+  document.createForm["_stage"].value = "changeLines";
+  document.createForm.submit();
+  return (false);
+ }
+//-->
+</script>
+
+<form name="changeLinesForm">
+
+<table width="650" border="0" cellpadding="2" cellspacing="3"><tr>
+ <td align="right">
+  <a href="javascript:void" onclick="return changeLines('-');">Del lines</a>
+  <input type="text" name="num_lines" size="2" maxlength="2" value="1" />
+  <a href="javascript:void" onclick="return changeLines('+');">Add lines</a>
+ </td>
+</tr></table>
+
+</form>
+
+<table width="650" border="0" cellpadding="0" cellspacing="0">
+ <tr><td align="center">
+  <p class="copyright">
+   Copyright &#169; 2001 Motorola Confidential Proprietary
+  </p>
+ </td></tr>
+</table>
+ 
+</body>
+
+</html>
+

@@ -1,0 +1,280 @@
+#!/usr/bin/perl -w
+
+# $Id$
+
+=head1 NAME
+
+weblogic - a script to stop and start weblogic application servers
+
+=head1 AUTHOR
+
+ $Author$
+ $Date$
+
+ Initial Author: paul.egan@disney.com
+ Date: 2003/05/08
+
+=head1 SYNOPSIS
+
+ weblogic [options] <start|stop|restart|test|ping|kill|refresh|flushcache> <server_name|app_name> domain_name
+ weblogic -help
+
+=head1 OPTIONS
+
+  config - The value of this option if used to set default values
+    for other options.  This will generally be in XML form where
+    the children of the root element will be interpreted as options.
+    The default is /share/lib/weblogic/settings.xml.
+  bea_home - The installation directory for BEA
+  wl_home - The location of the directory containing the Weblogic config
+    sub-directory.
+  classpath - The Java classpath to use.
+  ld_library_path - The shared library path.
+  java_home - The directory containing the Java executable.
+  source_dir - The source directory for the application.
+  passwd - The Weblogic system password.
+  log_file - The server stdout log file location.
+  pid_file - The file in which to store the watchdog pid.
+  copy_config - First copy this config file to wl_home.
+  java_options - Java runtime options.
+  properties - System properties.
+  timeout - Time to wait for success.
+  success_pattern - Text to determine success.
+  error_pattern - Text to determine error.
+  check_log_file - Log file to determine shutdown success.
+  quiet - Suppress informational messages.
+  debug - Enable debug messages
+  help - Display this help message
+  
+=head1 DESCRIPTION
+
+This script implements a command line interface to the WDIG::Weblogic::Server
+and WDIG::Weblogic::Application packages for starting and stopping 
+Weblogic servers.
+
+The domain_name argument tells the script where to find the
+Weblogic config file (config.xml).  It may be the path to the
+config file itself but is normally simply the name of the domain
+and is combined with the wl_root option to find the config file. 
+Therefor, in everyday use this will be one of "dev", "staging" or
+"live".
+
+The <server_name|app_name> argument should be either the name of a
+server or the name of an application.  In our Seattle config the
+servers are always named after the app but with a digit suffix.
+Therefor the script will interpret a name as a server name if it
+ends in a number.  If a server is used then the command is
+performed on only that server.  If an application is referenced,
+then the command is performed on each server assigned to that
+server (normally there are two server to each app). e.g. To perform
+the command on both pluto servers use the app name "pluto" and to
+only use the first server use "pluto1".
+
+In general if an app name is used, the command is performed on
+each server in sequence but the entire process will terminate on
+the first error that is caught.
+
+=head2 Commands
+
+The meaning of the commands are as follows:
+
+start - first pings each server (or the single server) and if
+they/it are not running then start them/it.  If the first server
+in a set does not start then the remaining will not be started.
+
+stop - sends a stop signal to each server and then waits for the
+"Shutdown has completed" message in the weblogic log.
+
+restart - does a stop followed immediately by a start. As usual,
+each server is dealt with in sequence, so if e.g. the first server
+does not start correctly the remaining ones will not have been
+stopped.
+
+test - requests monitor.jsp from each server and checks that the
+output matches "STATUS: OK".  This command will continue on to the
+next server even if the previous fails the test.
+
+ping - does a weblogic ping for each server and checks for a
+succesful response.  Again, this command will continue on to the
+next server even if the previous fails to respond.
+
+kill - sends a TERM signal to each of the watchdog processes, which
+will in turn send a KILL signal to its children (the server).  The
+watchdog pid is read from the pid files in the logs dir.
+
+refresh - this rsyncs the files in the app & config dirs to the
+app servers.  Any changes to files that require a restart to take
+effect (e.g. config files or jar files) will cause a restart. The
+server is ping'd and test'd after a refresh.  Since this is
+performed in sequence, if a refresh for one server fails (e.g.
+monitor.jsp does not respond after a restart) then the remaining
+servers will not be touched and will continue to run with the old
+content.
+
+flushcache - first pings each server and if they are not running
+then deletes the server's cache directories.  The cache directories
+are those dirs that contain stuff like compiled JSPs etc.
+
+=head2 Option Syntax
+
+The options are specified in standard unix style, i.e. with a
+leading "-".  e.g. "-o", "-opt", or "-opt val".  You can also use
+GNU style long options, "--opt" or "--opt=val".
+
+An option specified on the command line will trickle down to each
+Perl package that is used internally.  Hence, there are too many
+options to detail in their entirity.  Many options that expect
+a value will also accept the name of a file that contains that
+value.
+
+=head2 Note
+
+The script is set to ignore INT & QUIT signals so hitting CONTROL-C
+when its running is unlikely to have any effect.
+
+=head1 HISTORY
+
+ $Log: weblogic,v $
+ Revision 1.3  2003/09/03 04:01:45  pegan
+ Added extra documentation
+
+ Revision 1.2  2003/08/26 20:35:31  pegan
+ removed ununsed options
+ added test, refresh & flushcache commands
+ switched to Log4perl
+
+ Revision 1.1  2003/05/09 21:33:38  pegan
+ Initial revision
+
+
+=head1 COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+=cut
+
+######################################################################
+
+use 5.006_001;
+use strict;
+use warnings;
+
+use lib('/share/src/perl/test_lib','/share/lib/perl5/5.6.1','/share/lib/perl5/site_perl');
+use Getopt::Long;
+use Pod::Usage;
+use Error qw(:try);
+use Log::Log4perl qw(:levels);
+use WDIG::Weblogic::Application;
+use WDIG::Weblogic::Server;
+
+my $Script_Defaults_File = "/share/lib/weblogic/settings.xml";
+
+my $Default_Log_Init = {
+  'log4perl.rootLogger' => 'INFO, screen',
+  'log4perl.appender.screen' => 'Log::Log4perl::Appender::Screen',
+  'log4perl.appender.screen.stderr' => 0,
+  'log4perl.appender.screen.layout' => 'SimpleLayout'
+};
+
+my @Opt_Config = (
+  'defaults|config=s',
+  'bea_home=s',
+  'wl_home=s',
+  'classpath=s',
+  'ld_library_path=s',
+  'java_home=s',
+  'source_dir=s',
+  'passwd=s',
+  'log_file=s',
+  'pid_file=s',
+  'copy_config=s',
+  'java_options=s',
+  'properties=s',
+  'timeout=i',
+  'success_pattern=s',
+  'error_pattern=s',
+  'check_log_file=s',
+  'log_conf_file=s',
+  'debug',
+  'quiet',
+  'help|?'
+);
+
+my @Valid_Cmds = ( 'start','stop','restart','kill','test','ping','refresh','flushcache' );
+
+umask(0002);
+
+$SIG{INT} = $SIG{QUIT} = 'IGNORE'; # User is not able to stop exec
+
+
+######################################################################
+# Process command line arguments:
+
+my %opt = ();
+GetOptions(\%opt, @Opt_Config) or pod2usage();
+pod2usage(-exitstatus=>0, -verbose=>1) if ( $opt{help} );
+
+$opt{defaults} = $Script_Defaults_File if ( !$opt{defaults} );
+
+my $cmd = shift();
+pod2usage(-message=>"Command must be one of: ".join(" ",@Valid_Cmds))
+            if ( !$cmd or !grep(/$cmd/, @Valid_Cmds) );
+
+my $name = shift();
+pod2usage() if ( !$name );
+
+my $domain = shift();
+pod2usage() if ( !$domain );
+
+Log::Log4perl->init($opt{log_conf_file} || $Default_Log_Init);
+my $root_logger = Log::Log4perl->get_logger("");
+$root_logger->level($FATAL) if ( $opt{quiet} );
+$root_logger->level($DEBUG) if ( $opt{debug} );
+
+
+######################################################################
+# Do as requested:
+
+my $success = undef;
+my $app;
+
+try {
+
+  if ( $name =~ /^(\w+)\d+$/ ) {	# if looks like a server name
+
+    $app = new WDIG::Weblogic::Server($name, $domain, %opt);
+
+  } else {
+
+    $app = new WDIG::Weblogic::Application($name, $domain, %opt);
+
+  }
+
+  throw Error::Simple("Unable to create object for $name") if ( !$app );
+
+  for ($cmd) {
+    /^start/      and !$app->ping(throw_error=>'alive')
+                  and $success = $app->start();
+    /^stop/       and $success = $app->stop();
+    /^restart/    and $success = $app->restart();
+    /^ping/       and $success = $app->ping();
+    /^test/       and $success = $app->test();
+    /^kill/       and $success = $app->kill();
+    /^refresh/    and $success = $app->refresh();
+    /^flushcache/ and !$app->ping(throw_error=>'alive')
+                  and $success = $app->flushcache();
+  }
+
+  throw Error::Simple("The command did not succeed") if ( !$success );
+
+} catch Error with {
+
+  my $error = shift();
+  $root_logger->error($error->text());
+  exit(1);
+
+};
+
+exit(0);
+
+__END__

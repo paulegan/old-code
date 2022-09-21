@@ -1,0 +1,26 @@
+<HTML>
+
+<SERVER>
+ var tabForm = new TabForm( [ new Tab("test","Test","",writeTest) ] );
+ var cols = [
+  //		   col name formName null?  type      len  VOC    title	         display munge
+  new ColumnSpec ( "thing",  "thing",  false, "text",   10,  true,  "Record Name", true,  null ),
+  new ColumnSpec ( "num",   "num",   true,  "number", 8,   true,  "Rec Number",  true,  null )
+ ];
+
+ function writeTest()
+ {
+  var testTable = new StandardTable("test",cols);
+
+  if (request.update && !testTable.update(request))
+    write("ERROR: "+testTable.errorMessage);
+
+  testTable.writeTable(null,null,true);
+  testTable.writeUpdateForm(request.thing,null,null,null,"update");
+ }// writeTest
+
+
+ tabForm.write();
+</SERVER>
+
+</HTML>

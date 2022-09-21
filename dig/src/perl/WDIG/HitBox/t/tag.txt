@@ -1,0 +1,18 @@
+<!-- BEGIN WEBSIDESTORY CODE v7.3 (no 1.0)-->
+<!-- COPYRIGHT 1997-2001 WEBSIDESTORY, INC. ALL RIGHTS RESERVED. U.S.PATENT PENDING. Privacy notice at: http://websidestory.com/privacy -->
+<script language="javascript" id="_hbc">
+var _acct="ACCOUNT+ID+LIST";
+var _mlc="CONTENT+CATEGORY";
+var _pn="PUT+PAGE+NAME+HERE"; var _pndef="index.html";
+var _cmp="ENTRY+CAMPAIGN+ID"; var _cmpn="hb_cmp_id";
+var _gp="GOAL+CAMPAIGN+ID"; var _gpn="hb_goal";
+var _seg="SEGMENT+ID"; var _cp="null"; var _ctdef="full";
+var _dlf="n"; var _elf="n"; var _epg="n"; var _hcv=68;
+var _mn="we20"; var _gn="hitbox.disneyinternational.com";
+var _lp=location.protocol.indexOf('https')>-1?'https://':'http://';
+</script>
+<script language="javascript1.1" defer src="http://a1668.g.akamai.net/7/1668/1573/506f009538cc83/hitbox.disneyinternational.com/hbe-v65-no10.js"></script>
+<script language="javascript">document.write("<\!--");</script><noscript>
+<img src="http://hitbox.disneyinternational.com/HG?hc=we20&cd=1&hv=6&ce=u&hb=ACCOUNT+ID+LIST&vcon=CONTENT+CATEGORY&n=PUT+PAGE+NAME+HERE&cmp=ENTRY+CAMPAIGN+ID&gp=GOAL+CAMPAIGN+ID&seg=SEGMENT+ID" border='0' width='1' height='1'>
+</noscript><!--//-->
+<!-- END WEBSIDESTORY CODE  -->

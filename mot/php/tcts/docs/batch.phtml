@@ -1,0 +1,17 @@
+#!/www/php/php-current
+<?php
+ 
+  include("./tcts_includes.php");
+
+  $ad = new Admin;
+  $user = GetEnv("REMOTE_USER");
+  if (!$ad->isAdmin(hris_emailID2CID($user)))
+  {
+    hris_printError("The user $user is not setup as a HR administrator");
+  }
+  else {
+         if ($stage == "confirm")
+            confirmBatch();
+         else printCreateForm($country,true);
+       }
+?>

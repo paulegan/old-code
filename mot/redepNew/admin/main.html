@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Admin Search Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System admin search form.">
+ <META NAME="Keywords"          CONTENT="redeployment,search,admin">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   // Get Cookie Value function
+   function getCookieVal(offset)
+   {
+    var endstr = document.cookie.indexOf (";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+   }// getCookieVal
+
+   // Get Cookie function
+   function getCookie(name)
+   {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+       var j = i + alen;
+       if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+       i = document.cookie.indexOf(" ", i) + 1;
+       if (i == 0) break;
+    }
+    return null;
+   }// getCookie
+
+   function preloadImage(img)
+   {
+    var i = new Image(); 
+    i.src = img; 
+    return(i); 
+   }
+
+   function doSearch(func,action)
+   {
+    document.refForm.func.value = func;
+    document.refForm.action = action;
+    document.refForm.submit();
+
+    return false;
+   }
+
+   browserSupportsJSImages = 
+    (((navigator.appName == "Netscape")			&& (parseInt(navigator.appVersion) >= 3 )) || 
+     ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4 ))    ); 
+
+   if (browserSupportsJSImages){ 
+     newPosition_G = preloadImage("images/newPosition_G.gif");
+     newPosition_W = preloadImage("images/newPosition_W.gif");
+     editPosition_G = preloadImage("images/editPosition_G.gif");
+     editPosition_W = preloadImage("images/editPosition_W.gif");
+     listApplications_G = preloadImage("images/listApplications_G.gif");
+     listApplications_W = preloadImage("images/listApplications_W.gif");
+   }
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF BACKGROUND="images/background.gif" TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>
+
+<TR ALIGN=LEFT VALIGN=TOP><TD WIDTH=150 NOWRAP>
+
+ <FORM NAME="createForm" METHOD=POST ACTION="create.html">
+  <SCRIPT>
+   <!-- 
+   document.write("<INPUT TYPE=HIDDEN NAME=\"defaults\" VALUE=\""+getCookie("creationDefaults")+"\">");
+   // -->
+  </SCRIPT>
+ </FORM>
+ <A HREF="javascript:document.createForm.submit();" onMouseOver="if (browserSupportsJSImages) document['newPosition'].src=newPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['newPosition'].src=newPosition_G.src"><IMG SRC="images/newPosition_G.gif" NAME="newPosition" ALT="Create New Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="editList.html?func=edit" onClick="return doSearch('edit','editList.html');" onMouseOver="if (browserSupportsJSImages) document['editPosition'].src=editPosition_W.src" onMouseOut="if (browserSupportsJSImages) document['editPosition'].src=editPosition_G.src"><IMG SRC="images/editPosition_G.gif" NAME="editPosition" ALT="Edit Position" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR>
+ <A HREF="main.html?func=listAppl" onClick="return doSearch('listAppl','main.html');" onMouseOver="if (browserSupportsJSImages) document['listApplications'].src=listApplications_W.src" onMouseOut="if (browserSupportsJSImages) document['listApplications'].src=listApplications_W.src"><IMG SRC="images/listApplications_W.gif" NAME="listApplications" ALT="List Applications" BORDER=0 HEIGHT=20 WIDTH=130></A>
+ <BR><BR>
+ <FORM NAME="refForm" METHOD=POST ACTION="editList.html">
+  <FONT COLOR=#C0C0C0 FACE="Arial,Helvetica" SIZE=2><B>Position Ref.:</B></FONT><BR>
+  <INPUT TYPE=HIDDEN NAME="func" VALUE="edit">
+  <INPUT TYPE=TEXT NAME="ref" SIZE=12>
+ </FORM>
+
+</TD><TD ALIGN=LEFT>
+
+
+<SERVER>
+ if ( !request.auth_user ) error("This directory must be protected!");
+
+ var jobs = new Jobs();
+ var recentOnly = (!request.recentOnly)||(request.recentOnly=="yes") 
+
+ if ( (request.ref) && (request.ref!="") && ((ref=jobs.find(request.ref,request.auth_user))!=null) )
+   redirect("listAppl.html?ref="+ref);
+
+ var list = jobs.list(request.auth_user,request.sortColumn,recentOnly);
+
+ if ( recentOnly && list.length==0 ){
+</SERVER>
+
+ <P ALIGN=CENTER>
+  No recent positions assigned to <SERVER>write(request.auth_user)</SERVER>
+  found in the database. <A HREF="main.html?recentOnly=no">View ALL</A>
+ </P>
+
+<SERVER> }else if ( list.length==0 ){ </SERVER>
+
+ <P ALIGN=CENTER>
+  No positions assigned to <SERVER>write(request.auth_user)</SERVER> found
+  in the database.
+ </P>
+
+<SERVER> }else{ </SERVER>
+ 
+ <FORM NAME="display" METHOD=POST>
+  <TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0 WIDTH=500><TR>
+   <TD ALIGN=LEFT VALIGN=MIDDLE>
+    Select the position to list the applications of.
+    &nbsp;&nbsp;&nbsp;&nbsp;
+   </TD><TD ALIGN=RIGHT VALIGN=MIDDLE>
+    <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Display"></NOSCRIPT>
+    &nbsp;
+   </TD><TD ALIGN=RIGHT VALIGN=MIDDLE>
+     <SELECT NAME="sortColumn" onChange="display.submit();">
+      <OPTION VALUE="ref" `(request.sortColumn=="ref"?"SELECTED":"")`>Sort by Reference
+      <OPTION VALUE="title" `(request.sortColumn=="title"?"SELECTED":"")`>Sort by Title
+      <OPTION VALUE="num_positions" `(request.sortColumn=="num_positions"?"SELECTED":"")`>Sort by no. of Positions
+      <OPTION VALUE="num_applications" `(request.sortColumn=="num_applications"?"SELECTED":"")`>Sort by no. of Applications
+     </SELECT>
+     <BR>
+     <SELECT NAME="recentOnly" onChange="display.submit();">
+      <OPTION VALUE="yes" `(request.recentOnly=="yes"?"SELECTED":"")`>Show only recent posts
+      <OPTION VALUE="no"  `(request.recentOnly=="no"?"SELECTED":"")`>Show all
+     </SELECT>
+   </TD>
+  </TR>
+  </TABLE>
+ </FORM>
+
+ <TABLE BORDER=1 WIDTH=500 CELLSPACING=0 CELLPADDING=3>
+
+  <TR BGCOLOR=#C0C0C0><TH>Reference</TH><TH>Title</TH><TH>#Positions</TH><TH>#Applications</TH></TR>
+
+  <SERVER>
+   while(list.next()){
+     write(" <TR><TD><FONT SIZE=-1><A HREF=\"listAppl.html?ref="+list.REF+'"');
+     write(" onMouseOver=\"window.status='Select "+list.REF+"';return true;\" ");
+     write(">"+list.REF+"</A></FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.TITLE+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.NUM_POSITIONS+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.NUM_APPLICATIONS+"</FONT></TD></TR>\n");
+   }
+  </SERVER>
+
+ </TABLE>
+
+<SERVER>
+ }// End else results.. 
+
+ list.close();
+</SERVER>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+
+</TD></TR>
+
+</TABLE>
+
+</BODY>
+
+</HTML>

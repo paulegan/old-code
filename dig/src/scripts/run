@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# $Id$
+ 
+# A simple command wrapper to set the correct lib path
+# paul.x.egan.-nd@email.disney.com 20030707
+
+CMD=`basename $0`
+if [ "$CMD" = "run"  ]; then
+  CMD=$1;
+  shift;
+fi
+
+ARCH=`uname -m`
+if [ "$ARCH" = "i686"  ]; then ARCH=i386-linux; fi
+if [ "$ARCH" = "sun4u" ]; then ARCH=sun4-solaris; fi
+
+LD_LIBRARY_PATH=/share/lib/$ARCH:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+PATH=/share/lib/$ARCH:$PATH
+export PATH
+
+exec $CMD "$@"

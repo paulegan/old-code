@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:16 2003 by ./update_checksums
+$cksum1 = {
+  'CPAN-1.70.tar.gz' => {
+    'md5-ungz' => '14925ae6127c54bfc03f947731609dd1',
+    'md5' => 'd6f2c0e0c1888d0f980214d640df5257',
+    'size' => '132124'
+  }
+};

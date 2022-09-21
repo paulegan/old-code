@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <title>Please Login</title> 
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta http-equiv="Content-language" content="en_UK" />
+ <meta name="Author" content="$Author$" />
+ <meta name="Revised" content="$Date$" />
+ <meta name="Description" content="TCTS login form." />
+ <meta name="Keywords" content="" />
+ <link rel="stylesheet" type="text/css" href="en_UK.css" />
+</head>
+
+<!--
+  - File:		$Source$
+  -
+  - Created:		2001/01/16
+  - Created By:		Paul Egan
+  -
+  - Last Edited:	$Date$
+  - Edited By:		$Author$
+  -
+  - ID:			$Id$
+  -
+  - History:		$Log$
+  - History:		Revision 1.2  2001/01/24 19:42:41  eganp
+  - History:		Updated header with correct header image & css locations
+  - History:		Added help menu option with helper script
+  - History:		Added copyright footer
+  - History:		Changed links & action to use PHP_SELF
+  - History:
+  - History:		Revision 1.1.1.1  2001/01/19 11:41:06  eganp
+  - History:		Initial import of TCTS3.
+  - History:		
+  -
+  -->
+
+<body>
+
+
+<img src="images/en_UK/header.gif" alt="TCTS" width="645" height="100"/>
+
+<table width="650" border="0" cellspacing="0" cellpadding="10"><tr><td>
+
+ <p>
+  Welcome to the Transaction Center Tracking System.  This application 
+  requires that you authenticate with your X500 user ID (email ID) and
+  password.
+ </p>
+
+ <p>
+  You can initialise or change your password using the password
+  form on the <a href="http://directory.mot.com/password.html">core directory</a>
+  website
+ </p>
+ 
+ <!-- MESSAGE credential_error -
+ <p class="error">
+  The username or password that you entered was incorrect.  Please try again.
+ </p>
+    - MESSAGE credential_error -->
+
+ <!-- MESSAGE cookie_tamper -
+ <p class="error">
+  The authentication cookie your browser provided is invalid.  This may sometimes
+  occur if you are accessing this system from behind a load-balanced proxy.
+ </p>
+    - MESSAGE cookie_tamper -->
+
+</td></tr><tr><td align="center">
+ 
+ <form method="post" action="{PHP_SELF}">
+
+ <input type="hidden" name="_login" value="true" />
+ <!-- BEGIN hidden_values -->
+ <input type="hidden" name="{name}" value="{value}" />
+ <!-- END hidden_values -->
+ 
+ <table class="form" border="0" cellspacing="0" cellpadding="10">
+ <tr>
+  <td align="right">Username:</td>
+  <td align="left"><input type="text" name="_login_user" length="8" value="{user}" /></td>
+ </tr>
+ <tr>
+  <td align="right">Password:</td>
+  <td align="left"><input type="password" name="_login_passwd" length="8" value="" onkeypress="if (event.which==13 || event.keyCode==13) { this.form.submit(); return false;}" /></td>
+ </tr>
+ <tr>
+  <td colspan="2" align="right">
+   <input type="submit" value=" Login " />
+  </td>
+ </tr>
+ </table>
+ 
+ </form>
+ 
+ <script type="text/javascript">
+ <!--
+
+  if (document.forms[0]['_login_user'].value == "")
+    document.forms[0]['_login_user'].focus();
+  else
+    document.forms[0]['_login_passwd'].focus();
+
+ //-->
+ </script>
+
+</td></tr><tr><td>
+
+ <p class="comment">
+  Should you require additional help, please contact the 
+  <a href="http://www.hr.emea.mot.com/hris/Helpdesk">Helpdesk</a>.
+ </p>
+
+</td></tr></table>
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Application List</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System - list of applications for a position.">
+ <META NAME="Keywords"          CONTENT="redeployment,vacancy,application,list">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+<SERVER>
+ if (request.ref==null) redirect("main.html");
+
+ var applications = new Application();
+ var list = applications.list(request.ref,request.sortColumn);
+
+ if ( list.length==0 ){
+</SERVER>
+
+ <P ALIGN=CENTER>
+  No applications for <SERVER>write(request.ref)</SERVER> found
+  in the database.
+ </P>
+
+<SERVER> }else{ </SERVER>
+
+ <TABLE BORDER=0 WIDTH=500><TR><TD>
+  <FONT SIZE=+1 COLOR=#333366 FACE="Helvetica,Arial"><B>List of applications for the position <SERVER>write(request.ref);</SERVER></B></FONT>
+ </TD></TR></TABLE>
+
+ <FORM NAME="sort" METHOD=POST>
+ <TABLE BORDER=0 WIDTH=500><TR><TD ALIGN=LEFT VALIGN=MIDDLE>
+  Select the application to view.
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ </TD><TD ALIGN=RIGHT VALIGN=MIDDLE>
+   <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+   <SELECT NAME="sortColumn" onChange="sort.submit();">
+    <OPTION VALUE="name" `(request.sortColumn=="name"?"SELECTED":"")`>Sort by name
+    <OPTION VALUE="offer_status" `(request.sortColumn=="offer_status"?"SELECTED":"")`>Sort by offer status
+    <OPTION VALUE="interview_status" `(request.sortColumn=="interview_status"?"SELECTED":"")`>Sort by interview status
+    <OPTION VALUE="manager_review" `(request.sortColumn=="manager_review"?"SELECTED":"")`>Sort by mngr. review
+   </SELECT>
+   <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Sort"></NOSCRIPT>
+ </TD></TR></TABLE>
+ </FORM>
+
+ <TABLE BORDER=1 WIDTH=500 CELLSPACING=0 CELLPADDING=3>
+
+  <TR BGCOLOR=#C0C0C0><TH>Applicant</TH><TH>Mngr. Review</TH><TH>Interview Status</TH><TH>Offer Status</TH></TR>
+
+  <SERVER>
+   while(list.next()){
+     write(" <TR><TD><FONT SIZE=-1><A HREF=\"application.html?ref="+list.REF+"&cid="+list.CID+"\"");
+     write(" onMouseOver=\"window.status='Select "+list.NAME+"';return true;\" ");
+     write(">"+list.NAME+"</A></FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.MANAGER_REVIEW+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.INTERVIEW_STATUS+"</FONT></TD>");
+     write(" <TD><FONT SIZE=-1>"+list.OFFER_STATUS+"</FONT></TD></TR>\n");
+   }
+   list.close();
+  </SERVER>
+
+ </TABLE>
+
+<SERVER>
+ }// End else results.. 
+
+ list.close();
+</SERVER>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+
+</TD></TR></TABLE>
+
+
+</BODY>
+
+</HTML>

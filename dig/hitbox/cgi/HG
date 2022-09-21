@@ -1,0 +1,8 @@
+#!/bin/sh -f
+echo "Pragma: no-cache"
+echo "Cache-control: max-age=0"
+echo "Expires: 0"
+echo "Content-Type: image/gif"
+echo ""
+echo `date +'%d/%b/%Y:%H:%M:%S'`" $REMOTE_ADDR $QUERY_STRING" >> /nslogs/hitbox/data/`date +'%Y%m%d'`
+cat /share/content/live/intl/hitbox/HG.gif

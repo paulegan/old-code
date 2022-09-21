@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# $Id: fix-modes,v 1.13 1997/08/31 13:14:56 casper Exp casper $
+#
+# Fix-modes script.
+#
+# Warning: no locking of the contents file is attempted.
+#
+# Casper Dik (Casper.Dik@Holland.Sun.COM)
+#
+PATH=/usr/local/etc:`dirname $0`:$PATH
+export PATH
+# Only tested for 5.2-5.6, check the modes program for each new revision
+# and adjust script accordingly.
+case "`uname -r`" in
+5.[2-5]*) ;;
+5.6) ;;
+*)  
+	echo "Only supported on Solaris 2.2 thru 2.6" 1>&2 
+	exit 1;;
+esac
+
+while getopts R: c
+do
+    case "$c" in
+    R)	echo "$0: -R option not supported" 1>&2 ; exit 1;;
+    *)  echo "$0 expects no arguments" 1>&2; exit 1;;
+    esac
+done
+
+if [ $# != 0 ]
+then
+    echo "$0 expects no arguments" 1>&2
+    exit 1
+fi
+
+tpf=/tmp/fixmodes$$
+trap 'rm -rf $tpf' 0
+trap 'exit 1' 1 2 15
+umask 077
+
+if mkdir /tmp/fixmodes$$
+then
+    :
+else
+    echo "can't create temporary directory" 1>&2
+    exit 1
+fi
+
+umask 022
+changes=$tpf/changes
+
+modes > $changes || {
+	echo "modes failed, aborting fix-modes" 1>&2
+	rm -f /tmp/contents
+	exit 1
+}
+if [ -s $changes ]
+then
+    find /var/sadm -xdev \( -perm -020 -o -perm -002 \) -print >> $changes
+    xargs chmod og-w < $changes
+    touch /var/adm/messages
+    chmod og-w /var/adm/messages
+    set -e
+    # Always save old contents file.  The very first one becomes increasingly
+    # out of date.  Previously, we saved the very first contents file.
+    rm -f /var/sadm/install/contents.org.Z
+    mv /var/sadm/install/contents /var/sadm/install/contents.org
+    compress /var/sadm/install/contents.org
+    mv /tmp/contents /var/sadm/install/contents
+    chmod 644 /var/sadm/install/contents
+else
+    rm -f /tmp/contents
+fi
+# Our install scripts created these with owner root.
+if [ ! -f /var/lp/logs/lpNet ]
+then
+    touch /var/lp/logs/lpNet /var/lp/logs/lpsched
+fi
+chown lp /var/lp/logs/lpNet /var/lp/logs/lpsched

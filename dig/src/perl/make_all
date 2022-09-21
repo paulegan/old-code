@@ -1,0 +1,29 @@
+#!/bin/tcsh -fb
+
+# Script to run make in all WDIG package directories
+# paul.x.egan.-nd@dig.com 20030703
+
+set source_root = /share/src/perl/WDIG
+set dist_dir = /share/src/perl/CPAN/local/authors/id/W/WD/WDIG/
+
+set makepl_arg = ()
+while ( "$1" =~ *=* )
+  set makepl_arg = ( $makepl_arg $1 )
+  shift
+end
+
+if ( "$1" == "dist" ) then
+  find $source_root -name '*.tar.gz' -print | xargs rm -f
+endif
+
+foreach dir ( `find $source_root \( -name Makefile -o -name Makefile.PL \) -print | xargs -i dirname \{} | sort -u` )
+  echo $dir
+  cd $dir
+  if ( -e Makefile.PL ) perl Makefile.PL $makepl_arg[*]
+  if ( -e Makefile ) make $*
+end
+
+if ( "$1" == "dist" ) then
+  find $source_root -name '*.tar.gz' -print | xargs -i cp \{} $dist_dir
+endif
+

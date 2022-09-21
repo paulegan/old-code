@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Error</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980928">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System error.">
+ <META NAME="Keywords"          CONTENT="redeployment,error">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+
+<SERVER>
+ var msg = (client.errorMessage==null?"Unknown":client.errorMessage);
+
+ addToLog(msg+(client.errorPage?(" [["+client.errorPage+"]] "):""));
+</SERVER>
+
+<P ALIGN=CENTER>
+ <FONT SIZE=+1 COLOR=RED><B>AN UNEXPECTED ERROR HAS OCCURED!</B></FONT>
+ <BR>
+ <SERVER>write(msg);</SERVER>
+</P>
+
+<P ALIGN=CENTER>
+ <FORM><INPUT TYPE=BUTTON VALUE=" BACK " onClick="history.go(-1);">
+</P>
+
+
+</TABLE></TR></TD>
+
+
+</CENTER>
+
+</BODY>
+
+</HTML>

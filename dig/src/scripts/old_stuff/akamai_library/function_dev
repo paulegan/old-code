@@ -1,0 +1,5 @@
+extractDev ()
+{
+		echo "Country Code is $COUNTRY_CODE"
+		echo "No Akamizing process needed"
+}

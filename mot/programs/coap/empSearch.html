@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Employee Search</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19981006">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Form for looking up a CID or core ID from a name using TWIN data">
+ <META NAME="Keywords"          CONTENT="cid,lookup,name,twin,search">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#C0C0C0 TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000 onLoad="document.forms[0].name.select(); document.forms[0].name.focus();">
+
+<FORM METHOD=POST>
+  Name:
+  <INPUT TYPE=TEXT SIZE=14 NAME="name" VALUE=`(request.name?request.name:"")`>
+  <INPUT TYPE=SUBMIT VALUE="Search">
+</FORM>
+
+<SERVER>
+ var empIdent = new EmpIdent();
+ empIdent.writeList(request);
+</SERVER>
+
+</BODY>
+
+</HTML>

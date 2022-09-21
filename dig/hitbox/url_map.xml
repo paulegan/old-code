@@ -1,0 +1,1385 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE url_map PUBLIC "-//Disney Enterprises, Inc.//DTD HitBox URL Map 1.1//EN" "http://hitbox.disneyinternational.com/url_map.dtd">
+
+<!-- $Id$ -->
+
+<url_map>
+
+ <site host="disneyinternational.com" root="/intl/disintercom">
+  <path pattern="/films/*" order="1">
+   <country>INTL</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>INTL</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.co.uk" root="/uk/docs">
+  <path pattern="/DisneyOnline/printstation/*" order="2">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>TEST</brand>
+  </path>
+  <path pattern="/usa-resorts/waltdisneyworld/V/popups/*" order="2">
+   <country>UK</country>
+   <unit>WDTC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/usa-resorts/waltdisneyworld/content_syndication/*" order="2">
+   <country>UK</country>
+   <unit>WDPRO_TOUR</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>UK</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyMovies/*" order="1">
+   <country>UK</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/mickeymatinees/*" order="1">
+   <country>UK</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+   <site_name>matinees</site_name>
+  </path>
+  <path pattern="/DisneyInteractive/*" order="1">
+   <country>UK</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/planet/*" order="1">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>planet</site_name>
+  </path>
+  <path pattern="/mickeysports/*" order="1">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>sport</site_name>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>UK</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/MusicalTheatre/*" order="1">
+   <country>UK</country>
+   <unit>THEATRE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/usa-resorts/*" order="1">
+   <country>UK</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/competitions.html" order="1">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/games.html" order="1">
+   <country>UK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>UK</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.fr" root="/fr/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>FR</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/FilmsDisney/*" order="1">
+   <country>FR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyInteractive/*" order="1">
+   <country>FR</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>FR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>FR</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/attractions/*" order="1">
+   <country>FR</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneylandparis/*" order="1">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/jeuxconcours.html" order="1">
+   <country>FR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/jeux.html" order="1">
+   <country>FR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>FR</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.de" root="/de/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>DE</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/dvd/*" order="1">
+   <country>DE</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+   <site_name>DVD</site_name>
+  </path>
+  <path pattern="/DisneyKinofilme/*" order="1">
+   <country>DE</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/micky-maus-magazin/*" order="1">
+   <country>DE</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyInteractive/*" order="1">
+   <country>DE</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>DE</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>DE</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/usa-resorts/*" order="1">
+   <country>DE</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/spiele.html" order="1">
+   <country>DE</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/gewinnspiele.html" order="1">
+   <country>DE</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>DE</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="achterbahn-designer.de" root="/de/achterbahn/docs">
+  <path pattern="*" order="0">
+   <country>DE</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+   <site_name>achterbahn-d</site_name>
+  </path>
+ </site>
+
+ <site host="alphago.it" root="/it/alphago">
+  <path pattern="*" order="0">
+   <country>IT</country>
+   <unit>NONE</unit>
+   <brand>ALPHA</brand>
+   </path>
+ </site>
+
+ <site host="disney.it" root="/it/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>IT</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/Film/*" order="1">
+   <country>IT</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/ConsumerProducts/*" order="1">
+   <country>IT</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyInteractive/*" order="1">
+   <country>IT</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>IT</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>IT</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/giochi.html" order="1">
+   <country>IT</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/gioca_e_vinci.html" order="1">
+   <country>IT</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>IT</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.es" root="/es/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>ES</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/FilmesDisney/*" order="1">
+   <country>ES</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>ES</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>ES</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/juegos.html" order="1">
+   <country>ES</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/concursos.html" order="1">
+   <country>ES</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>ES</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.nl" root="/nl/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>NL</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/dvd/*" order="1">
+   <country>NL</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+   <site_name>DVD</site_name>
+  </path>
+  <path pattern="/Films/*" order="1">
+   <country>NL</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>NL</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>NL</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.be" root="/be/docs">
+  <path pattern="/DisneyVideos/*" order="1">
+   <country>BE</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/dvd/*" order="1">
+   <country>BE</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+   <site_name>DVD</site_name>
+  </path>
+  <path pattern="/Films/*" order="1">
+   <country>BE</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>BE</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>BE</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.dk" root="/dk/docs">
+  <path pattern="/DisneyVideo/*" order="1">
+   <country>DK</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/Film/*" order="1">
+   <country>DK</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/andersand/*" order="1">
+   <country>DK</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>DK</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>DK</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>DK</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.no" root="/no/docs">
+  <path pattern="/DisneyVideo/*" order="1">
+   <country>NO</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyKino/*" order="1">
+   <country>NO</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DonaldDuck/*" order="1">
+   <country>NO</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>NO</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>NO</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>NO</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.se" root="/se/docs">
+  <path pattern="/DisneyVideo/*" order="1">
+   <country>SE</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyFilmer/*" order="1">
+   <country>SE</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>SE</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/kalleanka/*" order="1">
+   <country>SE</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>SE</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>SE</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="bionytt.com" root="/se/biony">
+  <path pattern="*" order="0">
+   <country>SE</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+   <site_name>BIONYTT</site_name>
+  </path>
+ </site>
+
+ <site host="disney.fi" root="/fi/docs">
+  <path pattern="/DisneyVideo/*" order="1">
+   <country>FI</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/Disney-Elokuvat/*" order="1">
+   <country>FI</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/Lehdet/*" order="1">
+   <country>FI</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>FI</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>FI</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.ch" root="/ch/docs">
+  <path pattern="/FilmsDisney/*" order="1">
+   <country>CH</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+   <site_name>FR</site_name>
+  </path>
+  <path pattern="/DisneyKinofilme/*" order="1">
+   <country>CH</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+   <site_name>DE</site_name>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>CH</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>CH</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.ie" root="/ie/docs">
+  <path pattern="*" order="0">
+   <country>IE</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disneyme.com" root="/intl/dme">
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>ME</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>ME</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disneylandparis.com" root="/intl/dlp">
+  <path pattern="*/uk/*" order="2">
+   <country>UK</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/fr/*" order="2">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/de/*" order="2">
+   <country>DE</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/it/*" order="2">
+   <country>IT</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/es/*" order="2">
+   <country>ES</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/nl/*" order="2">
+   <country>NL</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>NONE</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="eurodisney.com" root="/intl/eurod">
+  <path pattern="/uk/*" order="1">
+   <country>UK</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>EURODISNEY</site_name>
+  </path>
+  <path pattern="/fr/*" order="1">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>EURODISNEY</site_name>
+  </path>
+  <path pattern="*" order="0">
+   <country>NONE</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>EURODISNEY</site_name>
+  </path>
+ </site>
+
+ <site host="dlpbusiness.com" root="/intl/business.dlp">
+  <path pattern="/uk/*" order="1">
+   <country>UK</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>BUSINESS</site_name>
+  </path>
+  <path pattern="/fr/*" order="1">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>BUSINESS</site_name>
+  </path>
+  <path pattern="/incentives/uk/*" order="1">
+   <country>UK</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>BUSINESS/incentives</site_name>
+  </path>
+  <path pattern="/incentives/fr/*" order="1">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>BUSINESS/incentives</site_name>
+  </path>
+  <path pattern="*" order="0">
+   <country>NONE</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>BUSINESS</site_name>
+  </path>
+ </site>
+
+ <site host="thefilmfactory.co.uk" root="/intl/bvi">
+  <path pattern="*" order="0">
+   <country>UK</country>
+   <unit>BVI</unit>
+   <brand>FIL</brand>
+  </path>
+ </site>
+
+ <site host="fkidstv.com" root="/intl/fkids">
+  <path pattern="*" order="0">
+   <country>XX</country>
+   <unit>NONE</unit>
+   <brand>FOX</brand>
+  </path>
+ </site>
+
+ <site host="disneylatino.com" root="/intl/dislatinom">
+  <path pattern="/disneyvacaciones/waltdisneyworld*" order="2">
+   <country>XX</country>
+   <unit>WDPRO</unit>
+   <brand>WDPRO</brand>
+  </path>
+  <path pattern="/DisneyVideoDVD/*" order="1">
+   <country>XX</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/FilmesDisney/*" order="1">
+   <country>XX</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/videoclip/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>videoclip</site_name>
+  </path>
+  <path pattern="/juegos/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>juegos</site_name>
+  </path>
+  <path pattern="/newsletter/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>newsletter</site_name>
+  </path>
+  <path pattern="/Tarjeta/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>Tarjeta</site_name>
+  </path>
+  <path pattern="/cinemagico/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>cinemagico</site_name>
+  </path>
+  <path pattern="/Carrozas/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>Carrozas</site_name>
+  </path>
+  <path pattern="/votos/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>votos</site_name>
+  </path>
+  <path pattern="/correo/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>correo</site_name>
+  </path>
+  <path pattern="/regalodelasemana/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>regalodelasemana</site_name>
+  </path>
+  <path pattern="/wallpaper/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>wallpaper</site_name>
+  </path>
+  <path pattern="/noticias/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>noticias</site_name>
+  </path>
+  <path pattern="/registro/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>registro</site_name>
+  </path>
+  <path pattern="/disneyclix/*" order="1">
+   <country>XX</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+   <site_name>disneyclix</site_name>
+  </path>
+  <path pattern="/RadioDisney/*" order="1">
+   <country>XX</country>
+   <unit>WDR</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>XX</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/CopaDisney/*" order="1">
+   <country>XX</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+   <site_name>Copa</site_name>
+  </path>
+  <path pattern="/disneyvacaciones/*" order="1">
+   <country>XX</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>XX</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="esanpol.disney.com" root="/intl/espanol">
+  <path pattern="/disneyworld/*" order="1">
+   <country>ZZ</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>ZZ</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="fkids.com.br" root="/br/fkids">
+  <path pattern="*" order="0">
+   <country>BR</country>
+   <unit>NONE</unit>
+   <brand>FOX</brand>
+  </path>
+ </site>
+
+ <site host="disney.com.br" root="/br/docs">
+  <path pattern="/VideoDVD/*" order="1">
+   <country>BR</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/novideoedvd/*" order="1">
+   <country>BR</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/FilmesDisney/*" order="1">
+   <country>BR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/demo/*" order="1">
+   <country>BR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/nocinema/*" order="1">
+   <country>BR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/duelodetitas/*" order="1">
+   <country>BR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/PRALER/*" order="1">
+   <country>BR</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/praler/*" order="1">
+   <country>BR</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/prajogar/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/Promocao/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/PRAJOGAR/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/pracurtir/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/PROMOCOES/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/natal/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/homepage/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/promocoes/*" order="1">
+   <country>BR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>BR</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyViagens/*" order="1">
+   <country>BR</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyNaTV/*" order="1">
+   <country>BR</country>
+   <unit>WDTV</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyCRUJ/*" order="1">
+   <country>BR</country>
+   <unit>WDTV</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>BR</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="flimes.net" root="/br/filmes">
+  <path pattern="*" order="0">
+   <country>BR</country>
+   <unit>BVI</unit>
+   <brand>BVI</brand>
+  </path>
+ </site>
+
+ <site host="disney.ca" root="/ca/docs">
+  <path pattern="/disneyworld/*" order="1">
+   <country>CA</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>CA</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disneychannel-asia.com" root="/intl/asiatdc">
+  <path pattern="*" order="0">
+   <country>AA</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.com.sg" root="/sg/docs">
+  <path pattern="*" order="0">
+   <country>SG</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.com.tw" root="/tw/docs">
+  <path pattern="/movie/*" order="1">
+   <country>TW</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>TW</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneychannel/*" order="1">
+   <country>TW</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>TW</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.com.au" root="/au/docs">
+  <path pattern="/disneyvideo/*" order="1">
+   <country>AU</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneyfilms/*" order="1">
+   <country>AU</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneystore/*" order="1">
+   <country>AU</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyOnline/*" order="1">
+   <country>AU</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneyonline/*" order="1">
+   <country>AU</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/DisneyChannel/*" order="1">
+   <country>AU</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneyland/*" order="1">
+   <country>AU</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>AU</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="disney.kr" root="/kr/docs">
+  <path pattern="/video/*" order="1">
+   <country>KR</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/movie/*" order="1">
+   <country>KR</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneyonline/*" order="1">
+   <country>KR</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>KR</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+<site host="disney.com.hk" root="/hk/docs">
+  <path pattern="/en/stitch/*" order="2">
+   <country>HK</country>
+   <unit>STITCH_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/imagination/*" order="2">
+   <country>HK</country>
+   <unit>WDI_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/disney_store/*" order="2">
+   <country>HK</country>
+   <unit>TDS_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/book/*" order="2">
+   <country>HK</country>
+   <unit>PUB_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/sat_disney/*" order="2">
+   <country>HK</country>
+   <unit>TV_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/mobile/*" order="2">
+   <country>HK</country>
+   <unit>MOBI_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/hkdisneyland/*" order="2">
+   <country>HK</country>
+   <unit>HKDL_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/helps/*" order="2">
+   <country>HK</country>
+   <unit>HELP_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/en/*" order="1">
+   <country>HK</country>
+   <unit>WDIG_EN</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/stitch/*" order="1">
+   <country>HK</country>
+   <unit>STITCH</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/imagination/*" order="1">
+   <country>HK</country>
+   <unit>WDI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disney_store/*" order="1">
+   <country>HK</country>
+   <unit>TDS</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/book/*" order="1">
+   <country>HK</country>
+   <unit>PUB</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/sat_disney/*" order="1">
+   <country>HK</country>
+   <unit>TV</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/mobile/*" order="1">
+   <country>HK</country>
+   <unit>MOBI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/hkdisneyland/*" order="1">
+   <country>HK</country>
+   <unit>HKDL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/helps/*" order="1">
+   <country>HK</country>
+   <unit>HELP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/*.html" order="1">
+   <country>HK</country>
+   <unit>WDIG</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>HK</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+</site>
+
+ <site host="disney.co.jp" root="/jp/docs">
+  <path pattern="/movies/*" order="1">
+   <country>JP</country>
+   <unit>BVI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/videos/*" order="1">
+   <country>JP</country>
+   <unit>BVHE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/dcp/*" order="1">
+   <country>JP</country>
+   <unit>DCP</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disney-i/*" order="1">
+   <country>JP</country>
+   <unit>DISNEY-I</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disneyonline/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/press/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/present/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/worldofdisney/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/mail/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/store/*" order="1">
+   <country>JP</country>
+   <unit>TDS</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/registration/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/dol-2-*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/cybernetiquette/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/helps/*" order="1">
+   <country>JP</country>
+   <unit>DOL</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/records/*" order="1">
+   <country>JP</country>
+   <unit>WDR</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/hon/*" order="1">
+   <country>JP</country>
+   <unit>DPWW</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/tv/*" order="1">
+   <country>JP</country>
+   <unit>WDTV</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/usparks/*" order="1">
+   <country>JP</country>
+   <unit>WDPRO</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/usparks/wdw/*" order="2">
+   <country>JP</country>
+   <unit>WDPRO</unit>
+   <brand>WDW</brand>
+  </path>
+  <path pattern="/usparks/dl/*" order="2">
+   <country>JP</country>
+   <unit>WDPRO</unit>
+   <brand>DLR</brand>
+  </path>
+  <path pattern="/interactive/*" order="1">
+   <country>JP</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>JP</country>
+   <unit>NONE</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/d-card*" order="99">
+  </path>
+ </site>
+
+ <site host="disneyinteractive.com" root="/DisneyInteractiveServer/site">
+  <path pattern="/disney_interactive_uk/*" order="1">
+   <country>UK</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disney_interactive_france/*" order="1">
+   <country>FR</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disney_interactive_germany/*" order="1">
+   <country>DE</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="/disney_interactive_italy/*" order="1">
+   <country>IT</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/uk/*" order="9">
+   <country>UK</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/france/*" order="9">
+   <country>FR</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/germany/*" order="9">
+   <country>DE</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/italy/*" order="9">
+   <country>IT</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*" order="0">
+   <country>NONE</country>
+   <unit>DI</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="epg.disneyinternational.com" root="/EPGserver/public_html">
+  <path pattern="*/uk/*" order="9">
+   <country>UK</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/fr/*" order="9">
+   <country>FR</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/de/*" order="9">
+   <country>DE</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/it/*" order="9">
+   <country>IT</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+  <path pattern="*/es/*" order="9">
+   <country>ES</country>
+   <unit>TDC</unit>
+   <brand>DIS</brand>
+  </path>
+ </site>
+
+ <site host="booking.disneylandparis.com" root="/DLPserver/public_html">
+  <path pattern="/en/*" order="1">
+   <country>UK</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+  <path pattern="/fr/*" order="1">
+   <country>FR</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+  <path pattern="/de/*" order="1">
+   <country>DE</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+  <path pattern="/it/*" order="1">
+   <country>IT</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+  <path pattern="/es/*" order="1">
+   <country>ES</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+  <path pattern="/nl/*" order="1">
+   <country>NL</country>
+   <unit>DLP</unit>
+   <brand>DIS</brand>
+   <site_name>WBE</site_name>
+  </path>
+ </site>
+
+</url_map>

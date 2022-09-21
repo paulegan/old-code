@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'CPAN-WAIT-0.27-2.tar.gz' => {
+    'md5-ungz' => '21ca6fdc3b3a7e3e5360fa7c76b3259c',
+    'md5' => 'c0f4f49f5bae31675af28c5c5c4e880a',
+    'size' => '8151'
+  },
+  'CPAN-Site-0.014.tar.gz' => {
+    'md5-ungz' => 'd4af6323b6d8c7cf922ecccc0ea111ea',
+    'md5' => '31ae4ac508fac11b0aa75b56803ebd00',
+    'size' => '4769'
+  }
+};

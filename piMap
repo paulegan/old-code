@@ -1,0 +1,5 @@
+#!/usr/bin/perl -w
+$i1=$ARGV[0];
+$i2=$i1+9;
+$p=`pi $i1`.`pi $i2`;
+print join("",map { chr(($_%95)+32) } ( $p =~ /\d\d/g) )."\n";

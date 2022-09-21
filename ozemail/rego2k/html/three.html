@@ -1,0 +1,57 @@
+<HTML>
+
+<HEAD>
+ <TITLE>Page 3</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE BORDER="0">
+
+<TR>
+
+ <FORM NAME="backForm" METHOD="POST" ACTION="%BACK%" onSubmit="document.nextForm.action=this.action; document.nextForm.submit(); return (false);">
+ <TD VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <INPUT TYPE="SUBMIT" NAME="BACK" VALUE=" &lt; &lt; BACK ">
+ </TD>
+ </FORM>
+
+ <FORM NAME="nextForm" METHOD="POST" ACTION="%NEXT%">
+
+ <TD VALIGN="TOP">
+  <!-- Add your stuff here -->
+
+  <P>
+   This is step 3. Please enter some more info -
+  </P>
+
+  <P>
+   text_field_3:
+   <INPUT TYPE="TEXT" NAME="text_field_3" SIZE="30" VALUE="%text_field_3%">
+  </P>
+
+  <P>
+   text_field_4:
+   <INPUT TYPE="TEXT" NAME="text_field_4" SIZE="30" VALUE="%text_field_4%">
+  </P>
+
+  <BR CLEAR=ALL>
+
+  <!-- End here -->
+ </TD>
+
+ <TD VALIGN="BOTTOM">
+  <INPUT TYPE="HIDDEN" NAME=".id" VALUE="%.id%">
+  <INPUT TYPE="SUBMIT" NAME="NEXT" VALUE=" NEXT &gt; &gt; ">
+ </TD>
+
+ </FORM>
+
+</TR>
+
+</TABLE>
+
+</BODY>
+
+</HTML>

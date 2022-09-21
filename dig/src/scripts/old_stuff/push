@@ -1,0 +1,121 @@
+#!/usr/bin/sh
+
+STAGINGPATH=`pwd | sed 's/\/pool\/dev/\/pool\/staging/'`
+DEVPATH=`pwd | sed 's/\/pool\/staging/\/pool\/dev/'`
+loginID=`whoami`
+
+echo "This script was created and is maintained by Steve"
+echo "Your current location is ${STAGINGPATH}"
+echo "The dev path is ${DEVPATH}"
+echo "Have a great day ;)"
+
+if [ "$loginID" != disweb ]
+then
+        clear
+        echo ""
+        echo "You must be disweb to use this script."
+        echo ""
+        exit 1;
+fi
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 1 ~~~~~~~~~~~~~~~~~~~~~~"
+
+echo ""
+echo "Upload code (1/2)"
+read uploadcode
+
+echo ""
+echo "Enter the file name in upload directory (2/2)"
+read uploadfile
+origuploadfile=${uploadfile}
+echo ${origuploadfile}
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 2 ~~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+echo "copying file to dev......."
+cd ${DEVPATH}
+cp /pool/upload/${uploadcode}/${uploadfile} ./
+
+echo ""
+echo "converting to tar file"
+echo ${uploadfile} | grep .[zZ][iI][pP]
+if [ "$?" -eq 0 ];  then
+     echo "File is of type zip";
+# zip2tar ${uploadfile}
+################# ZIP2TAR
+        mkdir tempdir
+        chmod 700 tempdir
+        mv ${uploadfile} tempdir
+        cd tempdir
+
+        unzip ${uploadfile} 
+                find . -perm u+r,g+r,o+r -exec chmod 775 {} \;
+                find . -perm u+rx,g+rx,o+rx -exec chmod 775 {} \;
+        rm ${uploadfile} 
+
+        myFile="`pwd`/${uploadfile}"
+        myFileName="`basename $myFile .[zZ][iI][pP]`.tar"
+        
+        tar -cf $myFileName *
+        mv $myFileName ..
+        cd ..
+
+        rm -Rf tempdir
+        echo "File ${uploadfile} converted to $myFileName"
+###########################
+     uploadfile="`basename ${uploadfile} .[zZ][iI][pP]`.tar"
+fi
+echo ${uploadfile} | grep .[tT][aA][rR].[gG][zZ]
+if [ "$?" -eq 0 ];  then 
+     echo "File is of type tar.gz";
+     gunzip -d ${uploadfile}
+     uploadfile="`basename ${uploadfile} .[tT][aA][rR].[gG][zZ]`.tar"
+fi
+echo ${uploadfile} | grep .[tT][aA][rR]
+if [ "$?" -eq 0 ]; then 
+     echo "File is of type tar"; 
+     uploadfile="`basename ${uploadfile} .[tT][aA][rR]`"
+     uploadfile="${uploadfile}.tar"
+fi
+
+echo "Doing technical QA for DisneyChannel UK"
+mkdir tempdir
+chmod 755 tempdir
+cp ${uploadfile} tempdir
+cd tempdir
+tar -xmf ${uploadfile}
+rm ${uploadfile}
+
+echo "The following files are not complient with the INCLUDES"
+find . -type f | xargs grep -c "#include" | grep "\.htm" | grep -v "\.akabak" | grep -v "redirectsurl" | awk -F: '$2==0 {print $1":"$2}'
+
+echo "The following HTML files do not contain (c)"
+find . -type f | xargs grep -c "\&copy;" | grep "\.htm" | grep -v "\.akabak" | grep -v "redirectsurl" | awk -F: '$2==0 {print $1}' | xargs grep -c `echo "" | tr '\012' '\251'` "$@" | awk -F: '$2==0 {print $1}'
+
+
+	echo "Do you want continue? [y/n]"
+	read testyes
+	if [ "$testyes" != y ]
+	then
+		echo ""
+		echo ""
+		echo "Please don't forget to REMOVE tempdir"
+		echo ""
+		exit 1;	
+	fi	
+
+	cd ..
+	rm -Rf tempdir
+# fi
+
+echo "~~~~~~~~~~~~~~~~ STARTING PHASE 3 ~~~~~~~~~~~~~~~~~~~~~~"
+echo ""
+cd ${STAGINGPATH}
+find . -perm u+r,g+r,o+r -exec chmod 775 {} \;
+find . -perm u+rx,g+rx,o+rx -exec chmod 775 {} \;
+
+/local/bin/amarula.pl -f /pool/upload/${uploadcode}/${origuploadfile}
+
+/pool/local/bin/stevelog ${myusername} ${STAGINGPATH} ${uploadfile} ${uploadcode}
+
+exit 0;

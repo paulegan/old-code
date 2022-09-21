@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:13 2003 by ./update_checksums
+$cksum1 = {
+  'Log-Agent-Rotate-0.104.tar.gz' => {
+    'md5-ungz' => '416fddfa6d6ee25bfa319c0b2c8ce705',
+    'md5' => '5734984200a0f7aa6eb7abef4560e723',
+    'size' => '13100'
+  },
+  'Log-Agent-0.304.tar.gz' => {
+    'md5-ungz' => '146dac21306c018a535ecdfe3b95b492',
+    'md5' => 'f70b27af4bba2f33f93358a5f5408856',
+    'size' => '53853'
+  }
+};

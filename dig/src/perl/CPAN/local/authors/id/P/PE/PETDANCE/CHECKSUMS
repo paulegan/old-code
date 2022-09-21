@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'Test-Harness-2.26.tar.gz' => {
+    'md5-ungz' => '01528d5fa36ad699b8b26646f2a373ba',
+    'md5' => 'ec1b1ebc715614a5b06fe7ff5d355f25',
+    'size' => '48725'
+  }
+};

@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+ <title>Referrals</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <meta name="Author" content="paul.egan@disney.com" />
+ <meta name="DocDate" content="20011205" />
+ <meta name="ID" content="$Id$" />
+ <style type="text/css">
+   table td {
+     font-family: Helvetica;
+     font-size: x-small;
+   }
+   table.results td {
+     margin: 0px 0px 0px 0px;
+     padding: 0px 5px 0px 5px;
+     border-bottom: 1px solid #CCCCCC;
+   }
+   table.results thead td {
+     font-weight: bold;
+     background-color: #CCCCCC;
+   }
+   table.form {
+     background-color: #CCCCCC;
+   }
+   a {
+     color: black;
+     text-decoration: none;
+   }
+   p.message {
+     margin: 0px 0px 0px 0px;
+     font-family: Helvetica;
+   }
+   div.message {
+     visibility: hidden;
+   }
+ </style>
+ <script type="text/javascript">
+  <!--
+  
+   function param(name)
+   {
+    var re = new RegExp(name+"=([^&]*)");
+    var pair = document.location.search.match(re);
+    if (pair)
+      return (unescape(pair[1]));
+    else
+      return (0);
+   }
+   
+   function setSelectValue(s,v)
+   {
+    var o;
+    for (o=0; o< s.options.length; o++){
+      if (s.options[o].value == v){
+        s.options[o].selected = true;
+	break;
+      }
+    }
+    return (o);
+   }
+   
+   function setFormValues(form)
+   {
+    if (param('url')) form.url.value = param('url');
+    if (param('site')) setSelectValue(form.site,param('site'));
+    if (param('year')) setSelectValue(form.year,param('year'));
+    if (param('month')) setSelectValue(form.month,param('month'));
+    if (param('day')) setSelectValue(form.day,param('day'));
+    if (param('showURL')) form.showURL.checked = true;
+    return (true);
+   }
+   
+   function formatDoc()
+   {
+    var resBody = document.getElementById("resultBody");
+    var resLen = resBody.getElementsByTagName("tr").length;
+    
+    if (resLen == 0){
+    
+      var e = document.getElementById("resultTable");
+      e.style.visibility = "hidden";
+      
+      if (!document.location.search){
+        var e = document.getElementById("mesg_welcome"); 
+        e.style.visibility = "visible";
+      }else{
+        var e = document.getElementById("mesg_NDF"); 
+        e.style.visibility = "visible";
+      }
+      
+    }else if (resLen == 50){
+    
+      var e = document.getElementById("mesg_max");
+      e.style.visibility = "visible";
+      
+    }
+    
+    return (setFormValues(document.forms[0]))
+   }
+   
+   // -->
+ </script>
+</head>
+
+<body onLoad="return (formatDoc());">
+
+<form action="ref.pl" method="get">
+
+<table class="form">
+ <tbody>
+  <tr>
+
+   <td>
+    <select name="site">
+     <option value="disney_co_uk">disney.co.uk</option>
+     <option value="buenavistalatino_com">buenavistalatino.com</option>
+    </select>
+   </td>
+
+   <td>
+    URL:
+    <input name="url" type="text" value="/" />
+   </td>
+
+   <td>
+    Date:
+    <select name="year">
+     <option value="1">2001</option>
+     <option value="2">2002</option>
+    </select>
+    <select name="month">
+     <option value="0">Month</option>
+     <option value="1">January</option>
+     <option value="2">February</option>
+     <option value="3">March</option>
+     <option value="4">April</option>
+     <option value="5">May</option>
+     <option value="6">June</option>
+     <option value="7">July</option>
+     <option value="8">August</option>
+     <option value="9">September</option>
+     <option value="10">October</option>
+     <option value="11">November</option>
+     <option value="12">December</option>
+    </select>
+    <select name="day">
+     <option value="0">Day</option>
+     <option value="1">1</option>
+     <option value="2">2</option>
+     <option value="3">3</option>
+     <option value="4">4</option>
+     <option value="5">5</option>
+     <option value="6">6</option>
+     <option value="7">7</option>
+     <option value="8">8</option>
+     <option value="9">9</option>
+     <option value="10">10</option>
+     <option value="11">11</option>
+     <option value="12">12</option>
+     <option value="13">13</option>
+     <option value="14">14</option>
+     <option value="15">15</option>
+     <option value="16">16</option>
+     <option value="17">17</option>
+     <option value="18">18</option>
+     <option value="19">19</option>
+     <option value="20">20</option>
+     <option value="21">21</option>
+     <option value="22">22</option>
+     <option value="23">23</option>
+     <option value="24">24</option>
+     <option value="25">25</option>
+     <option value="26">26</option>
+     <option value="27">27</option>
+     <option value="28">28</option>
+     <option value="29">29</option>
+     <option value="30">30</option>
+     <option value="31">31</option>
+    </select>
+   </td>
+
+   <td>
+    Show ref. URL?
+    <input name="showURL" type="checkbox" />
+   </td>
+
+   <td>
+    <input name="submit" type="submit" value="View" />
+   </td>
+   
+  </tr>
+ </tbody>
+</table>
+
+</form>
+
+<div id="resultTable">
+
+ <table class="results">
+  <thead>
+   <tr><td>Count</td><td>Referrer</td></tr>
+  </thead>
+  <tbody id="resultBody">
+   <!-- TABLE BODY -->
+  </tbody>
+ </table>
+
+</div>
+
+<div id="mesg_NDF" class="message">
+ <p class="message">No data found.</p>
+</div>
+
+<div id="mesg_max" class="message">
+ <p class="message">Results limited to max of 50 rows.</p>
+</div>
+
+<div id="mesg_welcome" class="message">
+ <p class="message">
+  <ol>
+   <li>
+    Select site.
+   </li>
+   <li>
+    Enter required URL. This field is case sensitive. <i>Index files are ignored;
+    e.g. /DisneyChannel, /DisneyChannel/ & /DisneyChannel/index.html are treated
+    identically.</i>
+   </li>
+   <li>
+    Select date: month & day are optional. <i>e.g. 2001 : June : Day, will display
+    results for the whole of June.</i>
+   </li>
+   <li>
+    Select checkbox if you wish to view full URLs.  The default is to show only
+    host names.
+   </li>
+  </ol>
+ </p>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+#!/usr/local/bin/tcsh -fb
+
+
+./cycleResourceHog &
+
+set PlayTime = 30
+set RestTime = 180
+
+set hours = ` date +'%H' `
+set mins = ` date +'%M' `
+@ startTime = ( ${hours} * 60 + ${mins} )
+
+set cont = 1;
+while( $cont )
+  ps uaxwww | grep -i hog | awk '{ print $1 }' >& /dev/null
+  man tcsh >& /dev/null
+
+  sleep ${RestTime}
+  set hours = ` date +'%H' `
+  set mins = ` date +'%M' `
+  @ cont = ( ( ${hours} * 60 + ${mins} - ${startTime} ) < $PlayTime )
+end
+
+kill -9 `ps uaxwww | grep -i resourceHog | grep -v grep | awk '{ print $2 }' `

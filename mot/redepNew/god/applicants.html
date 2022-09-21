@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Admin Search Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System admin search form.">
+ <META NAME="Keywords"          CONTENT="redeployment,search,admin">
+ <META NAME="Notes"             CONTENT="">
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+   function looksLikeCID(cid)
+   {
+    if (cid.length != 8) return false;
+
+    for (i=0; i<8; i++)
+      if (isNaN(cid.charAt(i)))
+	return false;
+
+    return true;
+   }// looksLikeCID
+
+   function validateCIDForm(form)
+   {
+    if (!looksLikeCID(form.cid.value)){
+      alert("The CID you have inputed does not seem to be valid!");
+      return false;
+    }
+
+    return true;
+   }// validateCIDForm
+
+  // -->
+ </SCRIPT>
+</HEAD>
+ 
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<CENTER>
+
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+<SERVER>
+ if ( !request.cid ){
+</SERVER>
+
+<P>
+ Please enter the CID of the applicant you wish to view.
+</P>
+
+<FORM METHOD="POST" ACTION="applicants.html" onSubmit="return validateCIDForm(this);">
+ <INPUT TYPE=TEXT SIZE=8 NAME="cid">
+ <FONT SIZE=+1><INPUT TYPE="SUBMIT" VALUE="Show Applications"></FONT>
+</FORM>
+
+<A HREF="javascript:null;" onClick="window.open('cidLookup.html?form=0','cidLookup','width=250,height=150,resizable=1,scrollbars=yes'); return false;">Search</A>
+
+<SERVER> 
+ }else{
+
+
+ var applications = new Application();
+ var list = applications.list2(request.cid,request.sortColumn);
+
+ if ( list.length==0 ){
+</SERVER>
+
+  <P ALIGN=CENTER>
+   No applications for <SERVER>write(request.cid)</SERVER> found
+   in the database.
+  </P>
+
+ <SERVER> }else{ </SERVER>
+
+  <TABLE BORDER=0 WIDTH=500><TR><TD>
+   <FONT SIZE=+1 COLOR=#333366 FACE="Helvetica,Arial"><B>List of applications for <SERVER>write(request.cid);</SERVER></B></FONT>
+  </TD></TR></TABLE>
+
+  <FORM NAME="sort" METHOD=POST>
+  <TABLE BORDER=0 WIDTH=500><TR><TD ALIGN=LEFT VALIGN=MIDDLE>
+   Select the application to view.
+   &nbsp;&nbsp;&nbsp;&nbsp;
+  </TD><TD ALIGN=RIGHT VALIGN=MIDDLE>
+    <INPUT TYPE=HIDDEN NAME="cid" VALUE=`request.cid`>
+    <SELECT NAME="sortColumn" onChange="sort.submit();">
+     <OPTION VALUE="ref" `(request.sortColumn=="ref"?"SELECTED":"")`>Sort by ref
+     <OPTION VALUE="title" `(request.sortColumn=="title"?"SELECTED":"")`>Sort by title
+     <OPTION VALUE="offer_status" `(request.sortColumn=="offer_status"?"SELECTED":"")`>Sort by offer status
+     <OPTION VALUE="interview_status" `(request.sortColumn=="interview_status"?"SELECTED":"")`>Sort by interview status
+     <OPTION VALUE="manager_review" `(request.sortColumn=="manager_review"?"SELECTED":"")`>Sort by mngr. review
+    </SELECT>
+    <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Sort"></NOSCRIPT>
+  </TD></TR></TABLE>
+  </FORM>
+
+  <TABLE BORDER=1 WIDTH=500 CELLSPACING=0 CELLPADDING=3>
+
+   <TR BGCOLOR=#C0C0C0><TH>Ref</TH><TH>Title</TH><TH>Mngr. Review</TH><TH>Interview Status</TH><TH>Offer Status</TH></TR>
+
+   <SERVER>
+    while(list.next()){
+      write(" <TR><TD><FONT SIZE=-1><A HREF=\"application.html?ref="+list.REF+"&cid="+list.CID+"\"");
+      write(" onMouseOver=\"window.status='Select "+list.REF+"';return true;\" ");
+      write(">"+list.REF+"</A></FONT></TD>");
+      write(" <TD><FONT SIZE=-1>"+list.TITLE+"</FONT></TD>");
+      write(" <TD><FONT SIZE=-1>"+list.MANAGER_REVIEW+"</FONT></TD>");
+      write(" <TD><FONT SIZE=-1>"+list.INTERVIEW_STATUS+"</FONT></TD>");
+      write(" <TD><FONT SIZE=-1>"+list.OFFER_STATUS+"</FONT></TD></TR>\n");
+    }
+    list.close();
+   </SERVER>
+
+  </TABLE>
+
+ <SERVER>
+  }// End else results.. 
+
+  list.close();
+ </SERVER>
+
+<SERVER> 
+ }// End else cid
+</SERVER>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR></TABLE>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

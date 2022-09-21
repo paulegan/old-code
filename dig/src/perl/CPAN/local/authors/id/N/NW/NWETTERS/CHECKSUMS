@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'File-Touch-0.01.tar.gz' => {
+    'md5-ungz' => '46bb75286db0d3481b93c8863e4c520b',
+    'md5' => '6bd8fa1ddb84dc0c7ea04708ae6047b6',
+    'size' => '2546'
+  }
+};

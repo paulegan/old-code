@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+  
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+  
+  <appender name="file" class="Log::Dispatch::FileRotate">
+    <param name="DatePattern" value="yyyy-MM-dd"/>
+    <param name="mode" value="append"/>
+    <param name="filename" value="/share/var/weblogic.log"/>
+    <layout class="Log::Log4perl::Layout::PatternLayout">
+      <param name="ConversionPattern" value="&lt;%d{dd-MMM-yy HH:mm:ss}&gt; &lt;%p&gt; &lt;%c&gt; &lt;%H&gt; &lt;%l&gt; &lt;&gt; &lt;&gt; &lt;%P&gt; &lt;%m&gt;%n"/>
+    </layout>
+  </appender>
+
+  <appender name="stdout" class="Log::Log4perl::Appender::Screen">
+    <layout class="Log::Log4perl::Layout::SimpleLayout"/>
+  </appender>
+  
+  <category name="WDIG.Weblogic.Server">
+    <level value="debug"/>
+  </category>
+  
+  <root>
+    <priority value="error"/>
+    <appender-ref ref="stdout"/>
+    <!-- <appender-ref ref="file"/> -->
+    <appender-ref ref="file"/>
+  </root>
+  
+</log4j:configuration>

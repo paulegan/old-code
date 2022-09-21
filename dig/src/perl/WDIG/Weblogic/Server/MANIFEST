@@ -1,0 +1,11 @@
+MANIFEST
+Makefile.PL
+README
+Server.pm
+t/Server.t
+t/config/tdomain/SerializedSystemIni.dat
+t/config/tdomain/config.xml
+t/config/tdomain/fileRealm.properties
+t/config/java.options
+t/config/system.properties
+t/config/tserver.properties

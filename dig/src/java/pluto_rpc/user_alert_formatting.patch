@@ -1,0 +1,24 @@
+--- maincss.css.orig	Thu Aug 28 00:52:56 2003
++++ maincss.css	Thu Aug 28 00:52:40 2003
+@@ -14,7 +14,7 @@
+ .tabletext1Bold { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: bold; color: #000000; text-decoration: none; text-align: left; vertical-align: middle ; font-style: normal }
+ .tabletext1Centered { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: normal; color: #000000; text-decoration: none; text-align: center; vertical-align: middle ; font-style: normal }
+ .tablehead1indent { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: bold; color: #FFFFFF; text-decoration: none; text-align: center; vertical-align: middle; clip: rect( ); padding-left: 10px }
+-.tabletext1indent { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: normal; color: #000000; text-decoration: none; text-align: left; vertical-align: middle ; font-style: normal ; padding-left: 10px}
++.tabletext1indent { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: normal; color: #000000; text-decoration: none; text-align: left; vertical-align: top ; font-style: normal ; padding-left: 10px ; padding-top: 10px }
+ .tablehead1leftalign { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: bold; color: #FFFFFF; text-decoration: none; text-align: left; vertical-align: middle; clip: rect( ) ; padding-left: 10px}
+ .tabletext1leftalign { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: normal; color: #000000; text-decoration: none; text-align: left; vertical-align: middle ; font-style: normal ; padding-left: 10px}
+ .tabletext1rightalign { font-family: Verdana, Arial, Helvetica, Geneva, sans-serif; font-size: 8pt; font-weight: normal; color: #000000; text-decoration: none; text-align: right; vertical-align: middle ; font-style: normal ; padding-left: 10px}
+--- userAlert.jsp.orig	Thu Aug 28 00:56:05 2003
++++ userAlert.jsp	Thu Aug 28 00:55:36 2003
+@@ -116,7 +116,9 @@
+                           <tr bgcolor="#CECFCE" align="left" bordercolor="#000000"> 
+                             <td height="32" class="tabletext1indent" bordercolor="#000000" width="20%">Detail:</td>
+                             <td height="32" class="tabletext1indent" bordercolor="#000000" colspan="3">
+-                              <bean:write name="userAlertForm" property="message" scope="request" />
++                              <pre>
++<bean:write name="userAlertForm" property="message" scope="request" />
++                              </pre>
+                             </td>
+                           </tr>
+                         </table>

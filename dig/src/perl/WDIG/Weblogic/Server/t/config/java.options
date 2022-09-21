@@ -1,0 +1,4 @@
+# Use server optimizations
+-server 
+# Max 16Mb stack
+-ms8m -mx16m

@@ -1,0 +1,13 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'XML-DOM-1.42.tar.gz' => {
+    'md5-ungz' => 'eecee0c306f67710561b63b00609bf31',
+    'md5' => '5b5de743e1f06f6757108f83fbf04b72',
+    'size' => '116617'
+  },
+  'XML-RegExp-0.03.tar.gz' => {
+    'md5-ungz' => 'be5ffad0e8a1ec094290317758db49e2',
+    'md5' => '5826b24e0d05714e25c2bb04e1f1c09b',
+    'size' => '3313'
+  }
+};

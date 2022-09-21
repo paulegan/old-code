@@ -1,0 +1,61 @@
+#!/usr/local/bin/tcsh -fb
+
+#Author       :paul@hr.emea.mot.com 
+#DevDate      :19990226
+#TestedWith   :
+#TestDate     :
+#ReviewedBy   :
+#ReviewDate   :
+#ApprovedBy   :
+#ProdDate     :
+#History      :
+#Description  :Script for creating a file repository.
+#Notes        :
+
+
+set repositoryHome	= "/www/programs/repository"
+set cgi			= "${repositoryHome}/index.cgi"
+set configFile 		= "${repositoryHome}/config.pl.skel"
+set patternFile 	= "${repositoryHome}/main.pat.skel"
+set echo_style		= both
+
+echo -n "Enter path for new repository: "; set repPath = $<
+if ( "${repPath}" == "" ) then
+  echo "Must enter a path!"; exit
+endif
+
+echo -n "Repository name: "; set repName = "$<"
+if ( "${repName}" == "" ) then
+  echo "Must enter a name!"; exit
+endif
+
+echo -n "Group name [none]: "; set groupName = $<
+
+echo -n "Interface file [${patternFile:t}]: "; set patternFileNew = $<
+if ( "${patternFileNew}" != "" ) set patternFile = ${patternFileNew}
+if ( ! -r ${patternFile} ) then
+  echo "Could not find interface file ${patternFile}"; exit
+endif
+
+echo -n "Use seperate upload interface [n]: "; set sepUpload = $<
+if ( "${sepUpload}" == "" ) set sepUpload = "n"
+if ( ${sepUpload} !~ [yn] ) then
+  echo "Please enter y or n!"; exit
+endif
+
+mkdir -p ${repPath}
+cd ${repPath}
+mkdir docs
+ln -s ${cgi}
+cp ${patternFile} ./main.pat
+/bin/sed "s/#GROUP_NAME#/${groupName}/;s/#REP_NAME#/${repName}/" ${configFile} > ./config.pl
+
+if ( ${sepUpload} == "y" ) then
+  mkdir upload
+  cd upload
+  ln -s ../config.pl
+  ln -s ../docs
+  ln -s ../index.cgi
+  cp ../main.pat .
+  sed 's/#BUTTONS#//' main.pat > ../main.pat
+endif

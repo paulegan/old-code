@@ -1,0 +1,24 @@
+WDIG::HitBox version 1.0
+========================
+
+$Id$
+
+Some stuff for dealing with HitBox code.
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

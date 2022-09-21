@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'Mail-Sendmail-0.79.tar.gz' => {
+    'md5-ungz' => '00105803e8169329e653145a121186a0',
+    'md5' => 'c7efda7f8532f35d70edf7f914dac435',
+    'size' => '18453'
+  }
+};

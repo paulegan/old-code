@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'Attribute-Handlers-0.78.tar.gz' => {
+    'md5-ungz' => '3d9ad885cbdaf8deb1eee49661515f3a',
+    'md5' => 'c935f240bee1baf4b46e7d69bf2f1636',
+    'size' => '15392'
+  }
+};

@@ -1,0 +1,113 @@
+#!/bin/sh
+#
+# $Id: fix-modes,v 2.3 1998/11/04 15:41:32 casper Exp $
+#
+# Fix-modes script.
+#
+# Casper Dik (Casper.Dik@Holland.Sun.COM)
+#
+dir=`dirname $0`
+dir=`cd $dir; pwd`
+PATH=/usr/local/etc:$dir:$PATH
+export PATH
+umask 022
+# Only tested for 5.2-5.7
+# check the secure-modes program for each new revision
+# and adjust script accordingly.
+case "`uname -r`" in
+5.[2-7]*) ;;
+*)  
+	echo "Only supported on SunOS 5.2 thru 5.7" 1>&2 
+	echo "	(Solaris 2.2 through Solaris 7)" 1>&2 
+	exit 1;;
+esac
+
+root=/
+#
+# Need to parse options here
+#
+
+usage () {
+    echo "Usage: $0 [-asomwSDvdrufqc] -R <dir>" 1>&2
+    exit 1
+}
+
+opt="$@"
+while getopts asomwSDvdrufR:qc c
+do
+    case "$c" in
+	R) root=$OPTARG;;
+	v) set -x; verbose=true;;
+	d) debug=true;;
+	r) rollback=true;;
+	u) undo=true;;
+	[asomwSDfqc]);;
+	*) usage;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+# Don't allow the contents file argument.
+if [ $# != 0 ]
+then
+    usage
+fi
+
+# This causes the shell to exit on failure.
+# chroot is implemented with chdir and leaving of the initial / of all
+# pathnames
+
+cd $root
+if [ ! -f var/sadm/install/contents.mods ]
+then
+    firsttime=true
+fi
+
+secure-modes $opt || {
+    echo "${0}: secure-modes failed, aborting" 1>&2
+    exit 1
+}
+
+[ -n "$rollback" -o -n "$undo" ] && exit
+
+if [ -n "$firsttime" ]
+then
+    [ -n "$debug" ] && echo=echo
+    [ -n "$verbose" ] && arg="-t"
+    # Need to suppress error message here if there's nothing to change
+    find var/sadm -xdev \( -perm -020 -o -perm -002 \) ! -type l -print |
+	$echo xargs $arg chmod og-w
+    $echo touch var/adm/messages
+    $echo chmod og-w var/adm/messages var/log/syslog*
+    $echo chmod 600 var/log/authlog*
+    if grep -s 666 usr/lib/newsyslog >/dev/null
+    then
+	if [ -n "$debug" ]
+	then
+	    echo "sed -e s/666/644/g usr/lib/newsyslog > usr/lib/newsyslog.$$"
+	else
+	    sed -e s/666/644/g usr/lib/newsyslog > usr/lib/newsyslog.$$
+	fi
+	$echo chmod 555 usr/lib/newsyslog.$$
+	$echo chgrp sys usr/lib/newsyslog.$$
+	if [ ! -f usr/lib/newsyslog.FCS ]
+	then
+	    $echo mv usr/lib/newsyslog usr/lib/newsyslog.FCS
+	fi
+	$echo mv usr/lib/newsyslog.$$ usr/lib/newsyslog
+    fi
+    if [ ! -f var/lp/logs/lpNet ]
+    then
+	$echo touch var/lp/logs/lpNet var/lp/logs/lpsched
+    fi
+    $echo chown lp var/lp/logs/lpNet* var/lp/logs/lpsched*
+    $echo chgrp lp var/lp/logs/lpNet* var/lp/logs/lpsched*
+    $echo chmod 644 var/lp/logs/lpNet* var/lp/logs/lpsched*
+    # Misc leftovers from installation time.
+    # For a number of those, a default umask of 022 is advised
+    $echo chmod -f og-w etc/inet/* etc/hostname.* var/log/sysidconfig.log \
+	var/saf/_log var/sadm/install/.pkg.lock var/sadm/install/.lockfile \
+	var/adm/log/asppp.log var/adm/vold.log etc/mnttab etc/rmtab
+    $echo chmod -fR og-w var/statmon
+fi
+exit 0

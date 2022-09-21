@@ -1,0 +1,13 @@
+<?xml encoding="ISO-8859-1"?>
+<!-- $Id: url_map.dtd,v 1.1 2001/11/08 20:09:43 pegan Exp $ -->
+<!ELEMENT url_map (site+) >
+<!ELEMENT site (path+) >
+<!ATTLIST site host CDATA #IMPLIED
+               root CDATA #IMPLIED >
+<!ELEMENT path ((country,unit,brand,site_name?)?) >
+<!ATTLIST path pattern CDATA #REQUIRED
+               order CDATA #REQUIRED >
+<!ELEMENT country (#PCDATA) >
+<!ELEMENT unit (#PCDATA) >
+<!ELEMENT brand (#PCDATA) >
+<!ELEMENT site_name (#PCDATA) >

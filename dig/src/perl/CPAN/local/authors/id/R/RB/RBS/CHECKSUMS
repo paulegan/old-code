@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'IPC-Run3-0.007.tar.gz' => {
+    'md5-ungz' => '5f4abc3b236477d9ab719a7d93485c5b',
+    'md5' => '91f454080c3499986d2e165fdb88a7bb',
+    'size' => '6187'
+  }
+};

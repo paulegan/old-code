@@ -1,0 +1,2 @@
+find . -type l -print | xargs rm -f
+find ../authors -name '*.tar.gz' -print | xargs -n 1 ln -s

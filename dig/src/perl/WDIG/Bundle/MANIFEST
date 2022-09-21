@@ -1,0 +1,5 @@
+MANIFEST
+README
+Makefile.PL
+WDIG.pm
+WDIG/Deps.pm

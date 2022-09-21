@@ -1,0 +1,191 @@
+#!/usr/bin/perl -w
+
+# $Id$
+
+# Does something similar to "h2xs -X -C -n foo::bar"
+
+use strict;
+
+die("Usage: createStub wdig::foo::bar\n") if ( !$ARGV[0] || $ARGV[0] !~ /^(\w+::)*\w+$/ );
+
+my $module_full = $ARGV[0];
+my @parts = split('::',$module_full);
+my $dir = join('/',@parts);
+my $module = $parts[$#parts];
+
+die("Dir, $dir, already exists!\n") if ( -d $dir );
+`mkdir -p $dir $dir/RCS $dir/t $dir/t/RCS`;
+chdir($dir) || die("$!\n");
+
+open(F,">${module}.pm") || die("$!\n");
+print F <<'END';
+
+# $Id$
+
+=head1 NAME
+
+END
+
+print F "$module_full - Module title.\n";
+print F <<'END';
+
+=head1 AUTHOR
+
+ $Author$
+ $Date$
+
+ Initial Author: paul.egan@disney.com
+ Date: 2003/04/21
+
+=head1 SYNOPSIS
+
+END
+print F " use $module_full;\n";
+print F <<'END';
+
+ my_func($blah);
+
+=head1 DESCRIPTION
+
+Provide a description of how to use the module here.
+
+=head1 EXPORTS
+
+List identifiers that will be exported to the caller, if any.
+
+=head1 HISTORY
+
+ $Log: createStub,v $
+
+=head1 COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+=cut
+
+
+######################################################################
+# Standard package initialisation:
+
+END
+
+print F "package $module_full;\n";
+print F <<'END';
+
+use 5.006_001;
+use strict;
+use warnings;
+require Exporter;
+
+our @ISA = qw(Exporter);
+our @EXPORT = qw(my_func);
+our @EXPORT_OK = qw();
+our $VERSION = '0.9';
+
+######################################################################
+# Put package specific initialisation stuff here:
+
+use Carp;
+
+my $Global = 42;
+
+
+######################################################################
+# my_func($blah) - Function/method template
+#
+
+sub my_func
+{
+ return (1);
+}
+
+1;
+__END__
+
+
+END
+
+open(F,">Makefile.PL") || die("$!\n");
+print F <<'END';
+# $Id$
+use ExtUtils::MakeMaker;
+WriteMakefile(
+END
+print F <<"END";
+    'NAME'		=> '${module_full}',
+    'VERSION_FROM'	=> '${module}.pm',
+END
+print F <<'END';
+    'PREREQ_PM'		=> {},
+    ($] >= 5.005 ?
+END
+print F <<"END";
+      (ABSTRACT_FROM => '${module}.pm',
+END
+print F <<'END';
+       AUTHOR     => 'Paul Egan <perl@dig.com>') : ()),
+);
+END
+close(F);
+
+
+my $head = "$module_full version 0.9";
+$head .= "\n".("=" x length($head));
+open(F,">README") || die("$!\n");
+print F <<"END";
+$head
+
+\$Id: \$
+
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+None.
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+END
+
+open(F,">t/${module}.t") || die("$!\n");
+print F <<'END';
+
+# $Id$
+
+use Test;
+END
+print F "use $module_full;\n";
+print F <<'END';
+
+BEGIN { plan tests => 2 };
+
+ok(1);
+
+ok(my_func(),1);
+
+END
+
+open(F,">MANIFEST") || die("$!\n");
+print F <<"END";
+Makefile.PL
+MANIFEST
+README
+${module}.pm
+t/${module}.t
+END
+
+print "$dir:\n";
+print `find . -print`;
+
+1;

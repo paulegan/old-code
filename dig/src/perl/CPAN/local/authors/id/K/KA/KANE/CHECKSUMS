@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:14 2003 by ./update_checksums
+$cksum1 = {
+  'Archive-Tar-1.03.tar.gz' => {
+    'md5-ungz' => '86245a7460c7457de2df37b0475f8e7f',
+    'md5' => '0ca42d658ae28d6c7df371d07b0b83ea',
+    'size' => '20993'
+  }
+};

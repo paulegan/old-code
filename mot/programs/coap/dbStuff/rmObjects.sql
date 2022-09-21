@@ -1,0 +1,11 @@
+DROP TABLE initiative_training;
+DROP TABLE skill_sets;
+DROP TABLE corrective_action;
+DROP TABLE it_course;
+DROP TABLE ss_name;
+DROP TABLE ss_status;
+DROP TABLE ss_recert;
+DROP TABLE ca_reason;
+DROP TABLE ca_stage;
+DROP TABLE ca_outcome;
+EXIT;

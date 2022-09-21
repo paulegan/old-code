@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Application Form</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990418">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System form for applying for a position.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,description,apply,form">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+ <IMG SRC="images/apphead.gif" ALT="Application Form" BORDER=0 WIDTH=218 HEIGHT=19>
+
+ <SERVER>
+  if (!request.ref || !request.cid) redirect("main.html");
+
+  var application = new Application(request.cid,request.ref);
+  var twin = new Twin();
+  var resume = null;
+  var status = new ApplicationStatus();
+
+  if ( !(status=application.canContinue()).cont ){
+    write("<P>"+status.mesg+"</P>\n");
+  }else if ( request.passwd && !(resume=application.getResume(request.passwd)) ){
+    write("<P>\n The password you entered does not seem to be valid.<BR>\n ");
+    write("Please go back <A HREF=\"javascript:history.go(-1);\">previous page</A> and try again.\n</P>");
+  }else if ( !request.passwd && !(resume=twin.cid2record(request.cid)) ){
+    write("<P>\n The commerce ID you entered is not valid.<BR>\n ");
+    write("Please go back <A HREF=\"javascript:history.go(-1);\">previous page</A> and try again.\n</P>");
+  }else{
+
+ </SERVER>
+
+ <P>
+  <FONT SIZE=5><B><SERVER>if (request.jobTitle) write(request.jobTitle);</SERVER></B></FONT>
+  <BR>
+  <FONT SIZE=2>Job Reference <SERVER>write(request.ref);</SERVER></FONT>
+ </P>
+
+ <P ALIGN=JUSTIFY><FONT SIZE=2>
+  <FONT COLOR="#CF0322"><B>The only way to apply for a position is to submit
+  your application on-line using the form below.</B></FONT>
+  Be sure to fill in each category or your application will be
+  rejected by the system. You will receive a confirmation that your
+  application has been received and the hiring manager will contact
+  you directly. Once you have submitted your on-line application,
+  you may also follow-up by sending your resume directly to the
+  hiring manager.
+ </FONT></P>
+
+ <P><SERVER>
+   if (status.mesg!="") write(status.mesg);
+ </SERVER></P>
+
+ <SERVER>if (!request.passwd) { </SERVER>
+  <P><FONT SIZE=2>
+   If the name given below is incorrect please return to the
+   <A HREF=`"details.html?ref="+request.ref+"&jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")+"&erfs="+request.refs` onClick="return gotoPage('details.html');">previous page</A>
+   and ensure that your Commerce ID is correct.
+  </FONT></P>
+ <SERVER> }// end if </SERVER>
+
+ <SERVER>if (!request.passwd && (resume.PASSWD || status.passwd) ) {</SERVER>
+  <CENTER><P><FORM METHOD=POST>
+   You already have a resume stored in the database. Please
+   enter your password to restore it.
+   <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+   <INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+   <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+   <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+   <INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+   <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")`>
+   <INPUT TYPE=HIDDEN NAME="jobTitle" VALUE=`request.jobTitle`>
+   <INPUT TYPE=HIDDEN NAME="jobEmail" VALUE=`request.jobEmail`>
+   <INPUT TYPE=HIDDEN NAME="cid" VALUE=`request.cid`>
+   <TABLE BORDER=0 CELLPADDING=5 CELLSPACING=0>
+    <TR ALIGN=CENTER VALIGN=MIDDLE>
+     <TD ALIGN=RIGHT><INPUT TYPE=PASSWORD NAME="passwd" SIZE=10>&nbsp;&nbsp;</TD>
+     <TD ALIGN=LEFT><INPUT TYPE=SUBMIT VALUE=" Restore "></TD>
+    </TR>
+   </TABLE>
+ </FORM></P></CENTER>
+ <SERVER>}</SERVER> 
+
+ <SERVER>application.writeClientCheck();</SERVER>
+
+ <FORM NAME="Application" METHOD=POST ACTION="confirmation.html" onSubmit="return validateApplicationForm(this);">
+
+ <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+ <INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+ <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+ <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+ <INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+ <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):" ")`>
+ <INPUT TYPE=HIDDEN NAME="jobTitle" VALUE=`request.jobTitle`>
+ <INPUT TYPE=HIDDEN NAME="jobEmail" VALUE=`request.jobEmail`>
+
+ <TABLE WIDTH="580" BORDER="0" CELLSPACING="2" CELLPADDING="2">
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your name:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="name" SIZE=40 VALUE=`((resume.NAME)?(resume.NAME):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your CID:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="cid" SIZE=40 VALUE=`request.cid`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your current position:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="position" SIZE=40 VALUE=`((resume.POSITION)?(resume.POSITION):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Number of months in current position:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="monthsInPos" SIZE=40 VALUE=`((resume.MONTHS_IN_POS)?(resume.MONTHS_IN_POS):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your current grade:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="grade" SIZE=40 VALUE=`((resume.GRADE)?(resume.GRADE):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your most recent manager:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="manager" SIZE=40 VALUE=`((resume.MANAGER)?(resume.MANAGER):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your Address:</FONT></B></TD>
+   <TD VALIGN=TOP><TEXTAREA NAME="address" ROWS=5 COLS=40 WRAP=HARD><SERVER>write((resume.ADDRESS)?(resume.ADDRESS):(""));</SERVER></TEXTAREA></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your daytime phone number:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="workTel" SIZE=40 VALUE=`((resume.WORK_TEL)?(resume.WORK_TEL):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your home phone number:</FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="homeTel" SIZE=40 VALUE=`((resume.HOME_TEL)?(resume.HOME_TEL):(""))`></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your email address:<BR><I>Optional</I><BR></FONT></B></TD>
+   <TD VALIGN=TOP><INPUT TYPE=TEXT NAME="email" SIZE=40 VALUE=`((resume.EMAIL)?((resume.EMAIL.match(/@/))?(resume.EMAIL):(resume.EMAIL+"@email.mot.com")):(""))`><BR><BR></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your education and qualifications:</FONT></B></TD>
+   <TD VALIGN=TOP><TEXTAREA NAME="education" ROWS=7 COLS=50 WRAP=HARD><SERVER>write((resume.EDUCATION)?(resume.EDUCATION):(""));</SERVER></TEXTAREA></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Your career history:</FONT></B></TD>
+   <TD VALIGN=TOP><TEXTAREA NAME="career" ROWS=7 COLS=50 WRAP=HARD><SERVER>write((resume.CAREER)?(resume.CAREER):(""));</SERVER></TEXTAREA></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Supporting text<BR>for your application:</FONT></B></TD>
+   <TD VALIGN=TOP><TEXTAREA NAME="supportingText" ROWS=7 COLS=50 WRAP=HARD><SERVER>write((resume.ADDITIONAL_TEXT)?(resume.ADDITIONAL_TEXT):(""));</SERVER></TEXTAREA><BR><BR></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">PIP?</FONT></B></TD>
+   <TD VALIGN=TOP>
+    I am currently on a PIP or incident report:
+    <INPUT TYPE=CHECKBOX NAME="pip">
+   </TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP><B><FONT SIZE="2">Store Resume?</FONT></B></TD>
+   <TD VALIGN=TOP>
+    <INPUT TYPE=CHECKBOX NAME="storeResume">
+    Yes, store my resume for future use with this password:
+    <INPUT TYPE=PASSWORD NAME="passwd" SIZE=10><BR><BR>
+   </TD>
+  </TR>
+
+  <TR VALIGN=TOP>
+   <TD COLSPAN=2><P ALIGN=JUSTIFY><FONT SIZE=2><I>
+    The information in this application is true to the best of my knowledge and
+    belief, and I understand and agree that any misrepresentation or false
+    statement by me in connection with this application an all attachments will
+    constitute justifiable cause for Motorola to terminate my employment for
+    cause.  I understand that my employment is at the sole discretion of the
+    Company, and can be terminated with or without notice at any time, and for
+    any reason, at my option or at the option of the Company.
+   </I></FONT></P></TD>
+  </TR>
+
+  <TR>
+   <TD VALIGN=TOP>&nbsp;<BR></TD>
+   <TD VALIGN=BOTTOM ALIGN=RIGHT><INPUT TYPE=SUBMIT VALUE="Submit Resume"></TD>
+  </TR>
+
+ </TABLE>
+
+ </FORM>
+
+ <SERVER>
+  resume.close();
+
+  }// end else
+ </SERVER>
+
+
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function gotoPage(dest)
+  {
+   document.propsForm.action = dest;
+   document.propsForm.submit();
+   return false;
+  }
+
+  // -->
+ </SCRIPT>
+
+ <FORM NAME="propsForm" METHOD=POST ACTION="">
+  <INPUT TYPE=HIDDEN NAME="ref" VALUE=`request.ref`>
+  <INPUT TYPE=HIDDEN NAME="order" VALUE=`request.order`>
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`request.jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`request.jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`request.refs`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")`>
+ </FORM>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 WIDTH=500><TR>
+  <TD ALIGN=LEFT>
+   <A HREF="main.html" onMouseOver="window.status='Go back to the search form.';return true;"><IMG SRC="images/returnsearch.gif" ALT="Search Form" BORDER=0 WIDTH=150 HEIGHT=15></A>
+   <BR>
+   <SERVER> if (request.jobNext && request.jobNext!="undefined") { </SERVER>
+     <A HREF=`"results.html?jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")+"&refs="+request.refs` onClick="return gotoPage('results.html');"><IMG SRC="images/returnresult.gif" ALT="Results" BORDER=0 WIDTH=162 HEIGHT=15></A>
+     <BR>
+     <A HREF=`"details.html?ref="+request.ref+"&jobNext="+request.jobNext+"&jobsPerPage="+request.jobsPerPage+"&order="+request.order+"&resultStr="+escape((request.resultStr)?request.resultStr.replace(/"/g,"&quot;"):"")+"&refs="+request.refs` onClick="return gotoPage('details.html');"><IMG SRC="images/returndescript.gif" ALT="Position Description" BORDER=0 WIDTH=214 HEIGHT=15></A>
+   <SERVER> }else{ </SERVER>
+     <A HREF=`"details.html?ref="+request.ref` onMouseOver="window.status='Go back to vacancy details.';return true;"><IMG SRC="images/returndescript.gif" ALT="Position Description" BORDER=0 WIDTH=214 HEIGHT=15></A>
+   <SERVER> } </SERVER>
+  </TD>
+  <TD ALIGN=CENTER WIDTH=70%><P ALIGN=CENTER><FONT SIZE=2>
+   Copyright &copy; 1999 Motorola Internal Use Only
+   <BR>
+   For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+  </FONT></P></TD>
+ </TR></TABLE>
+
+</TD></TR></TABLE>
+
+</FORM>
+
+</CENTER>
+
+</BODY>
+
+</HTML>
+
+ 

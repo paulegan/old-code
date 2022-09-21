@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# chkconfig: 2345 70 01
+# description: Init script for weblogic
+# paul.x.egan.-nd@email.disney.com 20030808
+# $Id$
+
+WL_USER=disweb
+WL_CMD=/share/bin/weblogic
+CONFIG_FILES="/local/apps/*/*/config/*/config.xml"
+LOCK_FILE=/var/lock/subsys/weblogic
+
+cmd="$1"
+
+case "$cmd" in
+  start)
+	touch $LOCK_FILE
+	;;
+  stop)
+	rm -f $LOCK_FILE
+	;;
+  restart|status|ping|kill|refresh)
+	if [ "$cmd" = "status" ]; then cmd=ping; fi
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status|ping|kill|refresh}"
+	exit 1
+esac
+
+for config in `grep -l "Machine=\"$HOST\"" $CONFIG_FILES`; do
+  domain=`echo $config | sed "s/.*\/apps\/\([^\/]*\).*/\1/"`
+  server=`echo $config | sed "s/.*apps\/$domain\/\([^\/]*\).*/\1/"`
+  su $WL_USER -c "$WL_CMD -quiet $cmd $server $domain"
+done
+
+exit 0

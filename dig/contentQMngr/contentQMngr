@@ -1,0 +1,209 @@
+#!/usr/bin/perl -w
+
+######################################################################
+#
+# ID:		$Id$
+#
+# Author:	paul.egan@disney.com
+# 		2002/01/30
+#
+# Last update:	$Author$
+# 		$Date$
+#
+# Description:	Script which watches a queue file for incoming content
+#		and calls a set of scripts to perform a set of actions
+#		with those files.
+#
+# Log:		$Log$
+# Log:		Revision 1.6  2002/11/08 13:01:08  root
+# Log:		added HUP support for dumping the content Q in memory back to disk.
+# Log:
+# Log:		Revision 1.5  2002/09/30 10:41:10  root
+# Log:		added simple extra logging to show queue processing status
+# Log:
+# Log:		Revision 1.4  2002/02/01 15:01:24  root
+# Log:		Generic version of akamaiQMngr
+# Log:
+#
+######################################################################
+
+use bytes;
+use strict;
+use XML::Simple;
+use Getopt::Std;
+
+my $configFile = './contentQMngr.xml';
+my $LOG = *STDERR;
+
+
+#########################
+# Initialization:
+
+$SIG{__DIE__} = sub { write2log("DIE: ".$_[0]); exit(-1); };
+$SIG{'TERM'}  = sub { write2log("Received term signal"); exit(-1); };
+$ENV{'PATH'} = "/bin";
+$| = 1;
+
+use vars('$opt_l','$opt_c');				# Check on arguments
+if (!getopts('c:l:')){
+  print STDERR "Usage: $0 [-c config.xml] [-l log]\n";
+  exit(-1);
+}
+
+my $config;						# Read config file
+if ( ! eval { $config = XMLin($opt_c || $configFile) } ){
+  die("Could not parse config file - $@\n");
+}
+
+if (! -w $config->{'queue_file'}){			# Check queue file
+  die("Queue file does not exist or is not writeable\n");
+}
+							# Sanitize the command list
+my @commands = sort {$a->{'order'} <=> $b->{'order'}} @{$config->{'command'}};
+foreach my $cmd ( @commands ){
+  $cmd->{'content'} =~ s/(^\s*|\s*$)//g;
+  my $cmdPath = (split(/\s/,$cmd->{'content'}))[0];
+  die("Command not found $cmdPath\n") if ( ! -x $cmdPath );
+  $cmd->{'content'} = '"'.$cmd->{'content'}.'"';
+}
+
+if ($opt_l){						# Open log file
+  if (!open(LOG,">>$opt_l")){
+    print STDERR "Could not open log : $!\n";
+    exit(-1);
+  }
+  $LOG = *LOG;
+  select($LOG);
+}
+$| = 1;
+  
+
+#########################
+# Main:
+
+while (42){
+
+  my $c = $config->{'lock_timeout'};
+
+  while ($c--){
+    if ( ! -z $config->{'queue_file'} && ! -e $config->{'queue_lock'} ){
+
+      if (!symlink($config->{'queue_file'},$config->{'queue_lock'})){
+        write2log("ERROR: Could not create queue lock: $!");
+        next;
+      }
+
+      my $fileList = readFiles($config->{'queue_file'});
+      emptyQueue($config->{'queue_file'});
+
+      unlink($config->{'queue_lock'}) || write2log("ERROR: Could not remove queue lock: $!");
+
+      processQueue($fileList) if ($fileList);
+
+      $c = $config->{'lock_timeout'};
+      next; # Immediately check for new entries
+    }
+    sleep(1);
+  }
+
+  sleep($config->{'nap_time'});
+}
+
+######################################################################
+# processQueue(fileList) - for each configured command, run it if 
+# it matches and save to output to the log.
+#
+sub processQueue
+{
+ my $fileList = $_[0];
+ my $fileCount=0;
+ my $currCount=1;
+$SIG{'HUP'}  = sub { write2log("Received HUP signal, flushing Q"); dropFilesInQueue($fileList); exit(-1); };
+
+ foreach my $file ( @$fileList ){
+	$fileCount++;
+	}
+ foreach my $file ( @$fileList ){
+   write2log("Processing $currCount of $fileCount");
+   foreach my $cmd ( @commands ){
+     if ($file =~ /$cmd->{'match'}/i){
+       my $cmdStr = eval($cmd->{'content'});
+       my $out = "";
+       open(P,"$cmdStr 2>&1 |");
+       while(<P>){
+         $out .= "\t$_";
+       }
+       close(P);
+       write2log("$cmdStr :\n$out");
+     }
+   }
+  $currCount++;
+ }
+
+ return;
+}
+
+
+######################################################################
+# readFiles(queueFile) - returns an array with all files found in the
+# queue.
+#
+sub readFiles
+{
+ my $queueFile = $_[0];
+ my $files = [];
+
+ if (!open(F,"<$queueFile")){
+   write2log("Could not read from queue file: $!");
+   return (0);
+ }
+
+ while (<F>){
+   chomp();
+   push(@$files,$_) if (-f $_);
+ }
+ close(F);
+ 
+ return ($files);
+}
+
+
+######################################################################
+# emptyQueue(queueFile) - removes all files from the queue
+#
+sub emptyQueue
+{
+ my $file = $_[0];
+ if (!open(F,">$file")){
+   write2log("Could not write to queue file: $!");
+ }else{
+   close(F);
+ }
+ return;
+}
+
+#########################
+# write2log
+
+sub write2log
+{
+ my $message = $_[0];
+ chomp($message);
+ print $LOG "".localtime()." $message\n";
+}
+
+######################################################################
+# dropFilesInQueue(filelist) -
+#
+sub dropFilesInQueue
+{
+ my $arrayFileList = $_[0];
+ my $fileList = join("\n",@$arrayFileList);
+
+     if (!open(Q,">>".$config->{'queue_file'})) {
+	write2log("Could not write to queue file: $!\n");
+       return (0);
+     }
+     print Q "$fileList\n";
+     close(Q);
+}

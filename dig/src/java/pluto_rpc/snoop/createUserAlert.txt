@@ -1,0 +1,69 @@
+POST /rpc HTTP/1.0
+Host: intlappsdev
+Content-Length: 1340
+Content-Type: text/xml
+
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>pluto.createUserAlert</methodName>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>projectName</name>
+            <value>
+              <string>cont_adv_2</string>
+            </value>
+          </member>
+          <member>
+            <name>projectId</name>
+            <value>
+              <int>2208</int>
+            </value>
+          </member>
+          <member>
+            <name>subject</name>
+            <value>
+              <string>The.test.script</string>
+            </value>
+          </member>
+          <member>
+            <name>dropVersion</name>
+            <value>
+              <int>21</int>
+            </value>
+          </member>
+          <member>
+            <name>siteName</name>
+            <value>
+              <string>app.pingu</string>
+            </value>
+          </member>
+          <member>
+            <name>message</name>
+            <value>
+              <string>a test message</string>
+            </value>
+          </member>
+          <member>
+            <name>username</name>
+            <value>
+              <string>pegan</string>
+            </value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<methodResponse>
+  <params>
+    <param>
+      <value>SUCCESS</value>
+    </param>
+  </params>
+</methodResponse>

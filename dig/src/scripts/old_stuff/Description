@@ -1,0 +1,19 @@
+aka-my			Called from cron job check_flags	Runs akamaize.pl with options from queue file
+amarula.pl		Run by webmasters			Untars dropped archive & creates akamia queue file
+amstat.pl		Weekly cron job				Summarizes amarula log file
+auto_cleanftp		Unused					Deletes old files from /pool/upload
+auto_cleantar		Daily cron job				Deletes old tar files 
+check_flags		5 minute cron job			Calls aka-my if akamai queue file exists
+cleantar		Unused					Interactively deletes old archives
+cleanzip		Unused					Interactively deletes old archives
+fileusage		Unused					Gives size totals for different file types
+margaux			Run by webmasters			Untars & akamaizes dropped archive
+push			Run by webmasters			Copies dropped archive, does some file checks & calls amarula
+redir-conf.pl		Run by webmasters			Adds redirect to redirect/config/obj.conf
+redir-mmts.pl		Run by webmasters			Adds redirect to mmts/config/obj.conf
+redir-url.pl		Run by webmasters			Creates a http-equiv refresh page
+replaceString		Run by webmasters			Does a find with a string search & replace
+setcron			Run by webmasters			Creates a cron entry
+sjoin			Run by webmasters			Combines tar files
+stevescp		Unused					scp's dropped archive & calls margaux
+volnay			Unused					Earlier version of margaux

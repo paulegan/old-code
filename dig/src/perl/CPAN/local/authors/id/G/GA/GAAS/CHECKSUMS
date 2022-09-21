@@ -1,0 +1,33 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'HTML-Parser-3.28.tar.gz' => {
+    'md5-ungz' => 'ef72a584f4f004a913550c4f7ee912b6',
+    'md5' => 'c904aa58c6ba2d35ffcb635935467cef',
+    'size' => '71185'
+  },
+  'MIME-Base64-2.20.tar.gz' => {
+    'md5-ungz' => '91878f548ed1ee269bd2b9528891fc14',
+    'md5' => '2b5901722feafca6dfcf498dc22ea6fe',
+    'size' => '15077'
+  },
+  'MD5-2.02.tar.gz' => {
+    'md5-ungz' => 'ce975f820143d81e3d3563c051830fca',
+    'md5' => 'def08d091392fe7d643d987514339536',
+    'size' => '2776'
+  },
+  'URI-1.23.tar.gz' => {
+    'md5-ungz' => '85979300cee86bd923c1f7e17a2f98c6',
+    'md5' => '74442dd8de93ea89ff382c07ac0e09ed',
+    'size' => '89351'
+  },
+  'libwww-perl-5.69.tar.gz' => {
+    'md5-ungz' => '6eca1a6470ccc82eb49cad5ed0cd4c7d',
+    'md5' => 'b4567b6fae2b1733415a746956826e0c',
+    'size' => '205846'
+  },
+  'Digest-MD5-2.24.tar.gz' => {
+    'md5-ungz' => 'f9c699f72ab6bf7c6bae23aca855a7b8',
+    'md5' => '1d328e479ac6e7019dd082f6a244a06c',
+    'size' => '42303'
+  }
+};

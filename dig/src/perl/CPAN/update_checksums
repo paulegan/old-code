@@ -1,0 +1,109 @@
+#!/usr/bin/perl -w
+
+# $Id: $
+
+=head1 NAME
+
+update_checksums - A script to create CHECKSUM files for a CPAN type archive
+
+=head1 AUTHOR
+
+ $Author: $
+ $Date: $
+
+ Initial Author: paul.x.egan.-nd@email.disney.com
+ Date: 2003/07/01
+
+=head1 SYNOPSIS
+
+ update_checksums authors/id/W/WD/WDIG
+
+=head1 DESCRIPTION
+
+Searches the given directory and its sub-directories for archive files 
+and updates the CHECKSUMS files.
+
+=head1 HISTORY
+
+ $Log: $
+
+=head1 COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+
+=cut
+
+
+######################################################################
+
+use 5.006_001;
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Pod::Usage;
+use IO::File;
+use File::Find;
+use Digest::MD5;
+use Data::Dumper;
+
+my @Opt_Config = (
+  'debug',
+  'help|?'
+);
+
+######################################################################
+# Process command line arguments:
+
+my %opt = ();
+GetOptions(\%opt, @Opt_Config) or pod2usage();
+pod2usage(-exitstatus=>0, -verbose=>1) if ( $opt{help} );
+
+my $source_dir = shift();
+pod2usage() if ( !$source_dir );
+pod2usage(-message=>"Source dir '$source_dir' not found") if ( !-d $source_dir );
+
+
+######################################################################
+# Find and process archive files:
+
+my $md5 = new Digest::MD5();
+
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Varname = 'cksum';
+
+
+find(  sub {
+
+  return unless -d;
+
+  print STDERR "processing $File::Find::name ...\n" if ( $opt{debug} );
+  
+  my $dir_name = $_;
+  opendir(DIR, $dir_name) or die();
+  my @files = grep(/\.tar\.gz$/, readdir(DIR));
+  close(DIR);
+  
+  my $checksums = {};
+  
+  foreach my $file_name ( @files ) {
+    print STDERR " $file_name\n" if ( $opt{debug} );
+    my $file = $dir_name."/".$file_name;
+    $checksums->{$file_name}->{'size'} = (-s $file);
+    $checksums->{$file_name}->{'md5'} = $md5->addfile(new IO::File("<$file"))->hexdigest();
+    $checksums->{$file_name}->{'md5-ungz'} = $md5->addfile(new IO::File("gzip -cd $file |"))->hexdigest();
+  }
+    
+  if ( keys(%$checksums) ) {
+    open(C,">$dir_name/CHECKSUMS") or die();
+    printf C "# CHECKSUMS file written on %s by $0\n", scalar(gmtime());
+    print C Dumper($checksums);
+    close(C);
+  }
+  
+}, $source_dir );
+
+
+exit(0);
+
+__END__

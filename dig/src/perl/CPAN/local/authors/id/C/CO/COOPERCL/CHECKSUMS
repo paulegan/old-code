@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'XML-Parser-2.31.tar.gz' => {
+    'md5-ungz' => '2ce17a8b95c64c462558ffa3ef05496a',
+    'md5' => '2eb4d2ea5ec50002c80f9f02ed2153da',
+    'size' => '241592'
+  }
+};

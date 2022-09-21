@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'Module-Info-0.19.tar.gz' => {
+    'md5-ungz' => '2cc8b0ab9bfd22f6b5241071f2fdddfc',
+    'md5' => '2dc838525c2a760e984a7a8c33f43166',
+    'size' => '40347'
+  }
+};

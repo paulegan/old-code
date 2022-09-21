@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>God Home</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19980829">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Redeployment System god user homepage.">
+ <META NAME="Keywords"          CONTENT="redeployment,god,admin">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#333366 ALINK=#FF0000>
+
+<CENTER>
+
+<P ALIGN=CENTER>
+ <A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH="550" HEIGHT="100"></A>
+</P>
+
+<SERVER>
+ if ( !request.auth_user ) error("This directory must be protected!");
+</SERVER>
+
+ 
+<TABLE BORDER=0 WIDTH=500 CELLSPACING=0 CELLPADDING=0><TR><TD>
+
+ <TABLE BORDER=0 BGCOLOR=C3C3C3 WIDTH=400 CELLSPACING=0 CELLPADDING=10><TR><TD>
+  <FONT FACE="Arial,Helvetica">Edit position:</FONT>
+  <BR>
+  <FORM METHOD=POST ACTION="edit.html">
+   Ref: <INPUT TYPE=TEXT NAME="ref" SIZE="12">
+   <INPUT TYPE=SUBMIT VALUE=" Edit ">
+  </FORM>
+ </TD></TR></TABLE>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 BGCOLOR=C3C3C3 WIDTH=400 CELLSPACING=0 CELLPADDING=10><TR><TD>
+  <FONT FACE="Arial,Helvetica">Review applications by person:</FONT>
+  <BR>
+  <FORM METHOD=POST ACTION="applicants.html">
+   <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0>
+    <TR><TD>
+     CID: <INPUT TYPE=TEXT SIZE=12 NAME="cid">
+     <INPUT TYPE="SUBMIT" VALUE="Show Applications">
+    </TD></TR><TR><TD>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <A HREF="javascript:null;" onClick="window.open('cidLookup.html?form=1','cidLookup','width=250,height=150,resizable=1,scrollbars=yes'); return false;">lookup</A>
+    </TD></TR>
+   </TABLE>
+  </FORM>
+ </TD></TR></TABLE>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 BGCOLOR=C3C3C3 WIDTH=400 CELLSPACING=0 CELLPADDING=10><TR><TD>
+  <FONT FACE="Arial,Helvetica">Review applications by position:</FONT>
+  <BR>
+  <FORM METHOD=POST ACTION="listAppl.html">
+   Ref: <INPUT TYPE=TEXT SIZE=12 NAME="ref">
+   <INPUT TYPE="SUBMIT" VALUE="Show Applications">
+  </FORM>
+ </TD></TR></TABLE>
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 WIDTH=400 CELLSPACING=0 CELLPADDING=10><TR>
+
+  <TD BGCOLOR=C3C3C3>
+   <FONT FACE="Arial,Helvetica">Manage restricted users:</FONT>
+   <BR>
+   <FORM METHOD=GET ACTION="continue.html">
+    <INPUT TYPE="SUBMIT" VALUE="Restricted Users">
+   </FORM>
+  </TD>
+
+  <TD>&nbsp;</TD>
+
+  <TD BGCOLOR=C3C3C3>
+   <FONT FACE="Arial,Helvetica">Admin Users:</FONT>
+   <BR>
+   <FORM METHOD=GET ACTION="/userdb/admin/">
+    <INPUT TYPE="SUBMIT" VALUE="Create">
+   </FORM>
+   <FORM METHOD=POST ACTION="/userdb/admin/index.cgi">
+    <INPUT TYPE="HIDDEN" NAME="action" VALUE="list">
+    <INPUT TYPE="SUBMIT" VALUE="Edit">
+   </FORM>
+  </TD>
+
+</TR></TABLE>
+
+<P ALIGN=CENTER><FONT SIZE=2>
+ Copyright &copy; 1999 Motorola Confidential Proprietary
+ <BR>
+ For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+</FONT></P>
+
+</TD></TR></TABLE>
+
+</CENTER>
+
+</BODY>
+
+</HTML>

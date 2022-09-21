@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE url_map [
+  <!ELEMENT url_map (url+) >
+  <!ELEMENT url (machine, root, platform, role, param*) >
+  <!ATTLIST url host CDATA #REQUIRED
+                protocol CDATA #REQUIRED >
+  <!ELEMENT machine (#PCDATA) >
+  <!ATTLIST machine type CDATA #IMPLIED >
+  <!ELEMENT root (#PCDATA) >
+  <!ELEMENT platform (#PCDATA) >
+  <!ELEMENT role (#PCDATA) >
+  <!ELEMENT param (#PCDATA) >
+  <!ATTLIST param name CDATA #REQUIRED >
+]>
+
+<!-- $Id$ -->
+
+<url_map>
+
+ <url host="dev.disney.ie" protocol="ftp">
+   <machine>intlftp01</machine>
+   <root>/pool/docs/disney.ie</root>
+   <platform>standard</platform>
+   <role>dev</role>
+ </url>
+
+ <url host="dev.disney.ie" protocol="http">
+   <machine>localhost</machine>
+   <root>/share/content/dev/ie/docs</root>
+   <platform>standard</platform>
+   <role>dev</role>
+ </url>
+
+ <url host="staging.disney.ie" protocol="http">
+   <machine>localhost</machine>
+   <root>/share/content/staging/ie/docs</root>
+   <platform>standard</platform>
+   <role>staging</role>
+ </url>
+
+ <url host="disney.ie" protocol="http">
+   <machine>localhost</machine>
+   <root>/share/content/live/ie/docs</root>
+   <platform>standard</platform>
+   <role>live</role>
+   <param name="test1">value1</param>
+   <param name="test2">value2</param>
+ </url>
+
+ <url host="store.disney.ie" protocol="http">
+   <machine>localhost</machine>
+   <root>/share/content/apps/live/disneystore</root>
+   <platform>advanced</platform>
+   <role>live</role>
+ </url>
+
+ <url host="iur.disney.ie" protocol="http">
+   <machine type="Win32">disney-nt1</machine>
+   <root>C:\webapps\iur</root>
+   <platform>advanced</platform>
+   <role>live</role>
+ </url>
+
+</url_map>

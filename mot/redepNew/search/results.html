@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ 
+<HTML>
+ 
+<HEAD>
+ <TITLE>Redeployment System - Search Results</TITLE>
+ <META NAME="Author"            CONTENT="paul@hr.emea.mot.com">
+ <META NAME="DevDate"           CONTENT="19990417">
+ <META NAME="TestedWith"        CONTENT="">
+ <META NAME="TestDate"          CONTENT="">
+ <META NAME="ReviewedBy"        CONTENT="">
+ <META NAME="ReviewDate"        CONTENT="">
+ <META NAME="ApprovedBy"        CONTENT="">
+ <META NAME="ProdDate"          CONTENT="">
+ <META NAME="Description"       CONTENT="Lists the jobs that matched the search criteria.">
+ <META NAME="Keywords"          CONTENT="redeployment,jobs,vacancy,IOS,search,results">
+ <META NAME="Notes"             CONTENT="">
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 LINK=#333366 VLINK=#CCCCCC ALINK=#FF0000>
+
+<CENTER>
+
+<A HREF="/"><IMG SRC="images/header.gif" ALT="Redeployment System" BORDER=0 WIDTH=580 HEIGHT=90></A>
+
+<TABLE WIDTH=580 BORDER=0 CELLSPACING=2 CELLPADDING=10><TR><TD>
+
+ <IMG SRC="images/resulthead.gif" ALT="Search Results" BORDER=0 WIDTH=215 HEIGHT=18>
+
+ <SERVER>
+  var jobs = new Jobs();
+  var refs,jobNext,jobsPerPage,order,resultStr;
+
+  if ( (request.refs==null) || (request.refs=="") )
+    refs = jobs.match(request);
+  else
+    refs = request.refs.split(",");
+
+  if ( (request.jobNext==null) || (request.jobNext=="") )
+    jobNext = 0;
+  else
+    jobNext = parseInt(request.jobNext);
+
+  if ( (request.jobsPerPage==null) || (request.jobsPerPage=="") )
+    jobsPerPage = project.defaultJobsPerPage;
+  else
+    jobsPerPage = parseInt(request.jobsPerPage);
+
+  if ( (request.order==null) || (request.order=="") )
+    order = project.defaultOrder;
+  else
+    order = request.order;
+
+  if ( (request.resultStr==null) || (request.resultStr=="") )
+    resultStr = resultString(refs.length);
+  else
+    resultStr = request.resultStr.replace(/"/g,"&quot;");
+
+  var jobEnd = ((jobNext+jobsPerPage)<refs.length)?(jobNext+jobsPerPage):(refs.length);
+  var curRefs = refs.slice(jobNext,jobEnd);
+
+  if (refs.length==0){
+    write("<P>\n"+resultStr+"\n</P>\n");
+    write("<P>\nPlease try broadening your search.\n</P>\n");
+  }else{
+    var job = jobs.resultInfo(curRefs,order);
+ </SERVER>
+
+ <TABLE BORDER=0 WIDTH=100%><TR VALIGN=TOP>
+
+ <TD ALIGN=LEFT WIDTH=70%><FONT SIZE="2">
+  <SERVER>write(resultStr);</SERVER>
+ </FONT></TD>
+
+ <TD ALIGN=RIGHT>
+ <FORM NAME="sort" METHOD=POST ACTION="results.html">
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`refs.join(",")`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`resultStr`>
+  <SELECT NAME="order" onChange="sort.submit();">
+   <OPTION VALUE="function" `(request.order=="job_family"?"SELECTED":"")`>Sort by Function
+   <OPTION VALUE="advertise_date" `(request.sortColumn=="advertise_date"?"SELECTED":"")`>Sort by Advertise Date
+   <OPTION VALUE="expiry_date" `(request.order=="expiry_date"?"SELECTED":"")`>Sort by Expiry Date
+   <OPTION VALUE="location" `(request.order=="location"?"SELECTED":"")`>Sort by Location
+   <OPTION VALUE="grade" `(request.order=="low_grade"?"SELECTED":"")`>Sort by Grade
+   <OPTION VALUE="department" `(request.order=="sector"?"SELECTED":"")`>Sort by Sector
+   <OPTION VALUE="title" `(request.order=="title"?"SELECTED":"")`>Sort by Title
+  </SELECT>
+  <NOSCRIPT><INPUT TYPE=SUBMIT VALUE="Sort"></NOSCRIPT>
+ </FORM>
+ </TD>
+
+ </TR></TABLE>
+
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function showDetail(ref)
+  {
+   document.detail.ref.value = ref;
+   document.detail.submit();
+   return false;
+  }
+
+  // -->
+ </SCRIPT>
+
+ <FORM NAME="detail" METHOD=POST ACTION="details.html">
+  <INPUT TYPE=HIDDEN NAME="ref" VALUE="">
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`refs.join(",")`>
+  <INPUT TYPE=HIDDEN NAME="order" VALUE=`order`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`resultStr`>
+ </FORM>
+
+ <TABLE WIDTH="100%" BORDER=1 CELLSPACING=0 CELLPADDING=3>
+
+  <TR BGCOLOR=#C0C0C0>
+   <TD ALIGN=LEFT WIDTH=55%><B><FONT SIZE=2>Position & Summary</FONT></B></TD>
+   <TD ALIGN=RIGHT WIDTH=40%><B><FONT SIZE=2>Additional Info.</FONT></B></TD>
+  </TR>
+
+  <SERVER>
+   while (job.next()){
+  </SERVER>
+
+   <TR>
+    <TD ALIGN=LEFT VALIGN=TOP>
+     <B><A HREF=`"details.html?ref="+job.REF+"&jobNext="+jobNext+"&jobsPerPage="+jobsPerPage+"&order="+escape(order)+"&resultStr="+escape(resultStr)+"&refs="+refs.join(",")`
+             onClick=`"return showDetail('"+job.REF+"');"`
+             onMouseOver=`"window.status='Show detail for "+job.TITLE.replace(/"/g,"")+"';return true;"`
+             onMouseOut=`"window.status='';return true;"`
+       ><SERVER>write(job.TITLE);</SERVER></A></B>
+      - <SERVER>write(job.REF);</SERVER>
+     <BR>
+     <SERVER>
+      write(job.DESCRIPTION+"...");
+     </SERVER>
+    </TD>
+    <TD ALIGN=RIGHT VALIGN=TOP>
+      <SERVER>
+       write(job.SECTOR?(job.SECTOR+" "):"");
+       write(job.DEPARTMENT?((job.DEPARTMENT.match(/^No/)?job.DEPARTMENT:("Dept: "+job.DEPARTMENT))):"");
+      </SERVER>
+      <BR>
+      <SERVER>
+       if (job.LOCATION){
+         write(job.LOCATION.replace(/ /,"&nbsp;")+", "+job.COUNTRY.replace(/ /,"&nbsp;"));
+         write("<BR>");
+       }
+      </SERVER>
+      Function: <SERVER>write(job.FUNCTION.replace(/ /,"&nbsp;"));</SERVER>
+      <BR>
+      <SERVER>
+       if (job.GRADE){
+         write("Grade: "+job.GRADE);
+       }
+      </SERVER>
+      <BR><BR>
+      <SERVER>
+       write(job.ADVERTISE_DATE.toLocaleString().replace(/ [0-9]+:.*$/,"")+" - "+job.EXPIRY_DATE.toLocaleString().replace(/ [0-9]+:.*$/,""));
+      </SERVER>
+    </TD>
+   </TR>
+
+  <SERVER>
+   }// while
+
+   job.close();
+  </SERVER>
+
+ </TABLE>
+
+ <SCRIPT LANGUAGE="JavaScript">
+  <!--
+
+  function showResults(next)
+  {
+   document.getResults.jobNext.value = next;
+   document.getResults.submit();
+   return false;
+  }
+
+  // -->
+ </SCRIPT>
+
+ <FORM NAME="getResults" METHOD=POST ACTION="results.html">
+  <INPUT TYPE=HIDDEN NAME="jobsPerPage" VALUE=`jobsPerPage`>
+  <INPUT TYPE=HIDDEN NAME="jobNext" VALUE=`jobNext`>
+  <INPUT TYPE=HIDDEN NAME="refs" VALUE=`refs.join(",")`>
+  <INPUT TYPE=HIDDEN NAME="order" VALUE=`order`>
+  <INPUT TYPE=HIDDEN NAME="resultStr" VALUE=`resultStr`>
+ </FORM>
+
+ <TABLE BORDER=0 WIDTH=100%><TR VALIGN=MIDDLE>
+  <TD ALIGN=LEFT>&nbsp;</TD>
+  <TD ALIGN=RIGHT VALIGN=MIDDLE>
+
+   <SERVER>
+    if (jobNext!=0) { 
+      write("<A HREF=\"results.html?jobNext="+(jobNext-jobsPerPage)+"&jobsPerPage="+jobsPerPage+"&order="+order+"&refs="+refs.join(",")+"\"");
+      write(" onClick=\"return showResults("+(jobNext-jobsPerPage)+");\"");
+      write(" onMouseOver=\"window.status='Show previous "+jobsPerPage+" matches.';return true;\" ");
+      write(" onMouseOut=\"window.status='';return true;\" ");
+      write("><IMG ALIGN=MIDDLE SRC=\"images/button_left.gif\" ALT=\"Prev\" NAME=\"leftBtn\" BORDER=0 WIDTH=27 HEIGHT=38></A>\n");
+    }
+   </SERVER>
+
+   <SERVER>
+     write("<FONT FACE=\"Helvetica,Arial\" SIZE=3 COLOR=#333366><B>\n");
+     write("  &nbsp;&nbsp;&nbsp;"+(jobNext+1)+" to "+jobEnd+" of "+refs.length+".&nbsp;&nbsp;&nbsp;\n");
+     write("</B></FONT>\n");
+   </SERVER>
+
+   <SERVER>
+    if (jobEnd!=refs.length) { 
+      write("<A HREF=\"results.html?jobNext="+(jobNext+jobsPerPage)+"&jobsPerPage="+jobsPerPage+"&order="+order+"&refs="+refs.join(",")+"\"");
+      write(" onClick=\"return showResults("+(jobNext+jobsPerPage)+");\"");
+      write(" onMouseOver=\"window.status='Show next "+jobsPerPage+" matches.';return true;\" ");
+      write(" onMouseOut=\"window.status='';return true;\" ");
+      write("><IMG ALIGN=MIDDLE SRC=\"images/button_right.gif\" ALT=\"Next\" NAME=\"rightBtn\" BORDER=0 WIDTH=27 HEIGHT=38></A>\n");
+    }
+   </SERVER>
+
+  </TD>
+ </TR></TABLE>
+
+ <SERVER>
+   }// End of else (If results..)!
+ </SERVER>
+
+
+ <BR CLEAR=ALL>
+
+ <TABLE BORDER=0 WIDTH=500><TR>
+  <TD ALIGN=LEFT>
+   <A HREF="main.html" onMouseOver="window.status='Go back to the search form.';return true;"><IMG SRC="images/returnsearch.gif" ALT="Search Form" BORDER=0 WIDTH="150" HEIGHT="15"></A>
+  </TD>
+  <TD ALIGN=CENTER WIDTH=70%><P ALIGN=CENTER><FONT SIZE=2>
+   Copyright &copy; 1999 Motorola Internal Use Only
+   <BR>
+   For help please mail <A HREF="mailto:help@redeployment.mot.com">help@redeployment.mot.com</A>
+  </FONT></P></TD>
+ </TR></TABLE>
+
+</TABLE></TR></TD>
+
+
+</CENTER>
+
+</BODY>
+
+</HTML>

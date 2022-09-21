@@ -1,0 +1,29 @@
+WDIG::Weblogic::Config version 1.0
+==================================
+
+$Id$
+
+Interface to BEA Weblogic configuration files.
+See POD for more information.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+XML::Simple 2.05
+WDIG::File::Slurp 1.0
+
+WDIG::Weblogic::Config::Default requires XML::LibXML and XML::LibXSLT.
+WDIG::Weblogic::Config::Runtime requires WDIG::Weblogic::Cmd
+
+COPYRIGHT
+
+(C) Walt Disney Internet Group.  All rights reserved.
+

@@ -1,0 +1,5 @@
+#!/bin/tcsh -fb
+
+foreach project ( `find . -name MANIFEST` )
+  sed 's|^|'`dirname $project`'/|' $project
+end

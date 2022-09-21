@@ -1,0 +1,52 @@
+#!/usr/local/bin/tcsh -fb
+
+# paul@hr.emea.mot.com		19990713
+
+set logDir 	= "/var/adm"
+set logs   	= "authlog critical kernel daemon loginlog messages sudo.log sulog syslog virtualLumpy"
+set syslogd	= "/etc/init.d/syslog"
+set logWatcher	= "/etc/init.d/logsurfer"
+set sumExt	= "summarize"
+set summaryFile	= "/tmp/rotateLogs.$$"
+set mail	= "/bin/mailx"
+set echo_style	= both
+
+umask 022
+
+if ( -d ${logDir} ) then
+  cd ${logDir}
+else
+  exit
+endif
+
+touch ${summaryFile}
+
+foreach log ( ${logs} )
+
+  # If non-empty log file exists....
+  if ( ( -e ${log} ) && ( ! -z ${log} ) ) then
+
+    # Build summary if summary script exists:
+    if ( -e ${log}.${sumExt} ) then
+      echo "\n  ********************* Summary for ${log} *********************\n" >> ${summaryFile}
+      ./${log}.${sumExt} >>& ${summaryFile}
+    endif
+
+    # Append log to compressed archive & empty current
+    if ( -e ${log}.Z ) then
+      zcat ${log}.Z | cat - ${log} | compress -fc - > ${log}.Z
+    else
+      cat ${log} | compress -fc - > ${log}.Z
+    endif
+    cp /dev/null ${log}
+
+  endif
+
+end
+
+# Mail off summary if there is one:
+if ( ! -z ${summaryFile} ) ${mail} -s "Log summary for ${HOST}" ${USER} < ${summaryFile}
+rm -f ${summaryFile}
+
+${syslogd} restart
+${logWatcher} restart

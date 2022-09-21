@@ -1,0 +1,18 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:12 2003 by ./update_checksums
+$cksum1 = {
+  'XML-LibXML-1.53.tar.gz' => {
+    'md5-ungz' => 'e91c0ca76b707059400905fabba48553',
+    'md5' => 'f6acf10520c9eedc8033aa4b55a3cf85',
+    'size' => '128001'
+  },
+  'XML-SAX-0.12.tar.gz' => {
+    'md5-ungz' => '48bae3a1e80df83dd6b476d4ab8c5b88',
+    'md5' => 'bff58bd077a9693fc8cf32e2b95f571f',
+    'size' => '59537'
+  },
+  'XML-LibXSLT-1.53.tar.gz' => {
+    'md5-ungz' => '2d2d4eaa77b77c99c1c17ae34bae4307',
+    'md5' => '1fc25bedd58fbf9f3faf0d4936632645',
+    'size' => '23855'
+  }
+};

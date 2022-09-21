@@ -1,0 +1,26 @@
+#!/www/php/php-current
+<?php
+  include('./tcts_includes.php');
+
+  $auth = new Auth;
+  $db = new DB_Auth;
+  $admin = new Admin;
+  $user = GetEnv("REMOTE_USER");
+
+
+  $output = hris_includeFile("$patDir/main.pat");
+  
+  if ($auth->inGroup($db,$user,"TCTS")){
+    $output = preg_replace("/..\-\- #\w*tcts\w+# \-\-. */","",$output);
+  }
+  if ($auth->inGroup($db,$user,"TCTS_Admin")){
+    $output = preg_replace("/..\-\- #\w*su\w+# \-\-. */","",$output);
+  }
+  if ($admin->isAdmin(hris_emailID2CID($user))){
+    $output = preg_replace("/..\-\- #\w*admin\w+# \-\-. */",'',$output);
+  }
+  
+  
+  hris_printOutput($output);
+
+?>

@@ -1,0 +1,107 @@
+From lumpy Mon Mar 18 16:48:59 1996
+Received: by interzone.ucc.ie; (5.65v3.2/1.1.8.2/23Jan96-0330PM)
+	id AA20815; Mon, 18 Mar 1996 16:48:58 GMT
+Date: Mon, 18 Mar 1996 16:48:58 GMT
+From: Paul Egan  <lumpy>
+Message-Id: <9603181648.AA20815@interzone.ucc.ie>
+Apparently-To: lumpy@interzone.ucc.ie
+Status: O
+
+netCrawler journey began: Mon Mar 18 16:35:54 GMT 1996
+interzone : Here now!
+interzone : Trying hamlet
+hamlet : Here now!
+hamlet : Trying freedom
+hamlet : Couldnt move to freedom!
+hamlet : Trying darkadia
+hamlet : Couldnt move to darkadia!
+hamlet : Trying pharos
+hamlet : Couldnt move to pharos!
+hamlet : Backtracking to interzone
+interzone : Here now!
+interzone : Trying inter1
+inter1 : Here now!
+inter1 : Trying inter2
+inter2 : Here now!
+inter2 : Trying inter3
+inter3 : Here now!
+inter3 : Trying inter4
+inter4 : Here now!
+inter4 : Trying inter5
+inter5 : Here now!
+inter5 : Trying inter6
+inter6 : Here now!
+inter6 : Trying inter7
+inter7 : Here now!
+inter7 : Trying inter8
+inter8 : Here now!
+inter8 : Trying inter9
+inter9 : Here now!
+inter9 : Trying inter10
+inter10 : Here now!
+inter10 : Trying inter11
+inter11 : Here now!
+inter11 : Trying inter13
+inter13 : Here now!
+inter13 : Trying inter14
+inter14 : Here now!
+inter14 : Trying inter15
+inter15 : Here now!
+inter15 : Trying inter16
+inter16 : Here now!
+inter16 : Trying inter17
+inter17 : Here now!
+inter17 : Trying inter18
+inter18 : Here now!
+inter18 : Trying inter19
+inter19 : Here now!
+inter19 : Trying inter20
+inter20 : Here now!
+inter20 : Trying inter21
+inter20 : Couldnt move to inter21!
+inter20 : Trying inter22
+inter20 : Couldnt move to inter22!
+inter20 : Trying inter23
+inter23 : Here now!
+inter23 : Backtracking to inter20
+inter20 : Here now!
+inter20 : Backtracking to inter19
+inter19 : Here now!
+inter19 : Backtracking to inter18
+inter18 : Here now!
+inter18 : Backtracking to inter17
+inter17 : Here now!
+inter17 : Backtracking to inter16
+inter16 : Here now!
+inter16 : Backtracking to inter15
+inter15 : Here now!
+inter15 : Backtracking to inter14
+inter14 : Here now!
+inter14 : Backtracking to inter13
+inter13 : Here now!
+inter13 : Backtracking to inter11
+inter11 : Here now!
+inter11 : Backtracking to inter10
+inter10 : Here now!
+inter10 : Backtracking to inter9
+inter9 : Here now!
+inter9 : Backtracking to inter8
+inter8 : Here now!
+inter8 : Backtracking to inter7
+inter7 : Here now!
+inter7 : Backtracking to inter6
+inter6 : Here now!
+inter6 : Backtracking to inter5
+inter5 : Here now!
+inter5 : Backtracking to inter4
+inter4 : Here now!
+inter4 : Backtracking to inter3
+inter3 : Here now!
+inter3 : Backtracking to inter2
+inter2 : Here now!
+inter2 : Backtracking to inter1
+inter1 : Here now!
+inter1 : Backtracking to interzone
+interzone : Here now!
+interzone : Nowhere else to go!
+

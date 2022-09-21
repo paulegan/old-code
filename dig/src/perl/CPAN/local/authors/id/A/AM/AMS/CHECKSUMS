@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:15 2003 by ./update_checksums
+$cksum1 = {
+  'Storable-2.06.tar.gz' => {
+    'md5-ungz' => 'd5c9e43c83f521d041a953f76385ed95',
+    'md5' => '28251cdd6aa2e39f1e36c02472ca5e34',
+    'size' => '118374'
+  }
+};

@@ -1,0 +1,8 @@
+# CHECKSUMS file written on Wed Sep  3 23:23:11 2003 by ./update_checksums
+$cksum1 = {
+  'IO-Zlib-1.01.tar.gz' => {
+    'md5-ungz' => '1c40141af4104e659046829fa47b1400',
+    'md5' => '914af0c54586d9e979fe03e5f1e341f0',
+    'size' => '4250'
+  }
+};
